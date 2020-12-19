@@ -1,12 +1,39 @@
 import styled from "styled-components";
 
-const Icon = ({ className }) => {
-  return <div className={className}></div>;
+const Icon = ({ className, Component, variant, onClick }) => {
+  if (!Component) {
+    throw new Error("Must define Component property for icon");
+  }
+
+  let StyledIcon;
+  switch (variant) {
+    case "button":
+      StyledIcon = IconButton;
+      break;
+
+    default:
+      StyledIcon = BaseIcon;
+      break;
+  }
+
+  return (
+    <StyledIcon className={className} onClick={onClick}>
+      <Component className={className}></Component>
+    </StyledIcon>
+  );
 };
 
-export default styled(Icon)`
-  width: 50px;
-  height: 50px;
-  background-color: grey;
-  border-color: none;
+const BaseIcon = styled.div`
+  color: white;
 `;
+
+const IconButton = styled(BaseIcon)`
+  transition: color 0.2s;
+
+  &:hover {
+    color: blue;
+    cursor: pointer;
+  }
+`;
+
+export default Icon;

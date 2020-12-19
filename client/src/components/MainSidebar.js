@@ -4,9 +4,9 @@ import SidebarItem from "./SidebarItem";
 import SidebarItemLabel from "./SidebarItemLabel";
 import Button from "./Button";
 
-const MainSidebar = () => {
+const MainSidebar = ({ className, hidden }) => {
   return (
-    <Sidebar>
+    <Sidebar className={className} hidden={hidden}>
       <SidebarItem>
         <Logo>Keep Lite</Logo>
       </SidebarItem>

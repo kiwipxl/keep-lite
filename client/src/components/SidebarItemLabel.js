@@ -1,10 +1,11 @@
 import styled from "styled-components";
+import { MdMenu } from "react-icons/md";
 import Icon from "./Icon";
 
 const SidebarItemLabel = ({ className, name }) => {
   return (
     <div className={className}>
-      <LabelIcon></LabelIcon>
+      <LabelIcon Component={MdMenu}></LabelIcon>
       <Label>{name}</Label>
     </div>
   );

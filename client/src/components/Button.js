@@ -1,7 +1,9 @@
 import styled from "styled-components";
 
-const Button = ({ className, children, variant }) => {
-  let StyledButton = BaseButton;
+const Button = (props) => {
+  const { className, children, variant } = props;
+
+  let StyledButton;
   switch (variant) {
     case "fill":
       StyledButton = FillButton;
@@ -10,9 +12,17 @@ const Button = ({ className, children, variant }) => {
     case "outline":
       StyledButton = OutlineButton;
       break;
+
+    default:
+      StyledButton = BaseButton;
+      break;
   }
 
-  return <StyledButton className={className}>{children}</StyledButton>;
+  return (
+    <StyledButton className={className} {...props}>
+      {children}
+    </StyledButton>
+  );
 };
 
 const BaseButton = styled.button`
@@ -25,6 +35,7 @@ const BaseButton = styled.button`
 
   &:hover {
     background-color: ${(props) => props.theme.primaryColorLighter};
+    cursor: pointer;
   }
 `;
 

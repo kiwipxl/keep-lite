@@ -1,4 +1,6 @@
+import React from "react";
 import styled from "styled-components";
+import { MdAccountCircle, MdMenu } from "react-icons/md";
 import NotesGrid from "../components/NotesGrid";
 import Note from "../components/Note";
 import HeaderBar from "../components/HeaderBar";
@@ -8,14 +10,26 @@ import Input from "../components/Input";
 import MainSidebar from "../components/MainSidebar";
 
 const MainScreen = ({ className }) => {
+  const [sidebarOpen, setSidebarOpen] = React.useState(false);
+
+  function toggleSidebar() {
+    setSidebarOpen(!sidebarOpen);
+  }
+
   return (
     <div className={className}>
-      <MainSidebar></MainSidebar>
+      <MainSidebar hidden={!sidebarOpen}></MainSidebar>
 
       <MainHeaderBar>
-        <SidebarIcon type="sidebar"></SidebarIcon>
+        <SidebarIcon
+          Component={MdMenu}
+          variant="button"
+          onClick={toggleSidebar}
+        ></SidebarIcon>
+
         <SearchInput placeholder="Search your notes"></SearchInput>
-        <AccountIcon type="account"></AccountIcon>
+
+        <AccountIcon Component={MdAccountCircle} variant="button"></AccountIcon>
       </MainHeaderBar>
 
       <MainNotesGrid>
