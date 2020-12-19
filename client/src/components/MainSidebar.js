@@ -1,12 +1,18 @@
+import React from "react";
 import styled from "styled-components";
 import Sidebar from "./Sidebar";
 import SidebarItem from "./SidebarItem";
 import SidebarItemLabel from "./SidebarItemLabel";
 import Button from "./Button";
 
-const MainSidebar = ({ className, hidden }) => {
+const MainSidebar = ({ className, hidden, onOpen, onClose }) => {
   return (
-    <Sidebar className={className} hidden={hidden}>
+    <Sidebar
+      className={className}
+      hidden={hidden}
+      onOpen={onOpen}
+      onClose={onClose}
+    >
       <SidebarItem>
         <Logo>Keep Lite</Logo>
       </SidebarItem>

@@ -12,19 +12,27 @@ import MainSidebar from "../components/MainSidebar";
 const MainScreen = ({ className }) => {
   const [sidebarOpen, setSidebarOpen] = React.useState(false);
 
-  function toggleSidebar() {
-    setSidebarOpen(!sidebarOpen);
+  function openSidebar() {
+    setSidebarOpen(true);
+  }
+
+  function closeSidebar() {
+    setSidebarOpen(false);
   }
 
   return (
     <div className={className}>
-      <MainSidebar hidden={!sidebarOpen}></MainSidebar>
+      <MainSidebar
+        hidden={!sidebarOpen}
+        onOpen={() => openSidebar()}
+        onClose={() => closeSidebar()}
+      ></MainSidebar>
 
       <MainHeaderBar>
         <SidebarIcon
           Component={MdMenu}
           variant="button"
-          onClick={toggleSidebar}
+          onClick={() => openSidebar()}
         ></SidebarIcon>
 
         <SearchInput placeholder="Search your notes"></SearchInput>
