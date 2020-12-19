@@ -14,19 +14,19 @@ const MainSidebar = () => {
       <SidebarItem>
         <SidebarItemLabelHeader>
           <span>Labels</span>
-          <Button>Edit</Button>
+          <Button variant="outline">Edit</Button>
         </SidebarItemLabelHeader>
       </SidebarItem>
 
-      <SidebarItem>
+      <SidebarItem clickable>
         <SidebarItemLabel name="Art"></SidebarItemLabel>
       </SidebarItem>
 
-      <SidebarItem>
+      <SidebarItem clickable>
         <SidebarItemLabel name="Science"></SidebarItemLabel>
       </SidebarItem>
 
-      <SidebarItem>
+      <SidebarItem clickable>
         <SidebarItemLabel name="Philosophy"></SidebarItemLabel>
       </SidebarItem>
     </Sidebar>

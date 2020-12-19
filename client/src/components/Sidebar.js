@@ -13,7 +13,7 @@ export default styled(Sidebar)`
   width: 300px;
   height: 100%;
   left: 0px;
-  background-color: rgb(100, 100, 255);
+  background-color: ${(props) => props.theme.backgroundColor};
 
   transition: left 0.3s;
 `;

@@ -24,7 +24,7 @@ const MainScreen = ({ className }) => {
         <Note />
       </MainNotesGrid>
 
-      <AddNoteButton>Add Note</AddNoteButton>
+      <AddNoteButton variant="fill">Add Note</AddNoteButton>
     </div>
   );
 };
@@ -52,7 +52,6 @@ const AddNoteButton = styled(Button)`
 
   width: 60px;
   height: 60px;
-  background-color: grey;
 `;
 
 const MainHeaderBar = styled(HeaderBar)`
