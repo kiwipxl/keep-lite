@@ -20,6 +20,7 @@ export default styled(Sidebar)`
   position: absolute;
   width: 300px;
   height: 100%;
+  top: 0px;
   left: ${(props) => (props.hidden ? -350 : 0)}px;
   background-color: ${(props) =>
     props.theme.elevate01dp(props.theme.surfaceColor)};

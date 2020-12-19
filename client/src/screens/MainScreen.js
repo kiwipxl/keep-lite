@@ -32,7 +32,7 @@ const MainScreen = ({ className }) => {
         <SidebarIcon
           Component={MdMenu}
           variant="button"
-          size={35}
+          size={28}
           onClick={() => openSidebar()}
         ></SidebarIcon>
 
@@ -41,7 +41,7 @@ const MainScreen = ({ className }) => {
         <AccountIcon
           Component={MdAccountCircle}
           variant="button"
-          size={35}
+          size={30}
         ></AccountIcon>
       </MainHeaderBar>
 
@@ -58,6 +58,8 @@ const MainScreen = ({ className }) => {
 
 const SidebarIcon = styled(Icon)`
   margin: 5px;
+  margin-left: 10px;
+  margin-right: 10px;
 `;
 
 const AccountIcon = styled(Icon)`
@@ -66,7 +68,7 @@ const AccountIcon = styled(Icon)`
 
 const SearchInput = styled(Input)`
   height: 100%;
-  font-size: 20px;
+  font-size: 14px;
   flex: 1;
 `;
 

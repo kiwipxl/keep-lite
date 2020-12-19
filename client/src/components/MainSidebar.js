@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import chroma from "chroma-js";
 import Sidebar from "./Sidebar";
 import SidebarItem from "./SidebarItem";
 import SidebarItemLabel from "./SidebarItemLabel";
@@ -14,7 +15,7 @@ const MainSidebar = ({ className, hidden, onOpen, onClose }) => {
       onClose={onClose}
     >
       <SidebarItem>
-        <Logo>Keep Lite</Logo>
+        <Logo onClick={onClose}>Keep Lite</Logo>
       </SidebarItem>
 
       <SidebarItemLabelHeader>
@@ -41,6 +42,13 @@ const Logo = styled.div`
   font-weight: bold;
   font-size: 2em;
   margin: 10px;
+  opacity: ${(props) => props.theme.highEmphasisOpacity};
+  transition: opacity 0.2s;
+
+  &:hover {
+    opacity: 1;
+    cursor: pointer;
+  }
 `;
 
 const SidebarItemLabelHeader = styled(SidebarItem)`
