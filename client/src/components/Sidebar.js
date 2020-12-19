@@ -6,7 +6,7 @@ const Sidebar = ({ className, children, hidden, onOpen, onClose }) => {
   return (
     <div>
       <DarkOverlay zIndex={5} hidden={hidden} onClick={onClose}></DarkOverlay>
-      <div className={className}>{children}</div>;
+      <div className={className}>{children}</div>
     </div>
   );
 };
@@ -21,7 +21,8 @@ export default styled(Sidebar)`
   width: 300px;
   height: 100%;
   left: ${(props) => (props.hidden ? -350 : 0)}px;
-  background-color: ${(props) => props.theme.backgroundColor};
+  background-color: ${(props) =>
+    props.theme.elevate01dp(props.theme.surfaceColor)};
 
   transition: left 0.3s;
 `;

@@ -32,12 +32,17 @@ const MainScreen = ({ className }) => {
         <SidebarIcon
           Component={MdMenu}
           variant="button"
+          size={35}
           onClick={() => openSidebar()}
         ></SidebarIcon>
 
         <SearchInput placeholder="Search your notes"></SearchInput>
 
-        <AccountIcon Component={MdAccountCircle} variant="button"></AccountIcon>
+        <AccountIcon
+          Component={MdAccountCircle}
+          variant="button"
+          size={35}
+        ></AccountIcon>
       </MainHeaderBar>
 
       <MainNotesGrid>
@@ -52,13 +57,11 @@ const MainScreen = ({ className }) => {
 };
 
 const SidebarIcon = styled(Icon)`
-  width: 40px;
-  height: 40px;
+  margin: 5px;
 `;
 
 const AccountIcon = styled(Icon)`
-  width: 40px;
-  height: 40px;
+  margin: 5px;
 `;
 
 const SearchInput = styled(Input)`

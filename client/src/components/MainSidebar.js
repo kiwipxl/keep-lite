@@ -17,12 +17,10 @@ const MainSidebar = ({ className, hidden, onOpen, onClose }) => {
         <Logo>Keep Lite</Logo>
       </SidebarItem>
 
-      <SidebarItem>
-        <SidebarItemLabelHeader>
-          <span>Labels</span>
-          <Button variant="outline">Edit</Button>
-        </SidebarItemLabelHeader>
-      </SidebarItem>
+      <SidebarItemLabelHeader>
+        <Header>Labels</Header>
+        <Button variant="outline">Edit</Button>
+      </SidebarItemLabelHeader>
 
       <SidebarItem clickable>
         <SidebarItemLabel name="Art"></SidebarItemLabel>
@@ -51,7 +49,10 @@ const SidebarItemLabelHeader = styled(SidebarItem)`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-weight: bold;
+`;
+
+const Header = styled.span`
+  opacity: ${(props) => props.theme.mediumEmphasisOpacity};
 `;
 
 export default MainSidebar;

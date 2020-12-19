@@ -7,6 +7,7 @@ const SidebarItem = ({ className, children }) => {
 
 export default styled(SidebarItem)`
   width: 100%;
+  transition: background-color 0.1s;
 
   &:hover {
     background-color: ${(props) =>

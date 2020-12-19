@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const Icon = ({ className, Component, variant, onClick }) => {
+const Icon = ({ className, Component, variant, size, onClick }) => {
   if (!Component) {
     throw new Error("Must define Component property for icon");
   }
@@ -18,22 +18,29 @@ const Icon = ({ className, Component, variant, onClick }) => {
 
   return (
     <StyledIcon className={className} onClick={onClick}>
-      <Component className={className}></Component>
+      <ComponentWrapper>
+        <Component size={size}></Component>
+      </ComponentWrapper>
     </StyledIcon>
   );
 };
 
 const BaseIcon = styled.div`
-  color: white;
+  color: ${(props) => props.theme.iconColor};
 `;
 
 const IconButton = styled(BaseIcon)`
   transition: color 0.2s;
 
   &:hover {
-    color: blue;
+    color: ${(props) => props.theme.iconColorHighlighted};
     cursor: pointer;
   }
+`;
+
+const ComponentWrapper = styled.div`
+  display: flex;
+  justify-content: center;
 `;
 
 export default Icon;

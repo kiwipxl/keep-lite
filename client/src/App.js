@@ -9,8 +9,8 @@ const AppContent = styled.div`
   left: calc(50% - 200px);
   width: 400px;
   height: 600px;
-  background-color: rgb(200, 200, 200);
-  color: ${(props) => props.theme.primaryColor};
+  background-color: ${(props) => props.theme.backgroundColor};
+  color: ${(props) => props.theme.onBackgroundColor};
 `;
 
 function App() {

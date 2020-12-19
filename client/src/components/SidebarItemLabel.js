@@ -1,11 +1,11 @@
 import styled from "styled-components";
-import { MdMenu } from "react-icons/md";
+import { MdLabelOutline } from "react-icons/md";
 import Icon from "./Icon";
 
 const SidebarItemLabel = ({ className, name }) => {
   return (
     <div className={className}>
-      <LabelIcon Component={MdMenu}></LabelIcon>
+      <Icon Component={MdLabelOutline} size={30}></Icon>
       <Label>{name}</Label>
     </div>
   );
@@ -13,11 +13,7 @@ const SidebarItemLabel = ({ className, name }) => {
 
 const Label = styled.span`
   margin-left: 10px;
-`;
-
-const LabelIcon = styled(Icon)`
-  width: 40px;
-  height: 40px;
+  opacity: ${(props) => props.theme.highEmphasisOpacity};
 `;
 
 export default styled(SidebarItemLabel)`
