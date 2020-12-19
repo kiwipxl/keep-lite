@@ -5,10 +5,13 @@ import HeaderBar from "../components/HeaderBar";
 import Icon from "../components/Icon";
 import Button from "../components/Button";
 import Input from "../components/Input";
+import MainSidebar from "../components/MainSidebar";
 
 const MainScreen = ({ className }) => {
   return (
     <div className={className}>
+      <MainSidebar></MainSidebar>
+
       <MainHeaderBar>
         <SidebarIcon type="sidebar"></SidebarIcon>
         <SearchInput placeholder="Search your notes"></SearchInput>
@@ -21,7 +24,7 @@ const MainScreen = ({ className }) => {
         <Note />
       </MainNotesGrid>
 
-      <AddNoteButton></AddNoteButton>
+      <AddNoteButton>Add Note</AddNoteButton>
     </div>
   );
 };
