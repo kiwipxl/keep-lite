@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { ThemeProvider } from "styled-components";
 import MainScreen from "./screens/MainScreen";
+import EditNoteScreen from "./screens/EditNoteScreen";
 import theme from "./theme";
 
 const AppContent = styled.div`
@@ -17,7 +18,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <AppContent>
-        <MainScreen></MainScreen>
+        <EditNoteScreen></EditNoteScreen>
       </AppContent>
     </ThemeProvider>
   );

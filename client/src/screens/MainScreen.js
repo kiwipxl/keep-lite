@@ -2,8 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { MdAccountCircle, MdMenu } from "react-icons/md";
 import NotesGrid from "../components/note/NotesGrid";
-import Note from "../components/note/Note";
-import HeaderBar from "../components/HeaderBar";
+import NoteCard from "../components/note/NoteCard";
+import Header from "../components/Header";
 import Icon from "../components/Icon";
 import Button from "../components/input/Button";
 import Input from "../components/input/Input";
@@ -28,7 +28,7 @@ const MainScreen = ({ className }) => {
         onClose={() => closeSidebar()}
       ></MainSidebar>
 
-      <MainHeaderBar>
+      <Header variant="elevated">
         <SidebarIcon
           Component={MdMenu}
           variant="button"
@@ -43,12 +43,12 @@ const MainScreen = ({ className }) => {
           variant="button"
           size={30}
         ></AccountIcon>
-      </MainHeaderBar>
+      </Header>
 
       <MainNotesGrid>
-        <Note />
-        <Note />
-        <Note />
+        <NoteCard />
+        <NoteCard />
+        <NoteCard />
       </MainNotesGrid>
 
       <AddNoteButton variant="fill">Add Note</AddNoteButton>
@@ -79,10 +79,6 @@ const AddNoteButton = styled(Button)`
 
   width: 60px;
   height: 60px;
-`;
-
-const MainHeaderBar = styled(HeaderBar)`
-  height: 40px;
 `;
 
 const MainNotesGrid = styled(NotesGrid)``;
