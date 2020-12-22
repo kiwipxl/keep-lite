@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Button from "../../input/Button";
+import ToggleButton from "../../input/ToggleButton";
 import { RichUtils } from "draft-js";
 
 const RichTextEditor = ({ className, editorState, setEditorState }) => {
@@ -9,30 +9,51 @@ const RichTextEditor = ({ className, editorState, setEditorState }) => {
     // https://github.com/facebook/draft-js/blob/master/src/model/immutable/DefaultDraftInlineStyle.js
 
     setEditorState(RichUtils.toggleInlineStyle(editorState, inlineStyle));
-
-    console.log(inlineStyle);
   }
+
+  const inlineStyles = editorState.getCurrentInlineStyle();
 
   return (
     <div className={className}>
-      <Button variant="outline" onClick={() => toggleInlineStyle("BOLD")}>
+      <ToggleButton
+        variant="outline"
+        onClick={() => toggleInlineStyle("BOLD")}
+        toggled={inlineStyles.includes("BOLD")}
+      >
         Bold
-      </Button>
-      <Button variant="outline" onClick={() => toggleInlineStyle("UNDERLINE")}>
+      </ToggleButton>
+
+      <ToggleButton
+        variant="outline"
+        onClick={() => toggleInlineStyle("UNDERLINE")}
+        toggled={inlineStyles.includes("UNDERLINE")}
+      >
         Underline
-      </Button>
-      <Button
+      </ToggleButton>
+
+      <ToggleButton
         variant="outline"
         onClick={() => toggleInlineStyle("STRIKE-THROUGH")}
+        toggled={inlineStyles.includes("STRIKE-THROUGH")}
       >
         Strike-through
-      </Button>
-      <Button variant="outline" onClick={() => toggleInlineStyle("ITALIC")}>
+      </ToggleButton>
+
+      <ToggleButton
+        variant="outline"
+        onClick={() => toggleInlineStyle("ITALIC")}
+        toggled={inlineStyles.includes("ITALIC")}
+      >
         Italic
-      </Button>
-      <Button variant="outline" onClick={() => toggleInlineStyle("CODE")}>
+      </ToggleButton>
+
+      <ToggleButton
+        variant="outline"
+        onClick={() => toggleInlineStyle("CODE")}
+        toggled={inlineStyles.includes("CODE")}
+      >
         Code
-      </Button>
+      </ToggleButton>
     </div>
   );
 };
