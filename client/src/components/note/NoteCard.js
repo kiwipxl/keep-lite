@@ -1,9 +1,19 @@
 import styled from "styled-components";
+import { useHistory } from "react-router-dom";
 import NoteLabel from "./NoteLabel";
 
-const Note = ({ className }) => {
+const Note = ({ className, onClick }) => {
+  const routerHistory = useHistory();
+
+  let onClickOverride = onClick;
+  if (!onClick) {
+    onClickOverride = () => {
+      routerHistory.push("/note/1");
+    };
+  }
+
   return (
-    <div className={className}>
+    <div className={className} onClick={onClickOverride}>
       <Content>
         <Title>Actionable steps in TMI stages</Title>
 
@@ -67,4 +77,8 @@ export default styled(Note)`
   border-style: solid;
   border-width: 1px;
   border-radius: 7px;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;

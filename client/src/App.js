@@ -1,3 +1,4 @@
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 import styled from "styled-components";
 import { ThemeProvider } from "styled-components";
 import MainScreen from "./screens/MainScreen";
@@ -16,11 +17,21 @@ const AppContent = styled.div`
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <AppContent>
-        <EditNoteScreen></EditNoteScreen>
-      </AppContent>
-    </ThemeProvider>
+    <BrowserRouter>
+      <ThemeProvider theme={theme}>
+        <AppContent>
+          <Switch>
+            <Route path="/note/1">
+              <EditNoteScreen></EditNoteScreen>
+            </Route>
+
+            <Route path="/">
+              <MainScreen></MainScreen>
+            </Route>
+          </Switch>
+        </AppContent>
+      </ThemeProvider>
+    </BrowserRouter>
   );
 }
 

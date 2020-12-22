@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { MdMenu } from "react-icons/md";
+import { useHistory } from "react-router-dom";
+import { BiArrowBack } from "react-icons/bi";
 import { BsFileRichtext } from "react-icons/bs";
 import Header from "../components/Header";
 import Icon from "../components/Icon";
@@ -9,14 +10,25 @@ import NoteEditor from "../components/note/editor/NoteEditor";
 const EditNoteScreen = ({ className }) => {
   const [richTextEnabled, setRichTextEnabled] = React.useState(false);
 
+  const routerHistory = useHistory();
+
   function toggleRichText() {
     setRichTextEnabled(!richTextEnabled);
+  }
+
+  function onClickBack() {
+    routerHistory.goBack();
   }
 
   return (
     <div className={className}>
       <Header>
-        <BackIcon Component={MdMenu} variant="button" size={28}></BackIcon>
+        <BackIcon
+          Component={BiArrowBack}
+          variant="button"
+          size={28}
+          onClick={onClickBack}
+        ></BackIcon>
 
         <HeaderSpace></HeaderSpace>
 
