@@ -1,10 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import chroma from "chroma-js";
 import Sidebar from "./Sidebar";
 import SidebarItem from "./SidebarItem";
 import SidebarItemLabel from "./SidebarItemLabel";
-import Button from "./Button";
+import Button from "../input/Button";
 
 const MainSidebar = ({ className, hidden, onOpen, onClose }) => {
   return (

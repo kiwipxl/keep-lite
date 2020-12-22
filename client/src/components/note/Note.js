@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Label from "./Label";
+import NoteLabel from "./NoteLabel";
 
 const Note = ({ className }) => {
   return (
@@ -27,7 +27,7 @@ const Note = ({ className }) => {
         </Body>
 
         <LabelsGrid>
-          <Label name="Meditation/TMI"></Label>
+          <NoteLabel name="Meditation/TMI"></NoteLabel>
         </LabelsGrid>
       </Content>
     </div>

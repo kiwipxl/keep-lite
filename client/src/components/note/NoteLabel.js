@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const Label = ({ className, name }) => {
+const NoteLabel = ({ className, name }) => {
   return (
     <div className={className}>
       <Text>{name}</Text>
@@ -18,7 +18,7 @@ const Text = styled.span`
   justify-content: center;
 `;
 
-export default styled(Label)`
+export default styled(NoteLabel)`
   color: ${(props) => props.theme.onSurfaceColor};
   background-color: ${(props) => props.theme.surfaceColor};
   border-color: ${(props) => props.theme.borderColor00dp};

@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import DarkOverlay from "../components/DarkOverlay";
+import Backdrop from "../Backdrop";
 
 const Sidebar = ({ className, children, hidden, onOpen, onClose }) => {
   return (
     <div>
-      <DarkOverlay zIndex={5} hidden={hidden} onClick={onClose}></DarkOverlay>
+      <Backdrop zIndex={5} hidden={hidden} onClick={onClose}></Backdrop>
       <div className={className}>{children}</div>
     </div>
   );

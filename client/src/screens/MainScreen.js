@@ -1,13 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 import { MdAccountCircle, MdMenu } from "react-icons/md";
-import NotesGrid from "../components/NotesGrid";
-import Note from "../components/Note";
+import NotesGrid from "../components/note/NotesGrid";
+import Note from "../components/note/Note";
 import HeaderBar from "../components/HeaderBar";
 import Icon from "../components/Icon";
-import Button from "../components/Button";
-import Input from "../components/Input";
-import MainSidebar from "../components/MainSidebar";
+import Button from "../components/input/Button";
+import Input from "../components/input/Input";
+import MainSidebar from "../components/nav/MainSidebar";
 
 const MainScreen = ({ className }) => {
   const [sidebarOpen, setSidebarOpen] = React.useState(false);

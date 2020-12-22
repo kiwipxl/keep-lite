@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { MdLabelOutline } from "react-icons/md";
-import Icon from "./Icon";
+import Icon from "../Icon";
 
 const SidebarItemLabel = ({ className, name }) => {
   return (
