@@ -2,21 +2,36 @@ import React from "react";
 import styled from "styled-components";
 import NoteTitleEditor from "./NoteTitleEditor";
 import NoteBodyEditor from "./NoteBodyEditor";
-import NoteLabel from "./NoteLabel";
+import NoteLabel from "../NoteLabel";
+import RichTextEditor from "./RichTextEditor";
+import { EditorState, ContentState } from "draft-js";
 
 const NoteEditor = ({ className, title, body }) => {
-  const titleEditor = React.useRef(null);
+  const [titleEditorState, setTitleEditorState] = React.useState(() =>
+    EditorState.createWithContent(ContentState.createFromText(title || ""))
+  );
 
-  const bodyEditor = React.useRef(null);
-
-  // React.useEffect(() => bodyEditor.current.focus(), []);
+  const [bodyEditorState, setBodyEditorState] = React.useState(() =>
+    EditorState.createWithContent(ContentState.createFromText(body || ""))
+  );
 
   return (
     <div className={className}>
       <Content>
-        <StyledTitleEditor ref={titleEditor} text={title}></StyledTitleEditor>
+        <StyledRichTextEditor
+          editorState={bodyEditorState}
+          setEditorState={setBodyEditorState}
+        ></StyledRichTextEditor>
 
-        <StyledBodyEditor ref={bodyEditor} text={body}></StyledBodyEditor>
+        <StyledTitleEditor
+          editorState={titleEditorState}
+          setEditorState={setTitleEditorState}
+        ></StyledTitleEditor>
+
+        <StyledBodyEditor
+          editorState={bodyEditorState}
+          setEditorState={setBodyEditorState}
+        ></StyledBodyEditor>
 
         <LabelsGrid>
           <NoteLabel name="Meditation/TMI"></NoteLabel>
@@ -29,6 +44,10 @@ const NoteEditor = ({ className, title, body }) => {
 const Content = styled.div`
   padding: 20px;
   padding-top: 10px;
+`;
+
+const StyledRichTextEditor = styled(RichTextEditor)`
+  margin-bottom: 15px;
 `;
 
 const StyledTitleEditor = styled(NoteTitleEditor)`

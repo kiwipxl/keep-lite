@@ -1,15 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import { EditorState, ContentState } from "draft-js";
 import "draft-js/dist/Draft.css";
 import Editor from "draft-js-plugins-editor";
 
-const NoteTitleEditor = ({ className, text }) => {
+const NoteTitleEditor = ({ className, editorState, setEditorState }) => {
   const editor = React.useRef(null);
-
-  const [editorState, setEditorState] = React.useState(() =>
-    EditorState.createWithContent(ContentState.createFromText(text || ""))
-  );
 
   return (
     <Editor

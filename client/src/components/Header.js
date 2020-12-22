@@ -28,5 +28,7 @@ const ElevatedHeader = styled.div`
 export default styled(Header)`
   width: 100%;
   height: 40px;
+  position: relative;
   background-color: ${(props) => props.theme.backgroundColor};
+  z-index: 5;
 `;
