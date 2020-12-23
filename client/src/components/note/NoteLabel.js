@@ -5,8 +5,6 @@ import App from "../../App";
 const NoteLabel = ({ className, id }) => {
   const labels = React.useContext(App.LabelsContext);
 
-  console.log(labels);
-
   return (
     <div className={className}>
       <Text>{id in labels ? labels[id].name : "null"}</Text>

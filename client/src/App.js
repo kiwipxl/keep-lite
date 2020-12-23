@@ -17,10 +17,10 @@ const AppContent = styled.div`
   color: ${(props) => props.theme.onBackgroundColor};
 `;
 
-const LabelsContext = React.createContext(sample_labels);
+const LabelsContext = React.createContext([]);
 
 function App() {
-  const [labels, setLabels] = React.useState([]);
+  const [labels, setLabels] = React.useState(sample_labels);
   const [mainNotes, setMainNotes] = React.useState([]);
 
   return (

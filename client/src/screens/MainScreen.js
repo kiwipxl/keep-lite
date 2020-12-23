@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { MdAccountCircle, MdMenu } from "react-icons/md";
-import NotesGrid from "../components/note/NotesGrid";
+import NoteCardGrid from "../components/note/NoteCardGrid";
 import NoteCard from "../components/note/NoteCard";
 import Header from "../components/Header";
 import Icon from "../components/Icon";
@@ -50,17 +50,7 @@ const MainScreen = ({ className, notes, setNotes }) => {
         ></AccountIcon>
       </Header>
 
-      <MainNotesGrid>
-        {notes.map((note) => (
-          <NoteCard
-            key={note.id}
-            id={note.id}
-            title={note.title}
-            body={note.body}
-            labels={note.labels}
-          ></NoteCard>
-        ))}
-      </MainNotesGrid>
+      <StyledNoteCardGrid width={380} notes={notes}></StyledNoteCardGrid>
 
       <AddNoteButton variant="fill">Add Note</AddNoteButton>
     </div>
@@ -92,6 +82,8 @@ const AddNoteButton = styled(Button)`
   height: 60px;
 `;
 
-const MainNotesGrid = styled(NotesGrid)``;
+const StyledNoteCardGrid = styled(NoteCardGrid)`
+  padding: 10px;
+`;
 
 export default styled(MainScreen)``;
