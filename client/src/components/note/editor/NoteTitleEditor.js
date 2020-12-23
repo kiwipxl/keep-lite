@@ -17,7 +17,4 @@ const NoteTitleEditor = ({ className, editorState, setEditorState }) => {
   );
 };
 
-export default styled(NoteTitleEditor)`
-  font-size: 21px;
-  opacity: ${(props) => props.theme.highEmphasisOpacity};
-`;
+export default styled(NoteTitleEditor)``;

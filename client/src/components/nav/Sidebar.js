@@ -5,7 +5,7 @@ import Backdrop from "../Backdrop";
 const Sidebar = ({ className, children, hidden, onOpen, onClose }) => {
   return (
     <div>
-      <Backdrop zIndex={5} hidden={hidden} onClick={onClose}></Backdrop>
+      <Backdrop zIndex={10} hidden={hidden} onClick={onClose}></Backdrop>
       <div className={className}>{children}</div>
     </div>
   );
@@ -15,7 +15,7 @@ export default styled(Sidebar)`
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
-  z-index: 10;
+  z-index: 20;
 
   position: absolute;
   width: 300px;

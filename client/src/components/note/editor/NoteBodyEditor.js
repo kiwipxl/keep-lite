@@ -16,13 +16,10 @@ const NoteBodyEditor = ({ className, text, editorState, setEditorState }) => {
       ref={editor}
       editorState={editorState}
       onChange={setEditorState}
-      placeholder="Write something!"
+      placeholder="Note"
       plugins={[linkifyPlugin]}
     ></Editor>
   );
 };
 
-export default styled(NoteBodyEditor)`
-  font-size: 14px;
-  opacity: ${(props) => props.theme.highEmphasisOpacity};
-`;
+export default styled(NoteBodyEditor)``;
