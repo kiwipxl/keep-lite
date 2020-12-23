@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
-import NoteLabel from "./NoteLabel";
 import clampjs from "clamp-js";
+import NoteLabelRows from "./NoteLabelRows";
 
 const Note = ({ className, id, title, body, labels, onClick }) => {
   const titleRef = React.useRef(null);
@@ -29,12 +29,7 @@ const Note = ({ className, id, title, body, labels, onClick }) => {
 
         <Body ref={bodyRef}>{body}</Body>
 
-        <LabelsGrid>
-          {labels &&
-            labels.map((labelId) => (
-              <NoteLabel key={labelId} id={labelId}></NoteLabel>
-            ))}
-        </LabelsGrid>
+        <StyledNoteLabelRows labels={labels}></StyledNoteLabelRows>
       </Content>
     </div>
   );
@@ -59,10 +54,9 @@ const Body = styled.p`
   overflow: hidden;
 `;
 
-const LabelsGrid = styled.div`
+const StyledNoteLabelRows = styled(NoteLabelRows)`
   margin-top: 10px;
-  display: flex;
-  align-items: center;
+  margin-bottom: -10px;
 `;
 
 export default styled(Note)`

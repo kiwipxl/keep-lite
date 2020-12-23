@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
+import { EditorState, ContentState } from "draft-js";
 import NoteTitleEditor from "./NoteTitleEditor";
 import NoteBodyEditor from "./NoteBodyEditor";
-import NoteLabel from "../NoteLabel";
 import RichTextEditor from "./RichTextEditor";
-import { EditorState, ContentState } from "draft-js";
+import NoteLabelRows from "../NoteLabelRows";
 
 const NoteEditor = ({ className, title, body }) => {
   const [titleEditorState, setTitleEditorState] = React.useState(() =>
@@ -33,9 +33,7 @@ const NoteEditor = ({ className, title, body }) => {
           setEditorState={setBodyEditorState}
         ></StyledBodyEditor>
 
-        <LabelsGrid>
-          <NoteLabel name="Meditation/TMI"></NoteLabel>
-        </LabelsGrid>
+        <StyledNoteLabelRows labels={[]}></StyledNoteLabelRows>
       </Content>
     </div>
   );
@@ -62,10 +60,8 @@ const StyledBodyEditor = styled(NoteBodyEditor)`
   opacity: ${(props) => props.theme.highEmphasisOpacity};
 `;
 
-const LabelsGrid = styled.div`
+const StyledNoteLabelRows = styled(NoteLabelRows)`
   margin-top: 10px;
-  display: flex;
-  align-items: center;
 `;
 
 export default styled(NoteEditor)`
