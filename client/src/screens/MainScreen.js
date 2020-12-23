@@ -8,8 +8,9 @@ import Icon from "../components/Icon";
 import Button from "../components/input/Button";
 import Input from "../components/input/Input";
 import MainSidebar from "../components/nav/MainSidebar";
+import sample_notes from "../sample_notes.json";
 
-const MainScreen = ({ className }) => {
+const MainScreen = ({ className, notes, setNotes }) => {
   const [sidebarOpen, setSidebarOpen] = React.useState(false);
 
   function openSidebar() {
@@ -19,6 +20,10 @@ const MainScreen = ({ className }) => {
   function closeSidebar() {
     setSidebarOpen(false);
   }
+
+  React.useEffect(() => {
+    setNotes(sample_notes);
+  }, []);
 
   return (
     <div className={className}>
@@ -46,9 +51,15 @@ const MainScreen = ({ className }) => {
       </Header>
 
       <MainNotesGrid>
-        <NoteCard />
-        <NoteCard />
-        <NoteCard />
+        {notes.map((note) => (
+          <NoteCard
+            key={note.id}
+            id={note.id}
+            title={note.title}
+            body={note.body}
+            labels={note.labels}
+          ></NoteCard>
+        ))}
       </MainNotesGrid>
 
       <AddNoteButton variant="fill">Add Note</AddNoteButton>

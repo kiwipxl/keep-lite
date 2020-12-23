@@ -1,9 +1,15 @@
+import React from "react";
 import styled from "styled-components";
+import App from "../../App";
 
-const NoteLabel = ({ className, name }) => {
+const NoteLabel = ({ className, id }) => {
+  const labels = React.useContext(App.LabelsContext);
+
+  console.log(labels);
+
   return (
     <div className={className}>
-      <Text>{name}</Text>
+      <Text>{id in labels ? labels[id].name : "null"}</Text>
     </div>
   );
 };

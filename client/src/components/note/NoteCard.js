@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import NoteLabel from "./NoteLabel";
 
-const Note = ({ className, onClick }) => {
+const Note = ({ className, id, title, body, labels, onClick }) => {
   const routerHistory = useHistory();
 
   let onClickOverride = onClick;
@@ -15,29 +15,15 @@ const Note = ({ className, onClick }) => {
   return (
     <div className={className} onClick={onClickOverride}>
       <Content>
-        <Title>Actionable steps in TMI stages</Title>
+        <Title>{title}</Title>
 
-        <Body>
-          - Gratitude
-          <br />
-          - Compassion
-          <br />
-          - Self-love
-          <br />
-          - Mindfulness
-          <br />
-          - Non-judgement
-          <br />
-          - Expanded awareness
-          <br />
-          - Stable attention
-          <br />
-          - Forgiveness
-          <br />
-        </Body>
+        <Body>{body}</Body>
 
         <LabelsGrid>
-          <NoteLabel name="Meditation/TMI"></NoteLabel>
+          {labels &&
+            labels.map((labelId) => (
+              <NoteLabel key={labelId} id={labelId}></NoteLabel>
+            ))}
         </LabelsGrid>
       </Content>
     </div>

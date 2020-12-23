@@ -1,9 +1,11 @@
+import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import styled from "styled-components";
 import { ThemeProvider } from "styled-components";
 import MainScreen from "./screens/MainScreen";
 import EditNoteScreen from "./screens/EditNoteScreen";
 import theme from "./theme";
+import sample_labels from "./sample_labels.json";
 
 const AppContent = styled.div`
   overflow: hidden;
@@ -15,24 +17,36 @@ const AppContent = styled.div`
   color: ${(props) => props.theme.onBackgroundColor};
 `;
 
+const LabelsContext = React.createContext(sample_labels);
+
 function App() {
+  const [labels, setLabels] = React.useState([]);
+  const [mainNotes, setMainNotes] = React.useState([]);
+
   return (
     <BrowserRouter>
       <ThemeProvider theme={theme}>
-        <AppContent>
-          <Switch>
-            <Route path="/note/1">
-              <EditNoteScreen></EditNoteScreen>
-            </Route>
+        <LabelsContext.Provider value={labels}>
+          <AppContent>
+            <Switch>
+              <Route path="/note/1">
+                <EditNoteScreen></EditNoteScreen>
+              </Route>
 
-            <Route path="/">
-              <MainScreen></MainScreen>
-            </Route>
-          </Switch>
-        </AppContent>
+              <Route path="/">
+                <MainScreen
+                  notes={mainNotes}
+                  setNotes={setMainNotes}
+                ></MainScreen>
+              </Route>
+            </Switch>
+          </AppContent>
+        </LabelsContext.Provider>
       </ThemeProvider>
     </BrowserRouter>
   );
 }
+
+App.LabelsContext = LabelsContext;
 
 export default App;

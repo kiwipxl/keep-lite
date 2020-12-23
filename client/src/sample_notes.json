@@ -1,0 +1,24 @@
+[
+  {
+    "id": 1, 
+    "color": "DEFAULT",
+    "pinned": false,
+    "archived": false,
+    "pinned": false, 
+    "body": "- morning run and breakfast\n- hang up clothes\n- read sapiens\n- listen to music\n- few eps of adventure time",
+    "title": "Daily 3/2",
+    "editedTimestampUsec": 1580792781894000,
+    "labels": [1, 2]
+  }, 
+  {
+    "id": 2, 
+    "color": "DEFAULT",
+    "pinned": false,
+    "archived": false,
+    "pinned": false, 
+    "body": "When I watch an animated film or short, I'm in awe of the beautiful art, environments, composition, and how much time and effort every single frame has in it. For me, every frame is a painting. In the same way, at any point when listening to music, I can bring my attention to the content and appreciate it as it is.\n\nBut I just don't normally feel that same appreciation when I watch a film. After most movies, I guess I feel pretty unsatisfied. It's as if I walked through an art gallery almost blind folded. I know there's beauty there, I can't just see it.\n\nSo what do we do?\n\n1. Appreciate all the stuff.\nAt any moment I can appreciate what it takes to make a film. Sound, directing, writing, vision, hours and hours of work from a massive collaboration of people. then appreciate how all those individual components come together in harmony. Every single movie is a piece of art.\n\n2. Understand the good stuff.\nAnalyse what makes good cinematography, sound, writing, directing, editing. When you then notice the good stuff in a film, you can appreciate it.\n\n3. Every frame a painting.\nKeep this in mind. At any point when watching a film, we can check in and appreciate exactly what's being shown to us.",
+    "title": "How do I better appreciate film?",
+    "editedTimestampUsec": 1580792781894000,
+    "labels": [2, 3]
+  }
+]
