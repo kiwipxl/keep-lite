@@ -31,12 +31,12 @@ const NoteEditor = ({ className, title, body, labels, children }) => {
 
         <StyledTitleEditor
           editorState={titleEditorState}
-          setEditorState={setTitleEditorState}
+          onChange={setTitleEditorState}
         ></StyledTitleEditor>
 
         <StyledBodyEditor
           editorState={bodyEditorState}
-          setEditorState={setBodyEditorState}
+          onChange={setBodyEditorState}
         ></StyledBodyEditor>
 
         <StyledNoteLabelRows labels={labels}></StyledNoteLabelRows>

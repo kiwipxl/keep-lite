@@ -2,12 +2,14 @@ import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import styled from "styled-components";
 import { ThemeProvider } from "styled-components";
+import { Provider, connect } from "react-redux";
 import MainScreen from "./screens/MainScreen";
 import EditNoteScreen from "./screens/EditNoteScreen";
 import NotFoundScreen from "./screens/NotFoundScreen";
 import theme from "./theme";
 import sample_labels from "./sample_labels.json";
 import sample_notes from "./sample_notes.json";
+import store from "./redux/store";
 
 const AppContent = styled.div`
   overflow: hidden;
@@ -36,27 +38,29 @@ function App() {
 
   return (
     <BrowserRouter>
-      <ThemeProvider theme={theme}>
-        <App.NotesContext.Provider value={notes}>
-          <App.LabelsContext.Provider value={labels}>
-            <AppContent>
-              <Switch>
-                <Route exact path="/note/:nid">
-                  <EditNoteScreen></EditNoteScreen>
-                </Route>
+      <Provider store={store}>
+        <ThemeProvider theme={theme}>
+          <App.NotesContext.Provider value={notes}>
+            <App.LabelsContext.Provider value={labels}>
+              <AppContent>
+                <Switch>
+                  <Route exact path="/note/:nid">
+                    <EditNoteScreen></EditNoteScreen>
+                  </Route>
 
-                <Route exact path="/">
-                  <MainScreen addNotes={addNotes}></MainScreen>
-                </Route>
+                  <Route exact path="/">
+                    <MainScreen addNotes={addNotes}></MainScreen>
+                  </Route>
 
-                <Route>
-                  <NotFoundScreen></NotFoundScreen>
-                </Route>
-              </Switch>
-            </AppContent>
-          </App.LabelsContext.Provider>
-        </App.NotesContext.Provider>
-      </ThemeProvider>
+                  <Route>
+                    <NotFoundScreen></NotFoundScreen>
+                  </Route>
+                </Switch>
+              </AppContent>
+            </App.LabelsContext.Provider>
+          </App.NotesContext.Provider>
+        </ThemeProvider>
+      </Provider>
     </BrowserRouter>
   );
 }

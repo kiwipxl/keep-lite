@@ -3,16 +3,16 @@ import styled from "styled-components";
 import "draft-js/dist/Draft.css";
 import Editor from "draft-js-plugins-editor";
 
-const NoteTitleEditor = ({ className, editorState, setEditorState }) => {
+const NoteTitleEditor = (props) => {
+  const { className } = props;
   const editor = React.useRef(null);
 
   return (
     <Editor
       className={className}
       ref={editor}
-      editorState={editorState}
-      onChange={setEditorState}
       placeholder="Title"
+      {...props}
     ></Editor>
   );
 };

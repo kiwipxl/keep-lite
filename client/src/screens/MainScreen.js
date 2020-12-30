@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { MdAccountCircle, MdMenu } from "react-icons/md";
+import { connect } from "react-redux";
 import NoteCardGrid from "../components/note/NoteCardGrid";
 import Header from "../components/Header";
 import Icon from "../components/Icon";
@@ -8,9 +9,11 @@ import Button from "../components/input/Button";
 import Input from "../components/input/Input";
 import MainSidebar from "../components/nav/MainSidebar";
 import App from "../App";
+import { addNote } from "../redux/actions";
 
-const MainScreen = ({ className, addNotes }) => {
-  const notes = React.useContext(App.NotesContext);
+const MainScreen = ({ className, notes, addNote }) => {
+  console.log(notes);
+
   const [sidebarOpen, setSidebarOpen] = React.useState(false);
 
   function openSidebar() {
@@ -22,7 +25,7 @@ const MainScreen = ({ className, addNotes }) => {
   }
 
   function addEmptyNote() {
-    addNotes({ id: notes.length + 1 });
+    addNote("new title!", "new body ;)");
   }
 
   return (
@@ -50,7 +53,13 @@ const MainScreen = ({ className, addNotes }) => {
         ></AccountIcon>
       </Header>
 
-      <StyledNoteCardGrid width={380} notes={notes}></StyledNoteCardGrid>
+      <StyledNoteCardGrid
+        width={380}
+        notes={Object.keys(notes).map((nid) => ({
+          id: nid,
+          ...notes[nid],
+        }))}
+      ></StyledNoteCardGrid>
 
       <AddNoteButton variant="fill" onClick={addEmptyNote}>
         Add Note
@@ -88,4 +97,8 @@ const StyledNoteCardGrid = styled(NoteCardGrid)`
   padding: 10px;
 `;
 
-export default styled(MainScreen)``;
+const mapState = (state) => ({
+  notes: state.notes,
+});
+
+export default connect(mapState, { addNote })(styled(MainScreen)``);
