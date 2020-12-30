@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { connect } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { BiArrowBack } from "react-icons/bi";
 import { BsFileRichtext } from "react-icons/bs";
@@ -11,13 +12,12 @@ import NoteEditor from "../components/note/editor/NoteEditor";
 import RichTextEditor from "../components/note/editor/RichTextEditor";
 import App from "../App";
 
-const EditNoteScreen = ({ className }) => {
-  const notes = React.useContext(App.NotesContext);
+const EditNoteScreen = ({ className, notes }) => {
   const [richTextEnabled, setRichTextEnabled] = React.useState(false);
   const routerHistory = useHistory();
   const { nid } = useParams();
 
-  const note = notes.find((n) => n.id == nid);
+  const note = notes[nid];
 
   React.useEffect(() => {
     if (!note) {
@@ -153,9 +153,16 @@ const MenuIcon = styled(Icon)`
   margin-right: 10px;
 `;
 
-export default styled(EditNoteScreen)`
+const mapState = (state) => ({
+  notes: state.notes,
+});
+
+export default connect(
+  mapState,
+  null
+)(styled(EditNoteScreen)`
   display: flex;
   justify-content: center;
   flex-direction: column;
   height: 100%;
-`;
+`);

@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { MdAccountCircle, MdMenu } from "react-icons/md";
 import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
 import NoteCardGrid from "../components/note/NoteCardGrid";
 import Header from "../components/Header";
 import Icon from "../components/Icon";
@@ -12,9 +13,8 @@ import App from "../App";
 import { addNote } from "../redux/actions";
 
 const MainScreen = ({ className, notes, addNote }) => {
-  console.log(notes);
-
   const [sidebarOpen, setSidebarOpen] = React.useState(false);
+  const routerHistory = useHistory();
 
   function openSidebar() {
     setSidebarOpen(true);
@@ -25,7 +25,8 @@ const MainScreen = ({ className, notes, addNote }) => {
   }
 
   function addEmptyNote() {
-    addNote("new title!", "new body ;)");
+    const note = addNote(null, "new title!", "new body ;)").payload;
+    routerHistory.push(`/note/${note.id}`);
   }
 
   return (
