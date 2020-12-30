@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { BiArrowBack } from "react-icons/bi";
 import { BsFileRichtext } from "react-icons/bs";
 import { IoMdAddCircle } from "react-icons/io";
@@ -8,11 +8,27 @@ import { MdMoreVert } from "react-icons/md";
 import Header from "../components/Header";
 import Icon from "../components/Icon";
 import NoteEditor from "../components/note/editor/NoteEditor";
+import RichTextEditor from "../components/note/editor/RichTextEditor";
+import App from "../App";
 
 const EditNoteScreen = ({ className }) => {
+  const notes = React.useContext(App.NotesContext);
   const [richTextEnabled, setRichTextEnabled] = React.useState(false);
-
   const routerHistory = useHistory();
+  const { nid } = useParams();
+
+  const note = notes.find((n) => n.id == nid);
+
+  React.useEffect(() => {
+    if (!note) {
+      console.error(`note ${nid} not found`);
+      routerHistory.replace("/404");
+    }
+  }, []);
+
+  if (!note) {
+    return <div></div>;
+  }
 
   function toggleRichText() {
     setRichTextEnabled(!richTextEnabled);
@@ -44,9 +60,20 @@ const EditNoteScreen = ({ className }) => {
 
       <NoteEditorContainer>
         <StyledNoteEditor
-          title="Actionable steps in TMI stages"
+          title={note.title}
+          body={note.body}
+          labels={note.labels}
           richTextEnabled={richTextEnabled}
-        ></StyledNoteEditor>
+          RichTextEditor={StyledRichTextEditor}
+        >
+          {(title, body) => (
+            <StyledRichTextEditor
+              editorState={body.editorState}
+              setEditorState={body.setEditorState}
+              enabled={richTextEnabled}
+            ></StyledRichTextEditor>
+          )}
+        </StyledNoteEditor>
       </NoteEditorContainer>
 
       <Footer>
@@ -82,14 +109,22 @@ const RichTextIcon = styled(Icon)`
 
 const NoteEditorContainer = styled.div`
   flex: 1;
-  background-color: blue;
 `;
 
 const StyledNoteEditor = styled(NoteEditor)`
   position: relative;
-  top: ${(props) => (props.richTextEnabled ? 0 : -40)}px;
+  top: ${(props) => (props.richTextEnabled ? Header.height : 0)}px;
+  transition: top 0.4s, height 0.4s;
+  height: ${(props) =>
+    600 - (Header.height + 55) - (props.richTextEnabled ? Header.height : 0)}px;
+  overflow-y: auto;
+`;
+
+const StyledRichTextEditor = styled(RichTextEditor)`
+  position: fixed;
+  top: ${(props) => (props.enabled ? Header.height + 10 : 0)}px;
   transition: top 0.4s;
-  height: calc(100% + 40px);
+  width: 350px;
 `;
 
 const Footer = styled.div`

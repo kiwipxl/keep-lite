@@ -2,15 +2,15 @@ import React from "react";
 import styled from "styled-components";
 import { MdAccountCircle, MdMenu } from "react-icons/md";
 import NoteCardGrid from "../components/note/NoteCardGrid";
-import NoteCard from "../components/note/NoteCard";
 import Header from "../components/Header";
 import Icon from "../components/Icon";
 import Button from "../components/input/Button";
 import Input from "../components/input/Input";
 import MainSidebar from "../components/nav/MainSidebar";
-import sample_notes from "../sample_notes.json";
+import App from "../App";
 
-const MainScreen = ({ className, notes, setNotes }) => {
+const MainScreen = ({ className, addNotes }) => {
+  const notes = React.useContext(App.NotesContext);
   const [sidebarOpen, setSidebarOpen] = React.useState(false);
 
   function openSidebar() {
@@ -21,9 +21,9 @@ const MainScreen = ({ className, notes, setNotes }) => {
     setSidebarOpen(false);
   }
 
-  React.useEffect(() => {
-    setNotes(sample_notes);
-  }, []);
+  function addEmptyNote() {
+    addNotes({ id: notes.length + 1 });
+  }
 
   return (
     <div className={className}>
@@ -52,7 +52,9 @@ const MainScreen = ({ className, notes, setNotes }) => {
 
       <StyledNoteCardGrid width={380} notes={notes}></StyledNoteCardGrid>
 
-      <AddNoteButton variant="fill">Add Note</AddNoteButton>
+      <AddNoteButton variant="fill" onClick={addEmptyNote}>
+        Add Note
+      </AddNoteButton>
     </div>
   );
 };

@@ -7,23 +7,29 @@ import NoteLabelRows from "./NoteLabelRows";
 const Note = ({ className, id, title, body, labels, onClick }) => {
   const titleRef = React.useRef(null);
   const bodyRef = React.useRef(null);
-
   const routerHistory = useHistory();
+  const [clampedContent, setClampedContent] = React.useState(false);
 
   let onClickOverride = onClick;
   if (!onClick) {
     onClickOverride = () => {
-      routerHistory.push("/note/1");
+      routerHistory.push(`/note/${id}`);
     };
   }
 
   React.useEffect(() => {
     clampjs(titleRef.current, { clamp: 2 });
     clampjs(bodyRef.current, { clamp: 5 });
+
+    setClampedContent(true);
   }, []);
 
   return (
-    <div className={className} onClick={onClickOverride}>
+    <div
+      className={className}
+      onClick={onClickOverride}
+      hidden={!clampedContent}
+    >
       <Content>
         <Title ref={titleRef}>{title}</Title>
 
@@ -60,6 +66,7 @@ const StyledNoteLabelRows = styled(NoteLabelRows)`
 `;
 
 export default styled(Note)`
+  display: ${(props) => (props.hidden ? "none" : "block")};
   width: 100%;
   max-height: 200px;
   overflow: hidden;

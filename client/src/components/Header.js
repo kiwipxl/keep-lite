@@ -25,6 +25,8 @@ const ElevatedHeader = styled.div`
   align-items: center;
 `;
 
+Header.height = 40;
+
 export default styled(Header)`
   width: 100%;
   height: 40px;

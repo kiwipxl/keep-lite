@@ -3,10 +3,9 @@ import styled from "styled-components";
 import { EditorState, ContentState } from "draft-js";
 import NoteTitleEditor from "./NoteTitleEditor";
 import NoteBodyEditor from "./NoteBodyEditor";
-import RichTextEditor from "./RichTextEditor";
 import NoteLabelRows from "../NoteLabelRows";
 
-const NoteEditor = ({ className, title, body }) => {
+const NoteEditor = ({ className, title, body, labels, children }) => {
   const [titleEditorState, setTitleEditorState] = React.useState(() =>
     EditorState.createWithContent(ContentState.createFromText(title || ""))
   );
@@ -18,10 +17,17 @@ const NoteEditor = ({ className, title, body }) => {
   return (
     <div className={className}>
       <Content>
-        <StyledRichTextEditor
-          editorState={bodyEditorState}
-          setEditorState={setBodyEditorState}
-        ></StyledRichTextEditor>
+        {children &&
+          children(
+            {
+              editorState: titleEditorState,
+              setEditorState: setTitleEditorState,
+            },
+            {
+              editorState: bodyEditorState,
+              setEditorState: setBodyEditorState,
+            }
+          )}
 
         <StyledTitleEditor
           editorState={titleEditorState}
@@ -33,7 +39,7 @@ const NoteEditor = ({ className, title, body }) => {
           setEditorState={setBodyEditorState}
         ></StyledBodyEditor>
 
-        <StyledNoteLabelRows labels={[]}></StyledNoteLabelRows>
+        <StyledNoteLabelRows labels={labels}></StyledNoteLabelRows>
       </Content>
     </div>
   );
@@ -42,10 +48,6 @@ const NoteEditor = ({ className, title, body }) => {
 const Content = styled.div`
   padding: 20px;
   padding-top: 10px;
-`;
-
-const StyledRichTextEditor = styled(RichTextEditor)`
-  margin-bottom: 15px;
 `;
 
 const StyledTitleEditor = styled(NoteTitleEditor)`
@@ -65,8 +67,6 @@ const StyledNoteLabelRows = styled(NoteLabelRows)`
 `;
 
 export default styled(NoteEditor)`
-  width: 100%;
-  height: 100%;
   color: ${(props) => props.theme.onSurfaceColor};
   background-color: ${(props) => props.theme.backgroundColor};
 `;

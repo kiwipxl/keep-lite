@@ -4,8 +4,10 @@ import styled from "styled-components";
 import { ThemeProvider } from "styled-components";
 import MainScreen from "./screens/MainScreen";
 import EditNoteScreen from "./screens/EditNoteScreen";
+import NotFoundScreen from "./screens/NotFoundScreen";
 import theme from "./theme";
 import sample_labels from "./sample_labels.json";
+import sample_notes from "./sample_notes.json";
 
 const AppContent = styled.div`
   overflow: hidden;
@@ -17,36 +19,46 @@ const AppContent = styled.div`
   color: ${(props) => props.theme.onBackgroundColor};
 `;
 
-const LabelsContext = React.createContext([]);
+App.LabelsContext = React.createContext(sample_labels);
+App.NotesContext = React.createContext([]);
 
 function App() {
   const [labels, setLabels] = React.useState(sample_labels);
-  const [mainNotes, setMainNotes] = React.useState([]);
+  const [notes, setNotes] = React.useState([]);
+
+  function addNotes(newNotes) {
+    setNotes(notes.concat(newNotes));
+  }
+
+  React.useEffect(() => {
+    addNotes(sample_notes);
+  }, []);
 
   return (
     <BrowserRouter>
       <ThemeProvider theme={theme}>
-        <LabelsContext.Provider value={labels}>
-          <AppContent>
-            <Switch>
-              <Route path="/note/1">
-                <EditNoteScreen></EditNoteScreen>
-              </Route>
+        <App.NotesContext.Provider value={notes}>
+          <App.LabelsContext.Provider value={labels}>
+            <AppContent>
+              <Switch>
+                <Route exact path="/note/:nid">
+                  <EditNoteScreen></EditNoteScreen>
+                </Route>
 
-              <Route path="/">
-                <MainScreen
-                  notes={mainNotes}
-                  setNotes={setMainNotes}
-                ></MainScreen>
-              </Route>
-            </Switch>
-          </AppContent>
-        </LabelsContext.Provider>
+                <Route exact path="/">
+                  <MainScreen addNotes={addNotes}></MainScreen>
+                </Route>
+
+                <Route>
+                  <NotFoundScreen></NotFoundScreen>
+                </Route>
+              </Switch>
+            </AppContent>
+          </App.LabelsContext.Provider>
+        </App.NotesContext.Provider>
       </ThemeProvider>
     </BrowserRouter>
   );
 }
-
-App.LabelsContext = LabelsContext;
 
 export default App;
