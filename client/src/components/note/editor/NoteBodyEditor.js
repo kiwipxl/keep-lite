@@ -7,7 +7,7 @@ import "draft-js-linkify-plugin/lib/plugin.css";
 
 const linkifyPlugin = createLinkifyPlugin();
 
-const NoteBodyEditor = ({ className, text, editorState, setEditorState }) => {
+const NoteBodyEditor = ({ className, editorState, setEditorState }) => {
   const editor = React.useRef(null);
 
   return (

@@ -66,7 +66,6 @@ const StyledNoteLabelRows = styled(NoteLabelRows)`
 `;
 
 export default styled(Note)`
-  display: ${(props) => (props.hidden ? "none" : "block")};
   width: 100%;
   max-height: 200px;
   overflow: hidden;
