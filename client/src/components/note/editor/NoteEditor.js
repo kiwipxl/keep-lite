@@ -1,19 +1,25 @@
 import React from "react";
 import styled from "styled-components";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import { EditorState } from "draft-js";
 import NoteTitleEditor from "./NoteTitleEditor";
 import NoteBodyEditor from "./NoteBodyEditor";
 import NoteLabelRows from "../NoteLabelRows";
 
-const NoteEditor = ({ className, nid, note, children }) => {
+const NoteEditor = ({ className, nid, children }) => {
+  const note = useSelector((state) => state.notes[nid]);
+
+  const titleRef = React.createRef();
   const [titleEditorState, setTitleEditorState] = React.useState(() =>
     EditorState.createWithContent(note.title)
   );
 
+  const bodyRef = React.createRef();
   const [bodyEditorState, setBodyEditorState] = React.useState(() =>
     EditorState.createWithContent(note.body)
   );
+
+  console.log(bodyRef);
 
   return (
     <div className={className}>
@@ -27,19 +33,23 @@ const NoteEditor = ({ className, nid, note, children }) => {
             {
               editorState: bodyEditorState,
               setEditorState: setBodyEditorState,
-            }
+            },
+            titleRef,
+            bodyRef
           )}
 
         <StyledTitleEditor
           nid={nid}
           editorState={titleEditorState}
           onChange={setTitleEditorState}
+          ref={titleRef}
         ></StyledTitleEditor>
 
         <StyledBodyEditor
           nid={nid}
           editorState={bodyEditorState}
           onChange={setBodyEditorState}
+          ref={bodyRef}
         ></StyledBodyEditor>
 
         <StyledNoteLabelRows labels={note.labels}></StyledNoteLabelRows>
@@ -69,11 +79,7 @@ const StyledNoteLabelRows = styled(NoteLabelRows)`
   margin-top: 10px;
 `;
 
-const mapState = (state, ownProps) => ({
-  note: state.notes[ownProps.nid],
-});
-
-export default styled(connect(mapState, null)(NoteEditor))`
+export default styled(NoteEditor)`
   color: ${(props) => props.theme.onSurfaceColor};
   background-color: ${(props) => props.theme.backgroundColor};
 `;

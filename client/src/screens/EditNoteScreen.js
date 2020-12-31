@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { BiArrowBack } from "react-icons/bi";
 import { BsFileRichtext } from "react-icons/bs";
@@ -16,8 +16,7 @@ const EditNoteScreen = ({ className, notes }) => {
   const [richTextEnabled, setRichTextEnabled] = React.useState(false);
   const routerHistory = useHistory();
   const { nid } = useParams();
-
-  const note = notes[nid];
+  const note = useSelector((state) => state.notes[nid]);
 
   React.useEffect(() => {
     if (!note) {
@@ -64,11 +63,12 @@ const EditNoteScreen = ({ className, notes }) => {
           richTextEnabled={richTextEnabled}
           RichTextEditor={StyledRichTextEditor}
         >
-          {(title, body) => (
+          {(title, body, titleRef, bodyRef) => (
             <StyledRichTextEditor
               editorState={body.editorState}
               setEditorState={body.setEditorState}
               enabled={richTextEnabled}
+              onClick={() => bodyRef.current.focus()}
             ></StyledRichTextEditor>
           )}
         </StyledNoteEditor>
@@ -151,16 +151,9 @@ const MenuIcon = styled(Icon)`
   margin-right: 10px;
 `;
 
-const mapState = (state) => ({
-  notes: state.notes,
-});
-
-export default connect(
-  mapState,
-  null
-)(styled(EditNoteScreen)`
+export default styled(EditNoteScreen)`
   display: flex;
   justify-content: center;
   flex-direction: column;
   height: 100%;
-`);
+`;

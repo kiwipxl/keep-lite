@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { MdAccountCircle, MdMenu } from "react-icons/md";
-import { connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import NoteCardGrid from "../components/note/NoteCardGrid";
 import Header from "../components/Header";
@@ -9,12 +9,13 @@ import Icon from "../components/Icon";
 import Button from "../components/input/Button";
 import Input from "../components/input/Input";
 import MainSidebar from "../components/nav/MainSidebar";
-import App from "../App";
 import { addNote } from "../redux/actions";
 
-const MainScreen = ({ className, notes, addNote }) => {
+const MainScreen = ({ className }) => {
   const [sidebarOpen, setSidebarOpen] = React.useState(false);
   const routerHistory = useHistory();
+  const notes = useSelector((state) => state.notes);
+  const dispatch = useDispatch();
 
   function openSidebar() {
     setSidebarOpen(true);
@@ -25,7 +26,7 @@ const MainScreen = ({ className, notes, addNote }) => {
   }
 
   function addEmptyNote() {
-    const note = addNote().payload;
+    const note = dispatch(addNote()).payload;
     routerHistory.push(`/note/${note.id}`);
   }
 
@@ -98,8 +99,4 @@ const StyledNoteCardGrid = styled(NoteCardGrid)`
   padding: 10px;
 `;
 
-const mapState = (state) => ({
-  notes: state.notes,
-});
-
-export default styled(connect(mapState, { addNote })(MainScreen))``;
+export default styled(MainScreen)``;

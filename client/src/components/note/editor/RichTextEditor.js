@@ -3,12 +3,19 @@ import styled from "styled-components";
 import ToggleButton from "../../input/ToggleButton";
 import { RichUtils } from "draft-js";
 
-const RichTextEditor = ({ className, editorState, setEditorState }) => {
+const RichTextEditor = ({
+  className,
+  editorState,
+  setEditorState,
+  onClick,
+}) => {
   function toggleInlineStyle(inlineStyle) {
     // Styles can be found at
     // https://github.com/facebook/draft-js/blob/master/src/model/immutable/DefaultDraftInlineStyle.js
 
     setEditorState(RichUtils.toggleInlineStyle(editorState, inlineStyle));
+
+    onClick();
   }
 
   const inlineStyles = editorState.getCurrentInlineStyle();
