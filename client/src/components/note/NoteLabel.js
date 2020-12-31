@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import App from "../../App";
 
 const NoteLabel = ({ className, id }) => {
-  const labels = React.useContext(App.LabelsContext);
+  // TODO
+  const labels = [];
 
   return (
     <div className={className}>

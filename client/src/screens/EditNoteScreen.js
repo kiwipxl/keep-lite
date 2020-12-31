@@ -63,12 +63,11 @@ const EditNoteScreen = ({ className, notes }) => {
           richTextEnabled={richTextEnabled}
           RichTextEditor={StyledRichTextEditor}
         >
-          {(title, body, titleRef, bodyRef) => (
+          {(title, body) => (
             <StyledRichTextEditor
               editorState={body.editorState}
               setEditorState={body.setEditorState}
               enabled={richTextEnabled}
-              onClick={() => bodyRef.current.focus()}
             ></StyledRichTextEditor>
           )}
         </StyledNoteEditor>

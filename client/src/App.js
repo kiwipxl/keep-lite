@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import styled from "styled-components";
 import { ThemeProvider } from "styled-components";
-import { Provider, connect } from "react-redux";
+import { Provider } from "react-redux";
 import MainScreen from "./screens/MainScreen";
 import EditNoteScreen from "./screens/EditNoteScreen";
 import NotFoundScreen from "./screens/NotFoundScreen";
@@ -21,44 +21,26 @@ const AppContent = styled.div`
   color: ${(props) => props.theme.onBackgroundColor};
 `;
 
-App.LabelsContext = React.createContext(sample_labels);
-App.NotesContext = React.createContext([]);
-
 function App() {
-  const [labels, setLabels] = React.useState(sample_labels);
-  const [notes, setNotes] = React.useState([]);
-
-  function addNotes(newNotes) {
-    setNotes(notes.concat(newNotes));
-  }
-
-  React.useEffect(() => {
-    addNotes(sample_notes);
-  }, []);
-
   return (
     <BrowserRouter>
       <Provider store={store}>
         <ThemeProvider theme={theme}>
-          <App.NotesContext.Provider value={notes}>
-            <App.LabelsContext.Provider value={labels}>
-              <AppContent>
-                <Switch>
-                  <Route exact path="/note/:nid">
-                    <EditNoteScreen></EditNoteScreen>
-                  </Route>
+          <AppContent>
+            <Switch>
+              <Route exact path="/note/:nid">
+                <EditNoteScreen></EditNoteScreen>
+              </Route>
 
-                  <Route exact path="/">
-                    <MainScreen addNotes={addNotes}></MainScreen>
-                  </Route>
+              <Route exact path="/">
+                <MainScreen></MainScreen>
+              </Route>
 
-                  <Route>
-                    <NotFoundScreen></NotFoundScreen>
-                  </Route>
-                </Switch>
-              </AppContent>
-            </App.LabelsContext.Provider>
-          </App.NotesContext.Provider>
+              <Route>
+                <NotFoundScreen></NotFoundScreen>
+              </Route>
+            </Switch>
+          </AppContent>
         </ThemeProvider>
       </Provider>
     </BrowserRouter>

@@ -5,8 +5,8 @@ import "draft-js/dist/Draft.css";
 import Editor from "draft-js-plugins-editor";
 import { setNoteTitle } from "../../../redux/actions";
 
-const NoteTitleEditor = React.forwardRef((props, ref) => {
-  const { className, nid } = props;
+const NoteTitleEditor = (props) => {
+  const { className, nid, forwardedRef } = props;
   const dispatch = useDispatch();
 
   function onChange(editorState) {
@@ -18,12 +18,12 @@ const NoteTitleEditor = React.forwardRef((props, ref) => {
   return (
     <Editor
       className={className}
+      ref={forwardedRef}
       placeholder="Title"
       {...props}
-      ref={ref}
       onChange={onChange}
     ></Editor>
   );
-});
+};
 
 export default styled(NoteTitleEditor)``;

@@ -3,19 +3,12 @@ import styled from "styled-components";
 import ToggleButton from "../../input/ToggleButton";
 import { RichUtils } from "draft-js";
 
-const RichTextEditor = ({
-  className,
-  editorState,
-  setEditorState,
-  onClick,
-}) => {
+const RichTextEditor = ({ className, editorState, setEditorState }) => {
   function toggleInlineStyle(inlineStyle) {
     // Styles can be found at
     // https://github.com/facebook/draft-js/blob/master/src/model/immutable/DefaultDraftInlineStyle.js
 
     setEditorState(RichUtils.toggleInlineStyle(editorState, inlineStyle));
-
-    onClick();
   }
 
   const inlineStyles = editorState.getCurrentInlineStyle();
@@ -24,6 +17,7 @@ const RichTextEditor = ({
     <div className={className}>
       <ToggleButton
         variant="outline"
+        preventMouseDown
         onClick={() => toggleInlineStyle("BOLD")}
         toggled={inlineStyles.includes("BOLD")}
       >
@@ -32,6 +26,7 @@ const RichTextEditor = ({
 
       <ToggleButton
         variant="outline"
+        preventMouseDown
         onClick={() => toggleInlineStyle("UNDERLINE")}
         toggled={inlineStyles.includes("UNDERLINE")}
       >
@@ -40,6 +35,7 @@ const RichTextEditor = ({
 
       <ToggleButton
         variant="outline"
+        preventMouseDown
         onClick={() => toggleInlineStyle("STRIKE-THROUGH")}
         toggled={inlineStyles.includes("STRIKE-THROUGH")}
       >
@@ -48,6 +44,7 @@ const RichTextEditor = ({
 
       <ToggleButton
         variant="outline"
+        preventMouseDown
         onClick={() => toggleInlineStyle("ITALIC")}
         toggled={inlineStyles.includes("ITALIC")}
       >
@@ -56,6 +53,7 @@ const RichTextEditor = ({
 
       <ToggleButton
         variant="outline"
+        preventMouseDown
         onClick={() => toggleInlineStyle("CODE")}
         toggled={inlineStyles.includes("CODE")}
       >

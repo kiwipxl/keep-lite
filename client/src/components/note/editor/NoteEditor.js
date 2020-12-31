@@ -19,7 +19,11 @@ const NoteEditor = ({ className, nid, children }) => {
     EditorState.createWithContent(note.body)
   );
 
-  console.log(bodyRef);
+  React.useEffect(() => {
+    if (bodyRef.current) {
+      bodyRef.current.focus();
+    }
+  }, []);
 
   return (
     <div className={className}>
@@ -33,23 +37,21 @@ const NoteEditor = ({ className, nid, children }) => {
             {
               editorState: bodyEditorState,
               setEditorState: setBodyEditorState,
-            },
-            titleRef,
-            bodyRef
+            }
           )}
 
         <StyledTitleEditor
           nid={nid}
           editorState={titleEditorState}
           onChange={setTitleEditorState}
-          ref={titleRef}
+          forwardedRef={titleRef}
         ></StyledTitleEditor>
 
         <StyledBodyEditor
           nid={nid}
           editorState={bodyEditorState}
           onChange={setBodyEditorState}
-          ref={bodyRef}
+          forwardedRef={bodyRef}
         ></StyledBodyEditor>
 
         <StyledNoteLabelRows labels={note.labels}></StyledNoteLabelRows>

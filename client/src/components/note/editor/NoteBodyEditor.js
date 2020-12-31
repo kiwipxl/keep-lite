@@ -9,8 +9,8 @@ import { setNoteBody } from "../../../redux/actions";
 
 const linkifyPlugin = createLinkifyPlugin();
 
-const NoteBodyEditor = React.forwardRef((props, ref) => {
-  const { className, nid } = props;
+const NoteBodyEditor = (props) => {
+  const { className, nid, forwardedRef } = props;
   const dispatch = useDispatch();
 
   function onChange(editorState) {
@@ -22,13 +22,13 @@ const NoteBodyEditor = React.forwardRef((props, ref) => {
   return (
     <Editor
       className={className}
+      ref={forwardedRef}
       placeholder="Note"
       plugins={[linkifyPlugin]}
       {...props}
-      ref={ref}
       onChange={onChange}
     ></Editor>
   );
-});
+};
 
 export default styled(NoteBodyEditor)``;
