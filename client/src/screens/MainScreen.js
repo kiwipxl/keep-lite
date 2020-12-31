@@ -25,7 +25,7 @@ const MainScreen = ({ className, notes, addNote }) => {
   }
 
   function addEmptyNote() {
-    const note = addNote(null, "new title!", "new body ;)").payload;
+    const note = addNote().payload;
     routerHistory.push(`/note/${note.id}`);
   }
 
@@ -102,4 +102,4 @@ const mapState = (state) => ({
   notes: state.notes,
 });
 
-export default connect(mapState, { addNote })(styled(MainScreen)``);
+export default styled(connect(mapState, { addNote })(MainScreen))``;

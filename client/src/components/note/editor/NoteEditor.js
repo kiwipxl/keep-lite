@@ -1,17 +1,18 @@
 import React from "react";
 import styled from "styled-components";
+import { connect } from "react-redux";
 import { EditorState, ContentState } from "draft-js";
 import NoteTitleEditor from "./NoteTitleEditor";
 import NoteBodyEditor from "./NoteBodyEditor";
 import NoteLabelRows from "../NoteLabelRows";
 
-const NoteEditor = ({ className, title, body, labels, children }) => {
+const NoteEditor = ({ className, nid, note, children }) => {
   const [titleEditorState, setTitleEditorState] = React.useState(() =>
-    EditorState.createWithContent(ContentState.createFromText(title || ""))
+    EditorState.createWithContent(ContentState.createFromText(note.title || ""))
   );
 
   const [bodyEditorState, setBodyEditorState] = React.useState(() =>
-    EditorState.createWithContent(ContentState.createFromText(body || ""))
+    EditorState.createWithContent(ContentState.createFromText(note.body || ""))
   );
 
   return (
@@ -30,16 +31,18 @@ const NoteEditor = ({ className, title, body, labels, children }) => {
           )}
 
         <StyledTitleEditor
+          nid={nid}
           editorState={titleEditorState}
           onChange={setTitleEditorState}
         ></StyledTitleEditor>
 
         <StyledBodyEditor
+          nid={nid}
           editorState={bodyEditorState}
           onChange={setBodyEditorState}
         ></StyledBodyEditor>
 
-        <StyledNoteLabelRows labels={labels}></StyledNoteLabelRows>
+        <StyledNoteLabelRows labels={note.labels}></StyledNoteLabelRows>
       </Content>
     </div>
   );
@@ -66,7 +69,11 @@ const StyledNoteLabelRows = styled(NoteLabelRows)`
   margin-top: 10px;
 `;
 
-export default styled(NoteEditor)`
+const mapState = (state, ownProps) => ({
+  note: state.notes[ownProps.nid],
+});
+
+export default styled(connect(mapState, null)(NoteEditor))`
   color: ${(props) => props.theme.onSurfaceColor};
   background-color: ${(props) => props.theme.backgroundColor};
 `;

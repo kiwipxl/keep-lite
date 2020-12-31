@@ -17,3 +17,11 @@ export const addNote = (id, title, body) => ({
     },
   },
 });
+
+export const setNoteTitle = (id, title) => ({
+  type: SET_NOTE_TITLE,
+  payload: {
+    id: id,
+    title: title,
+  },
+});

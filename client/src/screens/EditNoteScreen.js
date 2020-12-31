@@ -60,9 +60,7 @@ const EditNoteScreen = ({ className, notes }) => {
 
       <NoteEditorContainer>
         <StyledNoteEditor
-          title={note.title}
-          body={note.body}
-          labels={note.labels}
+          nid={nid}
           richTextEnabled={richTextEnabled}
           RichTextEditor={StyledRichTextEditor}
         >
