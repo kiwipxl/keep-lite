@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
-import { convertToRaw } from "draft-js";
 import "draft-js/dist/Draft.css";
 import Editor from "draft-js-plugins-editor";
 import { setNoteTitle } from "../../../redux/actions";
@@ -13,7 +12,7 @@ const NoteTitleEditor = (props) => {
   function onChange(editorState) {
     props.onChange(editorState);
 
-    setNoteTitle(nid, convertToRaw(editorState.getCurrentContent()));
+    setNoteTitle(nid, editorState.getCurrentContent());
   }
 
   return (

@@ -1,8 +1,36 @@
 import React from "react";
 import styled from "styled-components";
+import { convertToHTML } from "draft-convert";
 import { useHistory } from "react-router-dom";
 import clampjs from "clamp-js";
 import NoteLabelRows from "./NoteLabelRows";
+
+function draftToHTML(contentState) {
+  return convertToHTML({
+    styleToHTML: (style) => {
+      // if (style === 'BOLD') {
+      //   return <span style={{color: 'blue'}} />;
+      // }
+    },
+    blockToHTML: (block) => {
+      return (
+        <span
+          style={{
+            display: "block",
+            height: "calc(1em + 5px)",
+          }}
+        />
+      );
+    },
+    entityToHTML: (entity, originalText) => {
+      // TODO: add LINK support (need to add linkify plugin)
+      // if (entity.type === "LINK") {
+      //   return <span style={{ color: "blue" }}>{originalText}</span>;
+      // }
+      return originalText;
+    },
+  })(contentState);
+}
 
 const Note = ({ className, id, title, body, labels, onClick }) => {
   const titleRef = React.useRef(null);
@@ -31,9 +59,15 @@ const Note = ({ className, id, title, body, labels, onClick }) => {
       hidden={!clampedContent}
     >
       <Content>
-        <Title ref={titleRef}>{title}</Title>
+        <Title
+          ref={titleRef}
+          dangerouslySetInnerHTML={{ __html: draftToHTML(title) }}
+        ></Title>
 
-        <Body ref={bodyRef}>{body}</Body>
+        <Body
+          ref={bodyRef}
+          dangerouslySetInnerHTML={{ __html: draftToHTML(body) }}
+        ></Body>
 
         <StyledNoteLabelRows labels={labels}></StyledNoteLabelRows>
       </Content>
@@ -45,7 +79,7 @@ const Content = styled.div`
   margin: 15px;
 `;
 
-const Title = styled.p`
+const Title = styled.div`
   margin: 0px;
   margin-top: -5px;
   margin-bottom: 5px;
@@ -53,7 +87,7 @@ const Title = styled.p`
   opacity: ${(props) => props.theme.highEmphasisOpacity};
 `;
 
-const Body = styled.p`
+const Body = styled.div`
   margin: 0px;
   font-size: 12px;
   opacity: ${(props) => props.theme.highEmphasisOpacity};
