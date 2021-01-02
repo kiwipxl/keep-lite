@@ -12,11 +12,6 @@ const Sidebar = ({ className, children, hidden, onOpen, onClose }) => {
 };
 
 export default styled(Sidebar)`
-  display: flex;
-  justify-content: flex-start;
-  flex-direction: column;
-  z-index: 20;
-
   position: absolute;
   width: 300px;
   height: 100%;
@@ -24,6 +19,6 @@ export default styled(Sidebar)`
   left: ${(props) => (props.hidden ? -350 : 0)}px;
   background-color: ${(props) =>
     props.theme.elevate01dp(props.theme.surfaceColor)};
-
   transition: left 0.3s;
+  z-index: 20;
 `;

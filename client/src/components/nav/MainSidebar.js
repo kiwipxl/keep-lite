@@ -1,11 +1,16 @@
 import React from "react";
 import styled from "styled-components";
+import { MdLabelOutline } from "react-icons/md";
+import { useSelector } from "react-redux";
 import Sidebar from "./Sidebar";
-import SidebarItem from "./SidebarItem";
-import SidebarItemLabel from "./SidebarItemLabel";
+import List from "./List";
+import ListRow from "./ListRow";
 import Button from "../input/Button";
+import Icon from "../Icon";
 
 const MainSidebar = ({ className, hidden, onOpen, onClose }) => {
+  const labels = useSelector((state) => state.labels);
+
   return (
     <Sidebar
       className={className}
@@ -13,26 +18,25 @@ const MainSidebar = ({ className, hidden, onOpen, onClose }) => {
       onOpen={onOpen}
       onClose={onClose}
     >
-      <SidebarItem>
-        <Logo onClick={onClose}>Keep Lite</Logo>
-      </SidebarItem>
+      <List>
+        <ListRow>
+          <Logo onClick={onClose}>Keep Lite</Logo>
+        </ListRow>
 
-      <SidebarItemLabelHeader>
-        <Header>Labels</Header>
-        <Button variant="outline">Edit</Button>
-      </SidebarItemLabelHeader>
+        <LabelHeaderRow>
+          <Header>Labels</Header>
+          <Button variant="outline">Edit</Button>
+        </LabelHeaderRow>
 
-      <SidebarItem clickable>
-        <SidebarItemLabel name="Art"></SidebarItemLabel>
-      </SidebarItem>
-
-      <SidebarItem clickable>
-        <SidebarItemLabel name="Science"></SidebarItemLabel>
-      </SidebarItem>
-
-      <SidebarItem clickable>
-        <SidebarItemLabel name="Philosophy"></SidebarItemLabel>
-      </SidebarItem>
+        {Object.keys(labels).map((lid) => (
+          <ListRow clickable>
+            <LabelRowContent>
+              <Icon Component={MdLabelOutline} size={30}></Icon>
+              <Label>{labels[lid].name}</Label>
+            </LabelRowContent>
+          </ListRow>
+        ))}
+      </List>
     </Sidebar>
   );
 };
@@ -50,12 +54,29 @@ const Logo = styled.div`
   }
 `;
 
-const SidebarItemLabelHeader = styled(SidebarItem)`
+const LabelHeaderRow = styled(ListRow)`
   margin: 10px;
   width: calc(100% - 20px);
   display: flex;
   align-items: center;
   justify-content: space-between;
+`;
+
+const LabelRowContent = styled.div`
+  width: calc(100% - 20px);
+
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+
+  display: flex;
+  align-items: center;
+`;
+
+const Label = styled.span`
+  margin-left: 10px;
+  opacity: ${(props) => props.theme.highEmphasisOpacity};
 `;
 
 const Header = styled.span`

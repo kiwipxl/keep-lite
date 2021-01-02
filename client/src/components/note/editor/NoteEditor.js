@@ -67,8 +67,7 @@ const Content = styled.div`
 
 const StyledTitleEditor = styled(NoteTitleEditor)`
   font-size: 21px;
-  margin-top: -5px;
-  margin-bottom: -5px;
+  margin-bottom: 10px;
   opacity: ${(props) => props.theme.highEmphasisOpacity};
 `;
 

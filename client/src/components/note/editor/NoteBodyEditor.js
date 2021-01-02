@@ -20,14 +20,15 @@ const NoteBodyEditor = (props) => {
   }
 
   return (
-    <Editor
-      className={className}
-      ref={forwardedRef}
-      placeholder="Note"
-      plugins={[linkifyPlugin]}
-      {...props}
-      onChange={onChange}
-    ></Editor>
+    <div className={className}>
+      <Editor
+        ref={forwardedRef}
+        placeholder="Note"
+        plugins={[linkifyPlugin]}
+        {...props}
+        onChange={onChange}
+      ></Editor>
+    </div>
   );
 };
 

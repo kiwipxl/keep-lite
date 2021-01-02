@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import chroma from "chroma-js";
 
-const SidebarItem = ({ className, children, clickable, onClick }) => {
-  let StyledItem = clickable ? ClickableSidebarItem : BaseSidebarItem;
+const ListRow = ({ className, children, clickable, onClick }) => {
+  let StyledItem = clickable ? ClickableListRow : BaseListRow;
 
   return (
     <StyledItem className={className} onClick={onClick}>
@@ -11,11 +11,11 @@ const SidebarItem = ({ className, children, clickable, onClick }) => {
   );
 };
 
-const BaseSidebarItem = styled.div`
+const BaseListRow = styled.div`
   width: 100%;
 `;
 
-const ClickableSidebarItem = styled(BaseSidebarItem)`
+const ClickableListRow = styled(BaseListRow)`
   transition: background-color 0.1s;
 
   &:hover {
@@ -25,4 +25,4 @@ const ClickableSidebarItem = styled(BaseSidebarItem)`
   }
 `;
 
-export default SidebarItem;
+export default ListRow;

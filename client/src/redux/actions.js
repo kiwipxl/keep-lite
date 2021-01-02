@@ -34,3 +34,19 @@ export const setNoteBody = (id, body) => ({
     body: body,
   },
 });
+
+export const addLabel = (id, name) => ({
+  type: ADD_LABEL,
+  payload: {
+    id: id || uuidv4(),
+    name: name,
+  },
+});
+
+export const renameLabel = (id, name) => ({
+  type: RENAME_LABEL,
+  payload: {
+    id: id,
+    name: name,
+  },
+});

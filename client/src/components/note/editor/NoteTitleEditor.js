@@ -16,13 +16,14 @@ const NoteTitleEditor = (props) => {
   }
 
   return (
-    <Editor
-      className={className}
-      ref={forwardedRef}
-      placeholder="Title"
-      {...props}
-      onChange={onChange}
-    ></Editor>
+    <div className={className}>
+      <Editor
+        ref={forwardedRef}
+        placeholder="Title"
+        {...props}
+        onChange={onChange}
+      ></Editor>
+    </div>
   );
 };
 

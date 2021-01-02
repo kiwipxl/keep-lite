@@ -2,14 +2,13 @@ import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import styled from "styled-components";
 import { ThemeProvider } from "styled-components";
+import store from "./redux/store";
 import { Provider } from "react-redux";
+import theme from "./theme";
 import MainScreen from "./screens/MainScreen";
 import EditNoteScreen from "./screens/EditNoteScreen";
 import NotFoundScreen from "./screens/NotFoundScreen";
-import theme from "./theme";
-import sample_labels from "./sample_labels.json";
-import sample_notes from "./sample_notes.json";
-import store from "./redux/store";
+import AddLabelsScreen from "./screens/AddLabelsScreen";
 
 const AppContent = styled.div`
   overflow: hidden;
@@ -30,6 +29,10 @@ function App() {
             <Switch>
               <Route exact path="/note/:nid">
                 <EditNoteScreen></EditNoteScreen>
+              </Route>
+
+              <Route exact path="/">
+                <AddLabelsScreen></AddLabelsScreen>
               </Route>
 
               <Route exact path="/">

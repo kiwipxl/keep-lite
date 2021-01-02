@@ -27,9 +27,8 @@ function draftToHTML(contentState) {
   })(contentState);
 }
 
-function isHTMLEmpty(html) {
-  const noTagsHTML = html.replaceAll(/<[^>]*>/g, "");
-  return !/[^ \n]+/.test(noTagsHTML);
+function isContentEmpty(contentState) {
+  return !/[^ \n]+/.test(contentState.getPlainText());
 }
 
 const Note = ({ className, id, title, body, labels, onClick }) => {
@@ -65,7 +64,7 @@ const Note = ({ className, id, title, body, labels, onClick }) => {
       hidden={!clampedContent}
     >
       <Content>
-        {!isHTMLEmpty(titleHTML) && (
+        {!isContentEmpty(title) && (
           <Title
             ref={titleRef}
             dangerouslySetInnerHTML={{ __html: titleHTML }}
