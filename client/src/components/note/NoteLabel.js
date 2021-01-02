@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
+import { useSelector } from "react-redux";
 
 const NoteLabel = ({ className, id }) => {
-  // TODO
-  const labels = [];
+  const labels = useSelector((state) => state.labels);
 
   return (
     <div className={className}>

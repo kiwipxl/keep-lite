@@ -33,10 +33,6 @@ const EditNoteScreen = ({ className, notes }) => {
     setRichTextEnabled(!richTextEnabled);
   }
 
-  function onClickBack() {
-    routerHistory.goBack();
-  }
-
   return (
     <div className={className}>
       <Header>
@@ -44,7 +40,7 @@ const EditNoteScreen = ({ className, notes }) => {
           Component={BiArrowBack}
           variant="button"
           size={28}
-          onClick={onClickBack}
+          onClick={() => routerHistory.goBack()}
         ></BackIcon>
 
         <FlexSpace></FlexSpace>
@@ -56,6 +52,13 @@ const EditNoteScreen = ({ className, notes }) => {
           onClick={toggleRichText}
           preventMouseDown
         ></RichTextIcon>
+
+        <AddLabelsIcon
+          Component={BsFileRichtext}
+          variant="button"
+          size={28}
+          onClick={() => routerHistory.push(`/note/${nid}/labels`)}
+        ></AddLabelsIcon>
       </Header>
 
       <NoteEditorContainer>
@@ -100,6 +103,12 @@ const FlexSpace = styled.div`
 `;
 
 const RichTextIcon = styled(Icon)`
+  margin: 5px;
+  margin-left: 10px;
+  margin-right: 10px;
+`;
+
+const AddLabelsIcon = styled(Icon)`
   margin: 5px;
   margin-left: 10px;
   margin-right: 10px;

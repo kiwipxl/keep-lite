@@ -4,49 +4,68 @@ import { ContentState } from "draft-js";
 export const ADD_NOTE = "ADD_NOTE";
 export const SET_NOTE_TITLE = "SET_NOTE_TITLE";
 export const SET_NOTE_BODY = "SET_NOTE_BODY";
+export const ADD_NOTE_LABEL = "ADD_NOTE_LABEL";
+export const REMOVE_NOTE_LABEL = "REMOVE_NOTE_LABEL";
 
 export const ADD_LABEL = "ADD_LABEL";
 export const RENAME_LABEL = "RENAME_LABEL";
 
-export const addNote = (id, title, body) => ({
+// NOTES
+export const addNote = (nid, title, body, labels) => ({
   type: ADD_NOTE,
   payload: {
-    id: id || uuidv4(),
-    content: {
-      title: title || ContentState.createFromText(""),
-      body: body || ContentState.createFromText(""),
-    },
+    id: nid || uuidv4(),
+    title: title || ContentState.createFromText(""),
+    body: body || ContentState.createFromText(""),
+    labels: labels || [],
   },
 });
 
-export const setNoteTitle = (id, title) => ({
+export const setNoteTitle = (nid, title) => ({
   type: SET_NOTE_TITLE,
   payload: {
-    id: id,
+    id: nid,
     title: title,
   },
 });
 
-export const setNoteBody = (id, body) => ({
+export const setNoteBody = (nid, body) => ({
   type: SET_NOTE_BODY,
   payload: {
-    id: id,
+    id: nid,
     body: body,
   },
 });
 
-export const addLabel = (id, name) => ({
+export const addNoteLabel = (nid, lid) => ({
+  type: ADD_NOTE_LABEL,
+  payload: {
+    id: nid,
+    lid: lid,
+  },
+});
+
+export const removeNoteLabel = (nid, lid) => ({
+  type: REMOVE_NOTE_LABEL,
+  payload: {
+    id: nid,
+    lid: lid,
+  },
+});
+
+// LABELS
+export const addLabel = (lid, name) => ({
   type: ADD_LABEL,
   payload: {
-    id: id || uuidv4(),
+    id: lid || uuidv4(),
     name: name,
   },
 });
 
-export const renameLabel = (id, name) => ({
+export const renameLabel = (lid, name) => ({
   type: RENAME_LABEL,
   payload: {
-    id: id,
+    id: lid,
     name: name,
   },
 });

@@ -8,8 +8,6 @@ const Checkbox = React.forwardRef((props, ref) => {
     ref = React.createRef();
   }
 
-  console.log(checked);
-
   return (
     <input
       type="checkbox"

@@ -27,12 +27,12 @@ function App() {
         <ThemeProvider theme={theme}>
           <AppContent>
             <Switch>
-              <Route exact path="/note/:nid">
-                <EditNoteScreen></EditNoteScreen>
+              <Route exact path="/note/:nid/labels">
+                <AddLabelsScreen></AddLabelsScreen>
               </Route>
 
-              <Route exact path="/">
-                <AddLabelsScreen></AddLabelsScreen>
+              <Route exact path="/note/:nid">
+                <EditNoteScreen></EditNoteScreen>
               </Route>
 
               <Route exact path="/">

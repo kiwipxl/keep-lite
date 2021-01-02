@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { BiArrowBack } from "react-icons/bi";
 import { MdLabelOutline } from "react-icons/md";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import Header from "../components/Header";
 import Icon from "../components/Icon";
 import Button from "../components/input/Button";
@@ -11,21 +11,49 @@ import Input from "../components/input/Input";
 import Checkbox from "../components/input/Checkbox";
 import List from "../components/nav/List";
 import ListRow from "../components/nav/ListRow";
+import { addNoteLabel, removeNoteLabel } from "../redux/actions";
+
+// Merges an array of objects into a single object
+function mergeArrayObjects(arr) {
+  console.log(arr);
+  return arr.reduce((res, item) => Object.assign(res, item));
+}
 
 const AddLabelsScreen = ({ className }) => {
   const routerHistory = useHistory();
   const dispatch = useDispatch();
+  const { nid } = useParams();
+  const note = useSelector((state) => state.notes[nid]);
+
+  // Grabs the labels object and adds an extra 'checked' property to it
   const [labels, setLabels] = React.useState(
     useSelector((state) =>
-      Object.keys(state.labels).map((lid) => ({
-        checked: false,
-        ...state.labels[lid],
-      }))
+      mergeArrayObjects(
+        Object.keys(state.labels).map((lid) => ({
+          [lid]: {
+            ...state.labels[lid],
+            checked: note.labels.includes(lid),
+          },
+        }))
+      )
     )
   );
 
-  function onClickBack() {
-    routerHistory.goBack();
+  console.log(labels);
+
+  function toggleCheckedLabel(lid) {
+    const checked = !labels[lid].checked;
+
+    setLabels({
+      ...labels,
+      [lid]: { ...labels[lid], checked: checked },
+    });
+
+    if (checked) {
+      dispatch(addNoteLabel(nid, lid));
+    } else {
+      dispatch(removeNoteLabel(nid, lid));
+    }
   }
 
   return (
@@ -35,7 +63,7 @@ const AddLabelsScreen = ({ className }) => {
           Component={BiArrowBack}
           variant="button"
           size={28}
-          onClick={onClickBack}
+          onClick={() => routerHistory.goBack()}
         ></BackIcon>
 
         <SearchInput placeholder="Search labels..."></SearchInput>
@@ -46,7 +74,11 @@ const AddLabelsScreen = ({ className }) => {
           const label = labels[lid];
 
           return (
-            <ListRow key={lid} clickable>
+            <ListRow
+              key={lid}
+              clickable
+              onClick={() => toggleCheckedLabel(lid)}
+            >
               <LabelRowContent>
                 <LabelIcon Component={MdLabelOutline} size={22}></LabelIcon>
 
@@ -54,10 +86,7 @@ const AddLabelsScreen = ({ className }) => {
 
                 <StyledCheckbox
                   checked={label.checked}
-                  onClick={() => {
-                    label.checked = label.checked ? false : true;
-                    setLabels({ ...labels, [lid]: label });
-                  }}
+                  onClick={() => toggleCheckedLabel(lid)}
                 ></StyledCheckbox>
               </LabelRowContent>
             </ListRow>

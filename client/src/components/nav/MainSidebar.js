@@ -18,7 +18,7 @@ const MainSidebar = ({ className, hidden, onOpen, onClose }) => {
       onOpen={onOpen}
       onClose={onClose}
     >
-      <List>
+      <StyledList>
         <ListRow>
           <Logo onClick={onClose}>Keep Lite</Logo>
         </ListRow>
@@ -36,10 +36,15 @@ const MainSidebar = ({ className, hidden, onOpen, onClose }) => {
             </LabelRowContent>
           </ListRow>
         ))}
-      </List>
+      </StyledList>
     </Sidebar>
   );
 };
+
+const StyledList = styled(List)`
+  background-color: ${(props) =>
+    props.theme.elevate01dp(props.theme.surfaceColor)};
+`;
 
 const Logo = styled.div`
   font-weight: bold;
