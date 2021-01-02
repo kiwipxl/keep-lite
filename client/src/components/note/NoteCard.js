@@ -7,11 +7,6 @@ import NoteLabelRows from "./NoteLabelRows";
 
 function draftToHTML(contentState) {
   return convertToHTML({
-    styleToHTML: (style) => {
-      // if (style === 'BOLD') {
-      //   return <span style={{color: 'blue'}} />;
-      // }
-    },
     blockToHTML: (block) => {
       return (
         <span
@@ -32,11 +27,18 @@ function draftToHTML(contentState) {
   })(contentState);
 }
 
+function isHTMLEmpty(html) {
+  const noTagsHTML = html.replaceAll(/<[^>]*>/g, "");
+  return !/[^ \n]+/.test(noTagsHTML);
+}
+
 const Note = ({ className, id, title, body, labels, onClick }) => {
   const titleRef = React.useRef(null);
   const bodyRef = React.useRef(null);
   const routerHistory = useHistory();
   const [clampedContent, setClampedContent] = React.useState(false);
+  const [titleHTML] = React.useState(draftToHTML(title));
+  const [bodyHTML] = React.useState(draftToHTML(body));
 
   let onClickOverride = onClick;
   if (!onClick) {
@@ -46,8 +48,12 @@ const Note = ({ className, id, title, body, labels, onClick }) => {
   }
 
   React.useEffect(() => {
-    clampjs(titleRef.current, { clamp: 2 });
-    clampjs(bodyRef.current, { clamp: 5 });
+    if (titleRef.current) {
+      clampjs(titleRef.current, { clamp: 2 });
+    }
+    if (bodyRef.current) {
+      clampjs(bodyRef.current, { clamp: 5 });
+    }
 
     setClampedContent(true);
   }, []);
@@ -59,14 +65,16 @@ const Note = ({ className, id, title, body, labels, onClick }) => {
       hidden={!clampedContent}
     >
       <Content>
-        <Title
-          ref={titleRef}
-          dangerouslySetInnerHTML={{ __html: draftToHTML(title) }}
-        ></Title>
+        {!isHTMLEmpty(titleHTML) && (
+          <Title
+            ref={titleRef}
+            dangerouslySetInnerHTML={{ __html: titleHTML }}
+          ></Title>
+        )}
 
         <Body
           ref={bodyRef}
-          dangerouslySetInnerHTML={{ __html: draftToHTML(body) }}
+          dangerouslySetInnerHTML={{ __html: bodyHTML }}
         ></Body>
 
         <StyledNoteLabelRows labels={labels}></StyledNoteLabelRows>

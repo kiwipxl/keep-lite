@@ -54,6 +54,7 @@ const EditNoteScreen = ({ className, notes }) => {
           variant="button"
           size={28}
           onClick={toggleRichText}
+          preventMouseDown
         ></RichTextIcon>
       </Header>
 

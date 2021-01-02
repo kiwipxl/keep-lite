@@ -1,8 +1,13 @@
+import React from "react";
 import styled from "styled-components";
 import chroma from "chroma-js";
+import { usePreventMouseDown } from "./util";
 
 const Button = (props) => {
-  const { className, children, variant, disabled } = props;
+  const { className, children, variant, disabled, preventMouseDown } = props;
+
+  const ref = React.createRef();
+  usePreventMouseDown(ref, preventMouseDown);
 
   let StyledButton;
   switch (variant) {
@@ -20,7 +25,7 @@ const Button = (props) => {
   }
 
   return (
-    <StyledButton className={className} {...props}>
+    <StyledButton className={className} ref={ref} {...props}>
       {children}
     </StyledButton>
   );

@@ -1,9 +1,21 @@
+import React from "react";
 import styled from "styled-components";
+import { usePreventMouseDown } from "./input/util";
 
-const Icon = ({ className, Component, variant, size, onClick }) => {
+const Icon = ({
+  className,
+  Component,
+  variant,
+  size,
+  onClick,
+  preventMouseDown,
+}) => {
   if (!Component) {
     throw new Error("Must define Component property for icon");
   }
+
+  const ref = React.createRef();
+  usePreventMouseDown(ref, preventMouseDown);
 
   let StyledIcon;
   switch (variant) {
@@ -17,7 +29,7 @@ const Icon = ({ className, Component, variant, size, onClick }) => {
   }
 
   return (
-    <StyledIcon className={className} onClick={onClick}>
+    <StyledIcon className={className} ref={ref} onClick={onClick}>
       <ComponentWrapper>
         <Component size={size}></Component>
       </ComponentWrapper>
