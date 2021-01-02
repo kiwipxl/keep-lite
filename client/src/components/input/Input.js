@@ -1,8 +1,9 @@
+import React from "react";
 import styled from "styled-components";
 
-const Input = (props) => {
-  return <input {...props}></input>;
-};
+const Input = React.forwardRef((props, ref) => {
+  return <input ref={ref} {...props}></input>;
+});
 
 export default styled(Input)`
   background-color: transparent;

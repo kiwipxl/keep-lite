@@ -8,6 +8,7 @@ import Header from "../components/Header";
 import Icon from "../components/Icon";
 import Button from "../components/input/Button";
 import Input from "../components/input/Input";
+import Checkbox from "../components/input/Checkbox";
 import List from "../components/nav/List";
 import ListRow from "../components/nav/ListRow";
 
@@ -15,7 +16,12 @@ const AddLabelsScreen = ({ className }) => {
   const routerHistory = useHistory();
   const dispatch = useDispatch();
   const [labels, setLabels] = React.useState(
-    useSelector((state) => state.labels)
+    useSelector((state) =>
+      Object.keys(state.labels).map((lid) => ({
+        checked: false,
+        ...state.labels[lid],
+      }))
+    )
   );
 
   function onClickBack() {
@@ -36,14 +42,27 @@ const AddLabelsScreen = ({ className }) => {
       </Header>
 
       <List>
-        {Object.keys(labels).map((lid) => (
-          <ListRow clickable>
-            <LabelRowContent>
-              <LabelIcon Component={MdLabelOutline} size={22}></LabelIcon>
-              <Label>{labels[lid].name}</Label>
-            </LabelRowContent>
-          </ListRow>
-        ))}
+        {Object.keys(labels).map((lid) => {
+          const label = labels[lid];
+
+          return (
+            <ListRow key={lid} clickable>
+              <LabelRowContent>
+                <LabelIcon Component={MdLabelOutline} size={22}></LabelIcon>
+
+                <Label>{label.name}</Label>
+
+                <StyledCheckbox
+                  checked={label.checked}
+                  onClick={() => {
+                    label.checked = label.checked ? false : true;
+                    setLabels({ ...labels, [lid]: label });
+                  }}
+                ></StyledCheckbox>
+              </LabelRowContent>
+            </ListRow>
+          );
+        })}
       </List>
     </div>
   );
@@ -81,6 +100,10 @@ const Label = styled.span`
   margin-left: 10px;
   flex: 1;
   opacity: ${(props) => props.theme.highEmphasisOpacity};
+`;
+
+const StyledCheckbox = styled(Checkbox)`
+  flex: 0.2;
 `;
 
 export default styled(AddLabelsScreen)``;

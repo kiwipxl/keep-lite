@@ -29,7 +29,7 @@ const MainSidebar = ({ className, hidden, onOpen, onClose }) => {
         </LabelHeaderRow>
 
         {Object.keys(labels).map((lid) => (
-          <ListRow clickable>
+          <ListRow key={lid} clickable>
             <LabelRowContent>
               <Icon Component={MdLabelOutline} size={30}></Icon>
               <Label>{labels[lid].name}</Label>

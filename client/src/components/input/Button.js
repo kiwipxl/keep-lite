@@ -3,10 +3,12 @@ import styled from "styled-components";
 import chroma from "chroma-js";
 import { usePreventMouseDown } from "./util";
 
-const Button = (props) => {
+const Button = React.forwardRef((props, ref) => {
   const { className, children, variant, disabled, preventMouseDown } = props;
 
-  const ref = React.createRef();
+  if (!ref) {
+    ref = React.createRef();
+  }
   usePreventMouseDown(ref, preventMouseDown);
 
   let StyledButton;
@@ -29,7 +31,7 @@ const Button = (props) => {
       {children}
     </StyledButton>
   );
-};
+});
 
 const BaseButton = styled.button`
   background-color: transparent;
