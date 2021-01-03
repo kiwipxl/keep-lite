@@ -8,7 +8,7 @@ import Icon from "../Icon";
 import Input from "../input/Input";
 import { createLabel } from "../../redux/actions";
 
-const CreateLabel = ({ className }) => {
+const CreateLabel = ({ className, onSelectChange }) => {
   const inputRef = React.createRef();
   const [selected, setSelected] = React.useState(false);
   const dispatch = useDispatch();
@@ -20,6 +20,23 @@ const CreateLabel = ({ className }) => {
     }
   }, [selected]);
 
+  function select() {
+    setSelected(true);
+
+    if (onSelectChange) {
+      onSelectChange(true);
+    }
+  }
+
+  function deselect() {
+    setSelected(false);
+    setName("");
+
+    if (onSelectChange) {
+      onSelectChange(false);
+    }
+  }
+
   if (selected) {
     return (
       <div className={className}>
@@ -27,10 +44,7 @@ const CreateLabel = ({ className }) => {
           Component={ImCross}
           size={22}
           variant="button"
-          onClick={() => {
-            setSelected(false);
-            setName("");
-          }}
+          onClick={() => deselect()}
         ></StyledIcon>
 
         <StyledInput
@@ -46,19 +60,18 @@ const CreateLabel = ({ className }) => {
           size={22}
           onClick={() => {
             dispatch(createLabel(null, name));
-            setSelected(false);
-            setName("");
+            deselect();
           }}
         ></StyledIcon>
       </div>
     );
   } else {
     return (
-      <div className={className} onClick={() => setSelected(true)}>
+      <div className={className} onClick={() => select()}>
         <StyledIcon
           Component={AiOutlinePlus}
           size={22}
-          onClick={() => setSelected(true)}
+          onClick={() => select()}
         ></StyledIcon>
 
         <Text>Create new label</Text>

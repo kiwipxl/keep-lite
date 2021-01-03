@@ -9,11 +9,11 @@ import Input from "../components/input/Input";
 import Checkbox from "../components/input/Checkbox";
 import List from "../components/nav/List";
 import ListRow from "../components/nav/ListRow";
+import CreateLabelListRow from "../components/label/CreateLabelListRow";
 import { addNoteLabel, removeNoteLabel } from "../redux/actions";
 
 // Merges an array of objects into a single object
 function mergeArrayObjects(arr) {
-  console.log(arr);
   return arr.reduce((res, item) => Object.assign(res, item));
 }
 
@@ -22,32 +22,24 @@ const AddLabelsScreen = ({ className }) => {
   const dispatch = useDispatch();
   const { nid } = useParams();
   const note = useSelector((state) => state.notes[nid]);
-
-  // Grabs the labels object and adds an extra 'checked' property to it
-  const [labels, setLabels] = React.useState(
+  const labels = useSelector((state) => state.labels);
+  const [checkedLabels, setCheckedLabels] = React.useState(
     useSelector((state) =>
-      mergeArrayObjects(
-        Object.keys(state.labels).map((lid) => ({
-          [lid]: {
-            ...state.labels[lid],
-            checked: note.labels.includes(lid),
-          },
-        }))
-      )
+      Object.keys(state.labels).filter((lid) => note.labels.includes(lid))
     )
   );
 
   function toggleCheckedLabel(lid) {
-    const checked = !labels[lid].checked;
-
-    setLabels({
-      ...labels,
-      [lid]: { ...labels[lid], checked: checked },
-    });
+    const checked = !checkedLabels.includes(lid);
 
     if (checked) {
+      setCheckedLabels([lid].concat(checkedLabels));
+
       dispatch(addNoteLabel(nid, lid));
     } else {
+      checkedLabels.splice(checkedLabels.indexOf(lid), 1);
+      setCheckedLabels(checkedLabels);
+
       dispatch(removeNoteLabel(nid, lid));
     }
   }
@@ -63,6 +55,8 @@ const AddLabelsScreen = ({ className }) => {
       </Header>
 
       <List>
+        <CreateLabelListRow></CreateLabelListRow>
+
         {Object.keys(labels).map((lid) => {
           const label = labels[lid];
 
@@ -78,7 +72,7 @@ const AddLabelsScreen = ({ className }) => {
                 <Label>{label.name}</Label>
 
                 <StyledCheckbox
-                  checked={label.checked}
+                  checked={checkedLabels.includes(lid)}
                   onClick={() => toggleCheckedLabel(lid)}
                 ></StyledCheckbox>
               </LabelRowContent>
