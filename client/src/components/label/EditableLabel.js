@@ -1,56 +1,82 @@
 import React from "react";
 import styled from "styled-components";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { GoPencil } from "react-icons/go";
+import { FiTrash2 } from "react-icons/fi";
+import { BsCheck } from "react-icons/bs";
 import { MdLabelOutline } from "react-icons/md";
 import Icon from "../Icon";
 import Input from "../input/Input";
 import ListRow from "../nav/ListRow";
-import { removeLabel, renameLabel } from "../../redux/actions";
+import { deleteLabel, renameLabel } from "../../redux/actions";
 
 const EditableLabel = ({ className, id }) => {
+  const [editing, setEditing] = React.useState(false);
+  const dispatch = useDispatch();
   const label = useSelector((state) => state.labels[id]);
+  const [name, setName] = React.useState(label.name);
 
-  return (
-    <div className={className}>
-      <LabelIcon Component={MdLabelOutline} size={22}></LabelIcon>
+  if (editing) {
+    return (
+      <div className={className}>
+        <StyledIcon
+          Component={FiTrash2}
+          size={22}
+          variant="button"
+          onClick={() => {
+            dispatch(deleteLabel(id));
+          }}
+        ></StyledIcon>
 
-      <Label>{label.name}</Label>
+        <LabelInput
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        ></LabelInput>
 
-      <EditIcon variant="button" Component={GoPencil} size={22}></EditIcon>
-    </div>
-  );
+        <StyledIcon
+          variant="button"
+          Component={BsCheck}
+          size={22}
+          onClick={() => {
+            dispatch(renameLabel(id, name));
+            setEditing(false);
+          }}
+        ></StyledIcon>
+      </div>
+    );
+  } else {
+    return (
+      <div className={className}>
+        <StyledIcon Component={MdLabelOutline} size={22}></StyledIcon>
+
+        <Label>{label.name}</Label>
+
+        <StyledIcon
+          variant="button"
+          Component={GoPencil}
+          size={22}
+          onClick={() => setEditing(true)}
+        ></StyledIcon>
+      </div>
+    );
+  }
 };
 
-const SearchInput = styled(Input)`
-  height: 100%;
-  font-size: 14px;
-  flex: 1;
-`;
-
-const LabelRowContent = styled.div`
-  width: calc(100% - 20px);
-
-  margin-left: 10px;
-  margin-right: 10px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-
-  display: flex;
-  align-items: center;
-`;
-
-const LabelIcon = styled(Icon)`
-  flex: 0.1;
-`;
-
-const EditIcon = styled(Icon)`
+const StyledIcon = styled(Icon)`
   flex: 0.1;
 `;
 
 const Label = styled.span`
   margin-left: 10px;
   flex: 1;
+  font-size: 15px;
+  opacity: ${(props) => props.theme.highEmphasisOpacity};
+`;
+
+const LabelInput = styled(Input)`
+  margin-left: 10px;
+  flex: 1;
+  font-size: 15px;
   opacity: ${(props) => props.theme.highEmphasisOpacity};
 `;
 

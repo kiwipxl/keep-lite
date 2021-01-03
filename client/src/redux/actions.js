@@ -64,7 +64,7 @@ export const createLabel = (lid, name) => ({
 });
 
 export const deleteLabel = (lid) => ({
-  type: CREATE_LABEL,
+  type: DELETE_LABEL,
   payload: {
     id: lid || uuidv4(),
   },

@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import { MdLabelOutline } from "react-icons/md";
 import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { MdLabelOutline } from "react-icons/md";
 import Sidebar from "./Sidebar";
 import List from "./List";
 import ListRow from "./ListRow";
@@ -10,6 +11,7 @@ import Icon from "../Icon";
 
 const MainSidebar = ({ className, hidden, onOpen, onClose }) => {
   const labels = useSelector((state) => state.labels);
+  const routerHistory = useHistory();
 
   return (
     <Sidebar
@@ -25,7 +27,12 @@ const MainSidebar = ({ className, hidden, onOpen, onClose }) => {
 
         <LabelHeaderRow>
           <Header>Labels</Header>
-          <Button variant="outline">Edit</Button>
+          <Button
+            variant="outline"
+            onClick={() => routerHistory.push("/labels/edit")}
+          >
+            Edit
+          </Button>
         </LabelHeaderRow>
 
         {Object.keys(labels).map((lid) => (

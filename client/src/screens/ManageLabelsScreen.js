@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 import Header from "../components/Header";
 import Icon from "../components/Icon";
 import List from "../components/nav/List";
@@ -10,12 +9,7 @@ import { addNoteLabel, removeNoteLabel } from "../redux/actions";
 import EditableLabel from "../components/label/EditableLabel";
 
 const ManageLabelsScreen = ({ className }) => {
-  const routerHistory = useHistory();
-  const dispatch = useDispatch();
-
-  const [labels, setLabels] = React.useState(
-    useSelector((state) => state.labels)
-  );
+  const labels = useSelector((state) => state.labels);
 
   return (
     <div className={className}>

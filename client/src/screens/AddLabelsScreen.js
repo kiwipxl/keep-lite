@@ -18,7 +18,7 @@ function mergeArrayObjects(arr) {
 }
 
 const AddLabelsScreen = ({ className }) => {
-  const routerHistory = useHistory();
+  const [searchText, setSearchText] = React.useState("");
   const dispatch = useDispatch();
   const { nid } = useParams();
   const note = useSelector((state) => state.notes[nid]);
@@ -55,7 +55,11 @@ const AddLabelsScreen = ({ className }) => {
   return (
     <div className={className}>
       <Header backButton>
-        <SearchInput placeholder="Search labels..."></SearchInput>
+        <SearchInput
+          placeholder="Search labels..."
+          value={searchText}
+          onChange={(e) => setSearchText(e.current.target)}
+        ></SearchInput>
       </Header>
 
       <List>

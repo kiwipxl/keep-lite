@@ -13,6 +13,7 @@ import { addNote } from "../redux/actions";
 
 const MainScreen = ({ className }) => {
   const [sidebarOpen, setSidebarOpen] = React.useState(false);
+  const [searchText, setSearchText] = React.useState("");
   const routerHistory = useHistory();
   const notes = useSelector((state) => state.notes);
   const dispatch = useDispatch();
@@ -47,7 +48,11 @@ const MainScreen = ({ className }) => {
           onClick={() => openSidebar()}
         ></SidebarIcon>
 
-        <SearchInput placeholder="Search your notes"></SearchInput>
+        <SearchInput
+          placeholder="Search your notes"
+          value={searchText}
+          onChange={(e) => setSearchText(e.current.target)}
+        ></SearchInput>
 
         <AccountIcon
           Component={MdAccountCircle}
