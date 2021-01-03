@@ -1,10 +1,29 @@
+import { BiArrowBack } from "react-icons/bi";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
+import Icon from "./Icon";
 
-const Header = ({ className, children, variant }) => {
+const Header = ({ className, children, variant, backButton, title }) => {
+  const routerHistory = useHistory();
+
+  const StyledHeader = variant === "elevated" ? ElevatedHeader : BaseHeader;
+
   return (
     <div className={className}>
-      {variant === "elevated" && <ElevatedHeader>{children}</ElevatedHeader>}
-      {variant !== "elevated" && <BaseHeader>{children}</BaseHeader>}
+      <StyledHeader>
+        {backButton && (
+          <BackIcon
+            Component={BiArrowBack}
+            variant="button"
+            size={28}
+            onClick={() => routerHistory.goBack()}
+          ></BackIcon>
+        )}
+
+        {title && <Title>{title}</Title>}
+
+        {children}
+      </StyledHeader>
     </div>
   );
 };
@@ -23,6 +42,18 @@ const ElevatedHeader = styled.div`
 
   display: flex;
   align-items: center;
+`;
+
+const BackIcon = styled(Icon)`
+  margin: 5px;
+  margin-left: 10px;
+  margin-right: 10px;
+`;
+
+const Title = styled.div`
+  height: 100%;
+  font-size: 16px;
+  flex: 1;
 `;
 
 Header.height = 40;

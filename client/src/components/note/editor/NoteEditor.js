@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { EditorState } from "draft-js";
 import NoteTitleEditor from "./NoteTitleEditor";
 import NoteBodyEditor from "./NoteBodyEditor";
-import NoteLabelRows from "../NoteLabelRows";
+import NoteLabels from "../../label/NoteLabels";
 
 const NoteEditor = ({ className, nid, children }) => {
   const note = useSelector((state) => state.notes[nid]);
@@ -54,7 +54,7 @@ const NoteEditor = ({ className, nid, children }) => {
           forwardedRef={bodyRef}
         ></StyledBodyEditor>
 
-        <StyledNoteLabelRows labels={note.labels}></StyledNoteLabelRows>
+        <StyledNoteLabels labels={note.labels}></StyledNoteLabels>
       </Content>
     </div>
   );
@@ -76,7 +76,7 @@ const StyledBodyEditor = styled(NoteBodyEditor)`
   opacity: ${(props) => props.theme.highEmphasisOpacity};
 `;
 
-const StyledNoteLabelRows = styled(NoteLabelRows)`
+const StyledNoteLabels = styled(NoteLabels)`
   margin-top: 10px;
 `;
 

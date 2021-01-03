@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { convertToHTML } from "draft-convert";
 import { useHistory } from "react-router-dom";
 import clampjs from "clamp-js";
-import NoteLabelRows from "./NoteLabelRows";
+import NoteLabels from "../label/NoteLabels";
 
 function draftToHTML(contentState) {
   return convertToHTML({
@@ -76,7 +76,7 @@ const Note = ({ className, id, title, body, labels, onClick }) => {
           dangerouslySetInnerHTML={{ __html: bodyHTML }}
         ></Body>
 
-        <StyledNoteLabelRows labels={labels}></StyledNoteLabelRows>
+        <StyledNoteLabels labels={labels}></StyledNoteLabels>
       </Content>
     </div>
   );
@@ -101,7 +101,7 @@ const Body = styled.div`
   overflow: hidden;
 `;
 
-const StyledNoteLabelRows = styled(NoteLabelRows)`
+const StyledNoteLabels = styled(NoteLabels)`
   margin-top: 10px;
   margin-bottom: -10px;
 `;

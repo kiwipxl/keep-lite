@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
-import { BiArrowBack } from "react-icons/bi";
 import { BsFileRichtext } from "react-icons/bs";
 import { IoMdAddCircle } from "react-icons/io";
 import { MdMoreVert } from "react-icons/md";
@@ -35,14 +34,7 @@ const EditNoteScreen = ({ className, notes }) => {
 
   return (
     <div className={className}>
-      <Header>
-        <BackIcon
-          Component={BiArrowBack}
-          variant="button"
-          size={28}
-          onClick={() => routerHistory.goBack()}
-        ></BackIcon>
-
+      <Header backButton>
         <FlexSpace></FlexSpace>
 
         <RichTextIcon
@@ -91,12 +83,6 @@ const EditNoteScreen = ({ className, notes }) => {
     </div>
   );
 };
-
-const BackIcon = styled(Icon)`
-  margin: 5px;
-  margin-left: 10px;
-  margin-right: 10px;
-`;
 
 const FlexSpace = styled.div`
   flex: 1;

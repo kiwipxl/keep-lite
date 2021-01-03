@@ -13,10 +13,10 @@ const NoteLabel = ({ className, id }) => {
 };
 
 const Text = styled.span`
-  margin: 5px;
-  margin-top: 2px;
-  margin-bottom: 2px;
-  font-size: 12px;
+  margin: 6px;
+  margin-top: 3px;
+  margin-bottom: 3px;
+  font-size: 13px;
   opacity: ${(props) => props.theme.mediumEmphasisOpacity};
   display: flex;
   justify-content: center;

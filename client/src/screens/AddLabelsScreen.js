@@ -1,12 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import { BiArrowBack } from "react-icons/bi";
 import { MdLabelOutline } from "react-icons/md";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import Header from "../components/Header";
 import Icon from "../components/Icon";
-import Button from "../components/input/Button";
 import Input from "../components/input/Input";
 import Checkbox from "../components/input/Checkbox";
 import List from "../components/nav/List";
@@ -39,8 +37,6 @@ const AddLabelsScreen = ({ className }) => {
     )
   );
 
-  console.log(labels);
-
   function toggleCheckedLabel(lid) {
     const checked = !labels[lid].checked;
 
@@ -58,14 +54,7 @@ const AddLabelsScreen = ({ className }) => {
 
   return (
     <div className={className}>
-      <Header>
-        <BackIcon
-          Component={BiArrowBack}
-          variant="button"
-          size={28}
-          onClick={() => routerHistory.goBack()}
-        ></BackIcon>
-
+      <Header backButton>
         <SearchInput placeholder="Search labels..."></SearchInput>
       </Header>
 

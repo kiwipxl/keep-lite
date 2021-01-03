@@ -9,6 +9,7 @@ import MainScreen from "./screens/MainScreen";
 import EditNoteScreen from "./screens/EditNoteScreen";
 import NotFoundScreen from "./screens/NotFoundScreen";
 import AddLabelsScreen from "./screens/AddLabelsScreen";
+import ManageLabelsScreen from "./screens/ManageLabelsScreen";
 
 const AppContent = styled.div`
   overflow: hidden;
@@ -33,6 +34,10 @@ function App() {
 
               <Route exact path="/note/:nid">
                 <EditNoteScreen></EditNoteScreen>
+              </Route>
+
+              <Route exact path="/labels/edit">
+                <ManageLabelsScreen></ManageLabelsScreen>
               </Route>
 
               <Route exact path="/">
