@@ -39,15 +39,15 @@ const BaseHeader = styled.div`
 
 const ElevatedHeader = styled(BaseHeader)`
   position: relative;
-  top: 5px;
-  height: calc(100% - 10px);
+  top: 10px;
+  height: calc(100% - 20px);
   background-color: ${(props) =>
     props.theme.elevate02dp(props.theme.surfaceColor)};
   border-radius: 5px;
 `;
 
 const BackIcon = styled(Icon)`
-  flex: 0.1;
+  margin-left: 5px;
   margin-right: 10px;
 `;
 
@@ -56,11 +56,11 @@ const Title = styled.div`
   flex: 1;
 `;
 
-Header.height = 40;
+Header.height = 60;
 
 export default styled(Header)`
   width: 100%;
-  height: 50px;
+  height: 60px;
   position: relative;
   background-color: ${(props) => props.theme.surfaceColor};
   z-index: 5;

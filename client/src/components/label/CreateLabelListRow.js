@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import chroma from "chroma-js";
 import ListRow from "../nav/ListRow";
 import CreateLabel from "./CreateLabel";
 
@@ -19,7 +20,7 @@ const StyledListRow = styled(ListRow)`
   border-width: 1px;
   border-color: ${(props) =>
     props.selected
-      ? props.theme.primaryColor
+      ? chroma(props.theme.primaryColor).alpha(0.4).hex()
       : props.theme.elevate02dp(props.theme.surfaceColor)};
   border-style: solid;
 `;

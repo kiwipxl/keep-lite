@@ -104,6 +104,7 @@ const StyledNoteEditor = styled(NoteEditor)`
   transition: top 0.4s, height 0.4s;
   overflow-y: auto;
   flex: 1;
+  margin-top: -10px;
 `;
 
 const StyledRichTextEditor = styled(RichTextEditor)`

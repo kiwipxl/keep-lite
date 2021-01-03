@@ -103,6 +103,14 @@ const AddNoteButton = styled(Button)`
 
 const StyledNoteCardGrid = styled(NoteCardGrid)`
   padding: 10px;
+  padding-top: 0px;
+  flex: 1;
 `;
 
-export default styled(MainScreen)``;
+export default styled(MainScreen)`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  overflow-y: auto;
+`;

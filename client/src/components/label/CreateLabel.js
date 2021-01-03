@@ -71,6 +71,7 @@ const CreateLabel = ({ className, onSelectChange }) => {
         <StyledIcon
           Component={AiOutlinePlus}
           size={22}
+          variant="button"
           onClick={() => select()}
         ></StyledIcon>
 
@@ -101,4 +102,8 @@ const StyledInput = styled(Input)`
 export default styled(CreateLabel)`
   display: flex;
   align-items: center;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
