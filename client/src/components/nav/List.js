@@ -10,4 +10,5 @@ export default styled(List)`
   justify-content: flex-start;
   flex-direction: column;
   background-color: ${(props) => props.theme.surfaceColor};
+  overflow-y: auto;
 `;

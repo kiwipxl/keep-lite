@@ -51,7 +51,7 @@ const MainScreen = ({ className }) => {
         <SearchInput
           placeholder="Search your notes"
           value={searchText}
-          onChange={(e) => setSearchText(e.current.target)}
+          onChange={(e) => setSearchText(e.target.value)}
         ></SearchInput>
 
         <AccountIcon

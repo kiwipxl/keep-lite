@@ -12,17 +12,13 @@ import ListRow from "../components/nav/ListRow";
 import CreateLabelListRow from "../components/label/CreateLabelListRow";
 import { addNoteLabel, removeNoteLabel } from "../redux/actions";
 
-// Merges an array of objects into a single object
-function mergeArrayObjects(arr) {
-  return arr.reduce((res, item) => Object.assign(res, item));
-}
-
 const AddLabelsScreen = ({ className }) => {
   const [searchText, setSearchText] = React.useState("");
   const dispatch = useDispatch();
   const { nid } = useParams();
   const note = useSelector((state) => state.notes[nid]);
   const labels = useSelector((state) => state.labels);
+  // Array of label ids. If label is is in array, then it is 'checked'.
   const [checkedLabels, setCheckedLabels] = React.useState(
     useSelector((state) =>
       Object.keys(state.labels).filter((lid) => note.labels.includes(lid))
@@ -33,10 +29,12 @@ const AddLabelsScreen = ({ className }) => {
     const checked = !checkedLabels.includes(lid);
 
     if (checked) {
+      // Label is now checked
       setCheckedLabels([lid].concat(checkedLabels));
 
       dispatch(addNoteLabel(nid, lid));
     } else {
+      // Label is now un-checked
       checkedLabels.splice(checkedLabels.indexOf(lid), 1);
       setCheckedLabels(checkedLabels);
 
@@ -44,20 +42,34 @@ const AddLabelsScreen = ({ className }) => {
     }
   }
 
+  // Select labels based on search results
+  const filteredLabels = Object.keys(labels).filter((lid) => {
+    const label = labels[lid];
+
+    if (searchText.length > 0) {
+      // Nothing complicated, just a simple check to see if text exists in the name
+      if (label.name.toLowerCase().indexOf(searchText.toLowerCase()) == -1) {
+        return false;
+      }
+    }
+
+    return true;
+  });
+
   return (
     <div className={className}>
       <Header backButton>
         <SearchInput
           placeholder="Search labels..."
           value={searchText}
-          onChange={(e) => setSearchText(e.current.target)}
+          onChange={(e) => setSearchText(e.target.value)}
         ></SearchInput>
       </Header>
 
-      <List>
-        <CreateLabelListRow></CreateLabelListRow>
+      <CreateLabelListRow></CreateLabelListRow>
 
-        {Object.keys(labels).map((lid) => {
+      <List>
+        {filteredLabels.map((lid) => {
           const label = labels[lid];
 
           return (

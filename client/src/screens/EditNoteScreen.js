@@ -53,21 +53,19 @@ const EditNoteScreen = ({ className, notes }) => {
         ></AddLabelsIcon>
       </Header>
 
-      <NoteEditorContainer>
-        <StyledNoteEditor
-          nid={nid}
-          richTextEnabled={richTextEnabled}
-          RichTextEditor={StyledRichTextEditor}
-        >
-          {(title, body) => (
-            <StyledRichTextEditor
-              editorState={body.editorState}
-              setEditorState={body.setEditorState}
-              enabled={richTextEnabled}
-            ></StyledRichTextEditor>
-          )}
-        </StyledNoteEditor>
-      </NoteEditorContainer>
+      <StyledNoteEditor
+        nid={nid}
+        richTextEnabled={richTextEnabled}
+        RichTextEditor={StyledRichTextEditor}
+      >
+        {(title, body) => (
+          <StyledRichTextEditor
+            editorState={body.editorState}
+            setEditorState={body.setEditorState}
+            enabled={richTextEnabled}
+          ></StyledRichTextEditor>
+        )}
+      </StyledNoteEditor>
 
       <Footer>
         <AddContentIcon
@@ -100,17 +98,12 @@ const AddLabelsIcon = styled(Icon)`
   margin-right: 10px;
 `;
 
-const NoteEditorContainer = styled.div`
-  flex: 1;
-`;
-
 const StyledNoteEditor = styled(NoteEditor)`
   position: relative;
   top: ${(props) => (props.richTextEnabled ? Header.height : 0)}px;
   transition: top 0.4s, height 0.4s;
-  height: ${(props) =>
-    600 - (Header.height + 55) - (props.richTextEnabled ? Header.height : 0)}px;
   overflow-y: auto;
+  flex: 1;
 `;
 
 const StyledRichTextEditor = styled(RichTextEditor)`

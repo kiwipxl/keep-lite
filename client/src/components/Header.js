@@ -30,28 +30,28 @@ const Header = ({ className, children, variant, backButton, title }) => {
 
 const BaseHeader = styled.div`
   margin: 10px;
+  margin-top: 0px;
+  margin-bottom: 0px;
   display: flex;
   align-items: center;
+  height: 100%;
 `;
 
-const ElevatedHeader = styled.div`
-  margin: 10px;
+const ElevatedHeader = styled(BaseHeader)`
+  position: relative;
+  top: 5px;
+  height: calc(100% - 10px);
   background-color: ${(props) =>
     props.theme.elevate02dp(props.theme.surfaceColor)};
   border-radius: 5px;
-
-  display: flex;
-  align-items: center;
 `;
 
 const BackIcon = styled(Icon)`
-  margin: 5px;
-  margin-left: 10px;
+  flex: 0.1;
   margin-right: 10px;
 `;
 
 const Title = styled.div`
-  height: 100%;
   font-size: 16px;
   flex: 1;
 `;
@@ -60,8 +60,8 @@ Header.height = 40;
 
 export default styled(Header)`
   width: 100%;
-  height: 40px;
+  height: 50px;
   position: relative;
-  background-color: ${(props) => props.theme.backgroundColor};
+  background-color: ${(props) => props.theme.surfaceColor};
   z-index: 5;
 `;
