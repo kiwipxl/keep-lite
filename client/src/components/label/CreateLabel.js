@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { AiOutlinePlus } from "react-icons/ai";
 import { ImCross } from "react-icons/im";
 import { BsCheck } from "react-icons/bs";
@@ -18,7 +18,7 @@ const CreateLabel = ({ className, onSelectChange }) => {
     if (selected) {
       inputRef.current.focus();
     }
-  }, [selected]);
+  }, [selected, inputRef]);
 
   function select() {
     setSelected(true);

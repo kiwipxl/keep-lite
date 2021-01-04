@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import chroma from "chroma-js";
 import Button from "./Button";
 import { usePreventMouseDown } from "./util";
 

@@ -1,5 +1,4 @@
 import React from "react";
-import styled from "styled-components";
 
 const Checkbox = React.forwardRef((props, ref) => {
   const { className, children, checked, disabled, onClick } = props;

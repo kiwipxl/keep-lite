@@ -23,7 +23,7 @@ const NoteEditor = ({ className, nid, children }) => {
     if (bodyRef.current) {
       bodyRef.current.focus();
     }
-  }, []);
+  });
 
   return (
     <div className={className}>

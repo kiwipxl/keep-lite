@@ -17,7 +17,6 @@ const MainScreen = ({ className }) => {
   const routerHistory = useHistory();
   const notes = useSelector((state) => state.notes);
   const dispatch = useDispatch();
-  const inpRef = React.createRef();
 
   function openSidebar() {
     setSidebarOpen(true);

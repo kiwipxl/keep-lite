@@ -7,7 +7,6 @@ import { BsCheck } from "react-icons/bs";
 import { MdLabelOutline } from "react-icons/md";
 import Icon from "../Icon";
 import Input from "../input/Input";
-import ListRow from "../nav/ListRow";
 import { deleteLabel, renameLabel } from "../../redux/actions";
 
 const EditableLabel = ({ className, id }) => {

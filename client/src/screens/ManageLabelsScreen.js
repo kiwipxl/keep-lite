@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 import Header from "../components/Header";
-import Icon from "../components/Icon";
 import List from "../components/nav/List";
 import ListRow from "../components/nav/ListRow";
 import EditableLabel from "../components/label/EditableLabel";
@@ -19,8 +18,6 @@ const ManageLabelsScreen = ({ className }) => {
 
       <StyledList>
         {Object.keys(labels).map((lid) => {
-          const label = labels[lid];
-
           return (
             <ListRow key={lid}>
               <StyledEditableLabel id={lid}></StyledEditableLabel>

@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { MdLabelOutline } from "react-icons/md";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Header from "../components/Header";
 import Icon from "../components/Icon";
 import Input from "../components/input/Input";
@@ -48,7 +48,7 @@ const AddLabelsScreen = ({ className }) => {
 
     if (searchText.length > 0) {
       // Nothing complicated, just a simple check to see if text exists in the name
-      if (label.name.toLowerCase().indexOf(searchText.toLowerCase()) == -1) {
+      if (label.name.toLowerCase().indexOf(searchText.toLowerCase()) === -1) {
         return false;
       }
     }
@@ -95,12 +95,6 @@ const AddLabelsScreen = ({ className }) => {
     </div>
   );
 };
-
-const BackIcon = styled(Icon)`
-  margin: 5px;
-  margin-left: 10px;
-  margin-right: 10px;
-`;
 
 const SearchInput = styled(Input)`
   height: 100%;

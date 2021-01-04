@@ -16,7 +16,7 @@ const AppContent = styled.div`
   position: relative;
   left: calc(50% - 200px);
   width: 400px;
-  height: 600px;
+  height: ${window.innerHeight}px;
   background-color: ${(props) => props.theme.backgroundColor};
   color: ${(props) => props.theme.onBackgroundColor};
 `;

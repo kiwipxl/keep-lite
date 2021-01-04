@@ -9,9 +9,8 @@ import Header from "../components/Header";
 import Icon from "../components/Icon";
 import NoteEditor from "../components/note/editor/NoteEditor";
 import RichTextEditor from "../components/note/editor/RichTextEditor";
-import App from "../App";
 
-const EditNoteScreen = ({ className, notes }) => {
+const EditNoteScreen = ({ className }) => {
   const [richTextEnabled, setRichTextEnabled] = React.useState(false);
   const routerHistory = useHistory();
   const { nid } = useParams();
@@ -22,7 +21,7 @@ const EditNoteScreen = ({ className, notes }) => {
       console.error(`note ${nid} not found`);
       routerHistory.replace("/404");
     }
-  }, []);
+  });
 
   if (!note) {
     return <div></div>;

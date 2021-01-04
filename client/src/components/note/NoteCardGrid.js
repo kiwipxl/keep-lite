@@ -13,7 +13,7 @@ const NoteCardGrid = ({ className, width, notes }) => {
     columns.push(
       <Column key={column} id={column}>
         {notes.map((note, index) => {
-          if (index % numColumns != column) {
+          if (index % numColumns !== column) {
             return null;
           }
 

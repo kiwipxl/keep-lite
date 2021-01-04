@@ -13,5 +13,5 @@ export const usePreventMouseDown = (ref, defaultEnabled) => {
         e.preventDefault();
       }
     });
-  }, []);
+  });
 };
