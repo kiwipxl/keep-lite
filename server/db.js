@@ -15,35 +15,69 @@ async function connect() {
 async function createNewDatabase() {
   const query = {
     text: `
+      DROP TABLE IF EXISTS image;
+      DROP TABLE IF EXISTS note_label;
       DROP TABLE IF EXISTS note;
       DROP TABLE IF EXISTS label;
-      DROP TABLE IF EXISTS image;
-
+      DROP TABLE IF EXISTS app_user;
+      
       DROP TYPE IF EXISTS NOTE_CATEGORY;
       CREATE TYPE NOTE_CATEGORY AS ENUM ('default', 'pinned', 'archived');
       
-      CREATE TABLE note (
-        id serial PRIMARY KEY, 
-        user_id INT NOT NULL, 
-        title VARCHAR(255), 
-        body TEXT NOT NULL, 
-        images INT[], 
-        labels INT[], 
-        category NOTE_CATEGORY DEFAULT 'default', 
-        created TIMESTAMPTZ NOT NULL, 
-        edited TIMESTAMPTZ NOT NULL
+      CREATE TABLE app_user (
+        id serial PRIMARY KEY
       );
       
       CREATE TABLE label (
-        id serial PRIMARY KEY, 
-        user_id INT NOT NULL, 
-        name VARCHAR(255) NOT NULL
+        id serial, 
+        user_id INT, 
+        name VARCHAR(255) NOT NULL, 
+      
+        PRIMARY KEY(id, user_id), 
+      
+        CONSTRAINT fk_user_id
+          FOREIGN KEY(user_id)
+            REFERENCES app_user(id)
+              ON DELETE CASCADE, 
+      
+        UNIQUE(user_id, name)
+      );
+      
+      CREATE TABLE note (
+        id serial, 
+        user_id INT, 
+        title VARCHAR(255), 
+        body TEXT, 
+        category NOTE_CATEGORY DEFAULT 'default', 
+        created TIMESTAMPTZ NOT NULL, 
+        edited TIMESTAMPTZ NOT NULL, 
+      
+        PRIMARY KEY(id, user_id), 
+      
+        CONSTRAINT fk_user_id
+          FOREIGN KEY(user_id)
+            REFERENCES app_user(id)
+              ON DELETE CASCADE
+      );
+      
+      CREATE TABLE note_label (
+        user_id INT, 
+        note_id INT, 
+        label_id INT, 
+      
+        CONSTRAINT fk_note_id
+          FOREIGN KEY(note_id, user_id)
+            REFERENCES note(id, user_id)
+              ON DELETE CASCADE, 
+      
+        CONSTRAINT fk_label_id
+          FOREIGN KEY(label_id, user_id)
+            REFERENCES label(id, user_id)
+              ON DELETE CASCADE
       );
       
       CREATE TABLE image (
         id serial PRIMARY KEY, 
-        user_id INT NOT NULL, 
-        note_id INT NOT NULL, 
         data bytea NOT NULL
       );
     `,
