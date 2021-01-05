@@ -1,15 +1,31 @@
 const { Pool } = require("pg");
+const process = require("process");
 
-const pool = new Pool();
+/*
+By default node-postgres uses the following environment variables to
+configure a connection.
+
+{
+  user: process.env.PGUSER,
+  host: process.env.PGHOST,
+  database: process.env.PGDATABASE, 
+  password: process.env.PGPASSWORD, 
+  port: process.env.PGPORT
+}
+*/
+let client = new Pool();
 
 module.exports = {
-  db: pool,
+  db: client,
   connect,
   createNewDatabase,
 };
 
 async function connect() {
-  return await pool.connect();
+  console.log(
+    `connecting to database '${process.env.PGDATABASE}' at ${process.env.PGHOST}:${process.env.PGPORT}`
+  );
+  return await client.connect();
 }
 
 async function createNewDatabase() {
@@ -57,7 +73,9 @@ async function createNewDatabase() {
         CONSTRAINT fk_user_id
           FOREIGN KEY(user_id)
             REFERENCES app_user(id)
-              ON DELETE CASCADE
+              ON DELETE CASCADE, 
+        
+        UNIQUE(user_id, id)
       );
       
       CREATE TABLE note_label (
@@ -73,7 +91,9 @@ async function createNewDatabase() {
         CONSTRAINT fk_label_id
           FOREIGN KEY(label_id, user_id)
             REFERENCES label(id, user_id)
-              ON DELETE CASCADE
+              ON DELETE CASCADE, 
+        
+        UNIQUE(user_id, note_id, label_id)
       );
       
       CREATE TABLE image (
@@ -83,5 +103,5 @@ async function createNewDatabase() {
     `,
   };
 
-  return await pool.query(query);
+  return await client.query(query);
 }
