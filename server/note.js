@@ -31,8 +31,12 @@ async function editNoteTitle(user, noteId, title) {
     values: [user.id, noteId, title],
   };
 
-  const note = (await db.query(query)).rows[0];
-  return note;
+  const res = await db.query(query);
+  if (res.rowCount === 0) {
+    throw new Error(`note id ${id} does not exist`);
+  }
+
+  return res.rows[0];
 }
 
 async function editNoteBody(user, noteId, body) {
@@ -45,8 +49,12 @@ async function editNoteBody(user, noteId, body) {
     values: [user.id, noteId, body],
   };
 
-  const note = (await db.query(query)).rows[0];
-  return note;
+  const res = await db.query(query);
+  if (res.rowCount === 0) {
+    throw new Error(`note id ${id} does not exist`);
+  }
+
+  return res.rows[0];
 }
 
 async function deleteNote(user, id) {
@@ -55,7 +63,10 @@ async function deleteNote(user, id) {
     values: [user.id, id],
   };
 
-  await db.query(query);
+  const res = await db.query(query);
+  if (res.rowCount === 0) {
+    throw new Error(`note id ${id} does not exist`);
+  }
 }
 
 async function getNote(user, id) {
@@ -64,7 +75,12 @@ async function getNote(user, id) {
     values: [user.id, id],
   };
 
-  return (await db.query(query)).rows[0];
+  const res = await db.query(query);
+  if (res.rows.length === 0) {
+    throw new Error(`note id ${id} does not exist`);
+  }
+
+  return res.rows[0];
 }
 
 async function getRecentNotes(user, limit) {

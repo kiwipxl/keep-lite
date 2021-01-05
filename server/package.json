@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "set PGUSER=postgres&& set PGHOST=localhost&& set PGDATABASE=postgres&& set PGPORT=5432&& set PGPASSWORD=lol&& node index.js",
-    "test": "set PGUSER=postgres&& set PGHOST=localhost&& set PGDATABASE=testing&& set PGPORT=5432&& set PGPASSWORD=&& jest --watch --runInBand"
+    "start": "set PGUSER=postgres&& set PGHOST=localhost&& set PGDATABASE=postgres&& set PGPORT=5432&& node index.js",
+    "test": "set PGUSER=postgres&& set PGHOST=localhost&& set PGDATABASE=testing&& set PGPORT=5432&& jest --watch --runInBand"
   },
   "author": "",
   "license": "ISC",

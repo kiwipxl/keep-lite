@@ -72,7 +72,10 @@ test("Database functionality stress test", async () => {
     addLabelToNote(user, note1.id, meditationLabel.id)
   ).rejects.toThrow();
 
-  // Can't do operations on notes/labels that doesn't exist
+  // Can't add label name that already exists
+  await expect(createLabel(user, meditationLabel.name)).rejects.toThrow();
+
+  // Can't do operations on notes/labels that don't exist
   await expect(getNote(user, 100)).rejects.toThrow();
   await expect(deleteNote(user, 100)).rejects.toThrow();
   await expect(editNoteBody(user, 100, "")).rejects.toThrow();

@@ -39,8 +39,12 @@ async function renameLabel(user, labelId, name) {
     values: [user.id, labelId, name],
   };
 
-  const label = (await db.query(query)).rows[0];
-  return label;
+  const res = await db.query(query);
+  if (res.rowCount === 0) {
+    throw new Error(`note id ${id} does not exist`);
+  }
+
+  return res.rows[0];
 }
 
 async function deleteLabel(user, id) {
@@ -49,7 +53,10 @@ async function deleteLabel(user, id) {
     values: [user.id, id],
   };
 
-  await db.query(query);
+  const res = await db.query(query);
+  if (res.rowCount === 0) {
+    throw new Error(`note id ${id} does not exist`);
+  }
 }
 
 async function getLabel(user, id) {
@@ -58,7 +65,12 @@ async function getLabel(user, id) {
     values: [user.id, id],
   };
 
-  return (await db.query(query)).rows;
+  const res = await db.query(query);
+  if (res.rows.length === 0) {
+    throw new Error(`note id ${id} does not exist`);
+  }
+
+  return res.rows[0];
 }
 
 async function getAllLabels(user) {
