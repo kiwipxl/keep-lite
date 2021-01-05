@@ -1,8 +1,12 @@
 const { PG_UNDEFINED_TABLE } = require("@drdgvhbh/postgres-error-codes");
 const { db, connect, createNewDatabase } = require("./db");
-const { createUser } = require("./user");
+const { ApolloServer } = require("apollo-server");
+const schema = require("./schema");
 
-(async () => {
+const server = new ApolloServer({ typeDefs: schema });
+server.listen().then(async () => {
+  console.log("server is running on port 4000!");
+
   await connect();
 
   try {
@@ -15,9 +19,4 @@ const { createUser } = require("./user");
       throw err;
     }
   }
-
-  const user = await createUser();
-  console.log(user);
-
-  console.log("done");
-})();
+});
