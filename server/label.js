@@ -26,13 +26,17 @@ async function getNoteLabels(user, noteId) {
   const query = {
     text: `
       SELECT * FROM note_label
-      WHERE user_id = $1 note_id = $2`,
+      WHERE user_id = $1 AND note_id = $2`,
     values: [user.id, noteId],
   };
 
   const res = await db.query(query);
-  console.log(res.rows);
-  return [];
+
+  const labels = [];
+  for (const row of res.rows) {
+    labels.push(await getLabel(user, row.label_id));
+  }
+  return labels;
 }
 
 async function createLabel(user, name) {
@@ -79,7 +83,7 @@ async function deleteLabel(user, id) {
 
 async function getLabel(user, id) {
   const query = {
-    text: "SELECT * from label WHERE user_id = $1 AND id = $2",
+    text: "SELECT * FROM label WHERE user_id = $1 AND id = $2",
     values: [user.id, id],
   };
 
@@ -93,7 +97,7 @@ async function getLabel(user, id) {
 
 async function getLabels(user) {
   const query = {
-    text: "SELECT * from label WHERE user_id = $1",
+    text: "SELECT * FROM label WHERE user_id = $1",
     values: [user.id],
   };
 

@@ -10,6 +10,7 @@ const {
   renameLabel,
   deleteLabel,
   getLabels,
+  getNoteLabels,
   addLabelToNote,
 } = require("./label");
 
@@ -35,9 +36,10 @@ module.exports = {
     setNoteContent: async (_, { id, title, body }, { user }) =>
       setNoteContent(user, id, title, body),
     setNoteLabels: async (_, { id, labels }, { user }) => {
-      for (const label of labels) {
-        addLabelToNote(user, id, label.id);
+      for (const labelId of labels) {
+        addLabelToNote(user, id, labelId);
       }
+      return getNote(user, id);
     },
     deleteNote: async (_, { id }, { user }) => deleteNote(user, id),
   },
