@@ -1,17 +1,12 @@
 import {
-  // Notes
   ADD_NOTE,
   SET_NOTE_TITLE,
   SET_NOTE_BODY,
   ADD_NOTE_LABEL,
   REMOVE_NOTE_LABEL,
-  // Labels
-  CREATE_LABEL,
-  DELETE_LABEL,
-  RENAME_LABEL,
-} from "./actions";
+} from "../actions/notes";
 
-export const note = (state = {}, action) => {
+const note = (state = {}, action) => {
   switch (action.type) {
     case SET_NOTE_TITLE:
       return {
@@ -48,7 +43,7 @@ export const note = (state = {}, action) => {
   }
 };
 
-export const notes = (state = {}, action) => {
+export default (state = {}, action) => {
   const nid = (action.payload && action.payload.id) || -1;
 
   switch (action.type) {
@@ -70,48 +65,6 @@ export const notes = (state = {}, action) => {
         ...state,
         [nid]: {
           ...note(state[nid], action),
-        },
-      };
-
-    default:
-      return state;
-  }
-};
-
-const initialLabelState = {
-  1: {
-    name: "Art",
-  },
-  2: {
-    name: "Art/Drawing",
-  },
-  3: {
-    name: "Science",
-  },
-  4: {
-    name: "Philosophy",
-  },
-};
-
-export const labels = (state = initialLabelState, action) => {
-  switch (action.type) {
-    case CREATE_LABEL:
-      return {
-        ...state,
-        [action.payload.id]: { name: action.payload.name },
-      };
-
-    case DELETE_LABEL:
-      // Remove label from state via computed object properties
-      let { [action.payload.id]: _, ...newState } = state;
-      return newState;
-
-    case RENAME_LABEL:
-      return {
-        ...state,
-        [action.payload.id]: {
-          ...state[action.payload.id],
-          name: action.payload.name,
         },
       };
 

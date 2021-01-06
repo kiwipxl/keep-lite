@@ -7,7 +7,7 @@ import { BsCheck } from "react-icons/bs";
 import { MdLabelOutline } from "react-icons/md";
 import Icon from "../Icon";
 import Input from "../input/Input";
-import { deleteLabel, renameLabel } from "../../redux/actions";
+import { deleteLabel, renameLabel } from "../../redux/actions/labels";
 
 const EditableLabel = ({ className, id }) => {
   const [editing, setEditing] = React.useState(false);

@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { useQuery, gql } from "@apollo/client";
 import { MdAccountCircle, MdMenu } from "react-icons/md";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
@@ -9,7 +10,7 @@ import Icon from "../components/Icon";
 import Button from "../components/input/Button";
 import Input from "../components/input/Input";
 import MainSidebar from "../components/nav/MainSidebar";
-import { addNote } from "../redux/actions";
+import { addNote } from "../redux/actions/notes";
 
 const MainScreen = ({ className }) => {
   const [sidebarOpen, setSidebarOpen] = React.useState(false);

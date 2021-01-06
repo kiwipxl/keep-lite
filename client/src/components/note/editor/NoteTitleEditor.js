@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import "draft-js/dist/Draft.css";
 import Editor from "@draft-js-plugins/editor";
-import { setNoteTitle } from "../../../redux/actions";
+import { setNoteTitle } from "../../../redux/actions/notes";
 
 const NoteTitleEditor = (props) => {
   const { className, nid, forwardedRef } = props;

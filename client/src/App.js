@@ -1,15 +1,16 @@
 import React from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
 import styled from "styled-components";
 import { ThemeProvider } from "styled-components";
 import store from "./redux/store";
+import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import { Provider } from "react-redux";
 import theme from "./theme";
-import MainScreen from "./screens/MainScreen";
-import EditNoteScreen from "./screens/EditNoteScreen";
-import NotFoundScreen from "./screens/NotFoundScreen";
-import AddLabelsScreen from "./screens/AddLabelsScreen";
-import ManageLabelsScreen from "./screens/ManageLabelsScreen";
+import AppRouter from "./AppRouter";
+
+const apolloClient = new ApolloClient({
+  cache: new InMemoryCache(),
+  uri: "http://localhost:4000/graphql",
+});
 
 const AppContent = styled.div`
   overflow: hidden;
@@ -23,35 +24,15 @@ const AppContent = styled.div`
 
 function App() {
   return (
-    <BrowserRouter>
-      <Provider store={store}>
-        <ThemeProvider theme={theme}>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <ApolloProvider client={apolloClient}>
           <AppContent>
-            <Switch>
-              <Route exact path="/note/:nid/labels">
-                <AddLabelsScreen></AddLabelsScreen>
-              </Route>
-
-              <Route exact path="/note/:nid">
-                <EditNoteScreen></EditNoteScreen>
-              </Route>
-
-              <Route exact path="/labels/edit">
-                <ManageLabelsScreen></ManageLabelsScreen>
-              </Route>
-
-              <Route exact path="/">
-                <MainScreen></MainScreen>
-              </Route>
-
-              <Route>
-                <NotFoundScreen></NotFoundScreen>
-              </Route>
-            </Switch>
+            <AppRouter></AppRouter>
           </AppContent>
-        </ThemeProvider>
-      </Provider>
-    </BrowserRouter>
+        </ApolloProvider>
+      </ThemeProvider>
+    </Provider>
   );
 }
 

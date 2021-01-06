@@ -12,7 +12,7 @@ import {
 } from "@draft-js-plugins/buttons";
 import "@draft-js-plugins/linkify/lib/plugin.css";
 import "@draft-js-plugins/inline-toolbar/lib/plugin.css";
-import { setNoteBody } from "../../../redux/actions";
+import { setNoteBody } from "../../../redux/actions/notes";
 
 const inlineToolbarPlugin = createInlineToolbarPlugin();
 const { InlineToolbar } = inlineToolbarPlugin;

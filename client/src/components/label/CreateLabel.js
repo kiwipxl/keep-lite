@@ -6,7 +6,7 @@ import { ImCross } from "react-icons/im";
 import { BsCheck } from "react-icons/bs";
 import Icon from "../Icon";
 import Input from "../input/Input";
-import { createLabel } from "../../redux/actions";
+import { createLabel } from "../../redux/actions/labels";
 
 const CreateLabel = ({ className, onSelectChange }) => {
   const inputRef = React.createRef();

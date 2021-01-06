@@ -10,7 +10,7 @@ import Checkbox from "../components/input/Checkbox";
 import List from "../components/nav/List";
 import ListRow from "../components/nav/ListRow";
 import CreateLabelListRow from "../components/label/CreateLabelListRow";
-import { addNoteLabel, removeNoteLabel } from "../redux/actions";
+import { addNoteLabel, removeNoteLabel } from "../redux/actions/notes";
 
 const AddLabelsScreen = ({ className }) => {
   const [searchText, setSearchText] = React.useState("");
