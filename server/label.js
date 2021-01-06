@@ -5,6 +5,7 @@ module.exports = {
   createLabel,
   renameLabel,
   deleteLabel,
+  getLabel,
   getAllLabels,
 };
 
@@ -41,7 +42,7 @@ async function renameLabel(user, labelId, name) {
 
   const res = await db.query(query);
   if (res.rowCount === 0) {
-    throw new Error(`note id ${id} does not exist`);
+    throw new Error(`label id ${id} does not exist`);
   }
 
   return res.rows[0];
@@ -55,7 +56,7 @@ async function deleteLabel(user, id) {
 
   const res = await db.query(query);
   if (res.rowCount === 0) {
-    throw new Error(`note id ${id} does not exist`);
+    throw new Error(`label id ${id} does not exist`);
   }
 }
 
@@ -67,7 +68,7 @@ async function getLabel(user, id) {
 
   const res = await db.query(query);
   if (res.rows.length === 0) {
-    throw new Error(`note id ${id} does not exist`);
+    throw new Error(`label id ${id} does not exist`);
   }
 
   return res.rows[0];

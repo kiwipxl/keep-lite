@@ -29,6 +29,8 @@ module.exports = gql`
   }
 
   type Query {
+    #getAllLabels(): [Label!]!
+    getLabel(id: ID!): Label
     me: User
   }
 
