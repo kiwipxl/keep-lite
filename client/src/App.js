@@ -2,15 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import { ThemeProvider } from "styled-components";
 import store from "./redux/store";
-import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
+import { ApolloProvider } from "@apollo/client";
 import { Provider } from "react-redux";
 import theme from "./theme";
 import AppRouter from "./AppRouter";
-
-const apolloClient = new ApolloClient({
-  cache: new InMemoryCache(),
-  uri: "http://localhost:4000/graphql",
-});
+import gqlClient from "./gqlClient";
 
 const AppContent = styled.div`
   overflow: hidden;
@@ -26,7 +22,7 @@ function App() {
   return (
     <Provider store={store}>
       <ThemeProvider theme={theme}>
-        <ApolloProvider client={apolloClient}>
+        <ApolloProvider client={gqlClient}>
           <AppContent>
             <AppRouter></AppRouter>
           </AppContent>

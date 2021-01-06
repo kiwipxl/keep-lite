@@ -1,9 +1,10 @@
 const { PG_UNDEFINED_TABLE } = require("@drdgvhbh/postgres-error-codes");
+const express = require("express");
+const { ApolloServer } = require("apollo-server-express");
 const { db, connect, createNewDatabase } = require("./db");
-const { ApolloServer } = require("apollo-server");
 const schema = require("./schema");
 const resolvers = require("./resolvers");
-const user = require("./user");
+const auth = require("./auth");
 
 const context = async ({ req }) => {
   return {
@@ -21,7 +22,12 @@ const server = new ApolloServer({
   playground: true,
 });
 
-server.listen().then(async () => {
+const app = express();
+server.applyMiddleware({ app });
+
+auth.use(app);
+
+app.listen({ port: 4000 }, async () => {
   console.log("server is running on port 4000!");
 
   await connect();
@@ -36,6 +42,4 @@ server.listen().then(async () => {
       throw err;
     }
   }
-
-  await user.createUser();
 });

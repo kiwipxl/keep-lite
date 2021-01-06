@@ -39,14 +39,21 @@ async function createNewDatabase() {
       
       DROP TYPE IF EXISTS NOTE_CATEGORY;
       CREATE TYPE NOTE_CATEGORY AS ENUM ('default', 'pinned', 'archived');
-      
+
+      DROP TYPE IF EXISTS AUTH_PROVIDER;
+      CREATE TYPE AUTH_PROVIDER AS ENUM ('google');
+
       CREATE TABLE app_user (
-        id serial PRIMARY KEY
+        id VARCHAR(128) PRIMARY KEY, 
+        auth_provider AUTH_PROVIDER NOT NULL, 
+        email VARCHAR(255) NOT NULL, 
+        name VARCHAR(255), 
+        created TIMESTAMPTZ NOT NULL
       );
       
       CREATE TABLE label (
         id serial, 
-        user_id INT NOT NULL, 
+        user_id VARCHAR(128) NOT NULL, 
         name VARCHAR(255) NOT NULL, 
       
         PRIMARY KEY(id, user_id), 
@@ -61,7 +68,7 @@ async function createNewDatabase() {
       
       CREATE TABLE note (
         id serial, 
-        user_id INT NOT NULL, 
+        user_id VARCHAR(128) NOT NULL, 
         title VARCHAR(255), 
         body TEXT, 
         category NOTE_CATEGORY DEFAULT 'default', 
@@ -79,7 +86,7 @@ async function createNewDatabase() {
       );
       
       CREATE TABLE note_label (
-        user_id INT NOT NULL, 
+        user_id VARCHAR(128) NOT NULL, 
         note_id INT NOT NULL, 
         label_id INT NOT NULL, 
       
