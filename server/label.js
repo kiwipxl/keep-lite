@@ -2,11 +2,12 @@ const { db } = require("./db");
 
 module.exports = {
   addLabelToNote,
+  getNoteLabels,
   createLabel,
   renameLabel,
   deleteLabel,
   getLabel,
-  getAllLabels,
+  getLabels,
 };
 
 async function addLabelToNote(user, noteId, labelId) {
@@ -17,7 +18,21 @@ async function addLabelToNote(user, noteId, labelId) {
     values: [user.id, noteId, labelId],
   };
 
-  await db.query(query);
+  const res = await db.query(query);
+  return res.rowCount > 0;
+}
+
+async function getNoteLabels(user, noteId) {
+  const query = {
+    text: `
+      SELECT * FROM note_label
+      WHERE user_id = $1 note_id = $2`,
+    values: [user.id, noteId],
+  };
+
+  const res = await db.query(query);
+  console.log(res.rows);
+  return [];
 }
 
 async function createLabel(user, name) {
@@ -26,8 +41,12 @@ async function createLabel(user, name) {
     values: [user.id, name],
   };
 
-  const label = (await db.query(query)).rows[0];
-  return label;
+  const res = await db.query(query);
+  if (res.rowCount === 0) {
+    return null;
+  }
+
+  return res.rows[0];
 }
 
 async function renameLabel(user, labelId, name) {
@@ -42,7 +61,7 @@ async function renameLabel(user, labelId, name) {
 
   const res = await db.query(query);
   if (res.rowCount === 0) {
-    throw new Error(`label id ${id} does not exist`);
+    return null;
   }
 
   return res.rows[0];
@@ -55,9 +74,7 @@ async function deleteLabel(user, id) {
   };
 
   const res = await db.query(query);
-  if (res.rowCount === 0) {
-    throw new Error(`label id ${id} does not exist`);
-  }
+  return res.rowCount > 0;
 }
 
 async function getLabel(user, id) {
@@ -67,18 +84,19 @@ async function getLabel(user, id) {
   };
 
   const res = await db.query(query);
-  if (res.rows.length === 0) {
-    throw new Error(`label id ${id} does not exist`);
+  if (res.rowCount === 0) {
+    return null;
   }
 
   return res.rows[0];
 }
 
-async function getAllLabels(user) {
+async function getLabels(user) {
   const query = {
     text: "SELECT * from label WHERE user_id = $1",
     values: [user.id],
   };
 
-  return (await db.query(query)).rows;
+  const res = await db.query(query);
+  return res.rows;
 }

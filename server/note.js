@@ -1,60 +1,46 @@
 const { db } = require("./db");
+const { getNoteLabels } = require("./label");
 
 module.exports = {
   createNote,
-  editNoteTitle,
-  editNoteBody,
+  setNoteContent,
   deleteNote,
   getNote,
   getRecentNotes,
 };
 
-async function createNote(user) {
+async function createNote(user, title, body) {
   const query = {
     text: `
-      INSERT INTO note(user_id, created, edited)
-      VALUES($1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP) RETURNING *`,
-    values: [user.id],
-  };
-
-  const note = (await db.query(query)).rows[0];
-  return note;
-}
-
-async function editNoteTitle(user, noteId, title) {
-  const query = {
-    text: `
-      UPDATE note SET edited = CURRENT_TIMESTAMP, title = $3
-      WHERE user_id = $1 AND id = $2
-      RETURNING *
-    `,
-    values: [user.id, noteId, title],
+      INSERT INTO note(user_id, title, body, created, edited)
+      VALUES($1, $2, $3, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP) RETURNING *`,
+    values: [user.id, title, body],
   };
 
   const res = await db.query(query);
   if (res.rowCount === 0) {
-    throw new Error(`note id ${id} does not exist`);
+    return null;
   }
 
-  return res.rows[0];
+  return buildNote(user, res.rows[0]);
 }
 
-async function editNoteBody(user, noteId, body) {
+async function setNoteContent(user, noteId, title, body) {
   const query = {
     text: `
-      UPDATE note SET edited = CURRENT_TIMESTAMP, body = $3
+      UPDATE note SET edited = CURRENT_TIMESTAMP, title = $3, body = $4
       WHERE user_id = $1 AND id = $2
       RETURNING *
     `,
-    values: [user.id, noteId, body],
+    values: [user.id, noteId, title, body],
   };
 
   const res = await db.query(query);
   if (res.rowCount === 0) {
-    throw new Error(`note id ${id} does not exist`);
+    return null;
   }
 
-  return res.rows[0];
+  return buildNote(user, res.rows[0]);
 }
 
 async function deleteNote(user, id) {
@@ -64,9 +50,7 @@ async function deleteNote(user, id) {
   };
 
   const res = await db.query(query);
-  if (res.rowCount === 0) {
-    throw new Error(`note id ${id} does not exist`);
-  }
+  return res.rowCount > 0;
 }
 
 async function getNote(user, id) {
@@ -76,11 +60,11 @@ async function getNote(user, id) {
   };
 
   const res = await db.query(query);
-  if (res.rows.length === 0) {
-    throw new Error(`note id ${id} does not exist`);
+  if (res.rowCount === 0) {
+    return null;
   }
 
-  return res.rows[0];
+  return buildNote(user, res.rows[0]);
 }
 
 async function getRecentNotes(user, limit) {
@@ -89,5 +73,12 @@ async function getRecentNotes(user, limit) {
     values: [user.id, limit],
   };
 
-  return (await db.query(query)).rows;
+  const res = await db.query(query);
+  let notes = res.rows.map((dbNote) => buildNote(user, dbNote));
+  return notes;
+}
+
+function buildNote(user, note) {
+  note.labels = getNoteLabels(user, note.id);
+  return note;
 }
