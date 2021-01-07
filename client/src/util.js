@@ -1,4 +1,8 @@
 // Merges an array of objects into a single object
-function mergeArrayObjects(arr) {
+export function mergeObjectArrayToObject(arr) {
+  if (arr.length === 0) {
+    return {};
+  }
+
   return arr.reduce((res, item) => Object.assign(res, item));
 }

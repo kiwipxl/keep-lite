@@ -1,4 +1,5 @@
 import { CREATE_LABEL, DELETE_LABEL, RENAME_LABEL } from "../actions/labels";
+import { AUTH_LOGIN } from "../actions/auth";
 
 const initialState = {
   1: {
@@ -36,6 +37,16 @@ export default (state = initialState, action) => {
           name: action.payload.name,
         },
       };
+
+    case AUTH_LOGIN: {
+      let res = { ...state };
+
+      for (const label of action.payload.labels) {
+        res[label.id] = label;
+      }
+
+      return res;
+    }
 
     default:
       return state;
