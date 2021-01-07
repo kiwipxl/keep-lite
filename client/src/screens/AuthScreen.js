@@ -3,8 +3,9 @@ import styled from "styled-components";
 import { useQuery, gql } from "@apollo/client";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-// import { login } from "../redux/actions/auth";
+import * as auth from "../redux/actions/auth";
 import gqlClient from "../gqlClient";
+import Button from "../components/input/Button";
 
 async function login() {
   const res = await gqlClient.query({
@@ -41,7 +42,23 @@ const AuthScreen = ({ className }) => {
   const routerHistory = useHistory();
   const dispatch = useDispatch();
 
-  return <div className={className}></div>;
+  function login(authProvider) {
+    // TODO: replace localhost url
+    window.open(`http://localhost:4000/auth/${authProvider}`);
+
+    window.onmessage = (ev) => {
+      if (ev.data && ev.data.id) {
+        dispatch(auth.login(ev.data));
+        window.onmessage = null;
+      }
+    };
+  }
+
+  return (
+    <div className={className}>
+      <Button onClick={() => login("google")}>Sign in with Google</Button>
+    </div>
+  );
 };
 
 export default styled(AuthScreen)``;

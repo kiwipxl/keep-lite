@@ -41,5 +41,13 @@ async function getUser(id) {
     return null;
   }
 
-  return res.rows[0];
+  const user = res.rows[0];
+
+  return {
+    id: user.id,
+    authProvider: user.auth_provider,
+    email: user.email,
+    name: user.name,
+    created: user.created,
+  };
 }

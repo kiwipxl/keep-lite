@@ -14,7 +14,12 @@ passport.use(
       let user = await getUser(profile.id);
 
       if (!user) {
-        user = await createUser(profile.id, "google", "", profile.displayName);
+        user = await createUser(
+          profile.id,
+          "google",
+          profile.emails[0].value,
+          profile.displayName
+        );
       }
 
       done(null, user);
@@ -35,6 +40,24 @@ passport.deserializeUser(async (userId, done) => {
   done(user ? null : `No user could be found with id ${userId}`, user);
 });
 
+const genCallbackHTML = (message) => {
+  return `
+    <html>
+    <head>
+    <script>
+    window.opener.postMessage(${message}, '*');
+    console.log('posted message to parent window');
+    window.close();
+    </script>
+    </head>
+
+    <body>
+    ${message}
+    </body>
+    </html>
+    `;
+};
+
 module.exports.use = (app) => {
   app.use(passport.initialize());
   app.use(passport.session());
@@ -42,22 +65,32 @@ module.exports.use = (app) => {
   app.get(
     "/auth/google",
     passport.authenticate("google", {
-      scope: ["https://www.googleapis.com/auth/plus.login"],
+      scope: [
+        "https://www.googleapis.com/auth/plus.login",
+        "https://www.googleapis.com/auth/userinfo.email",
+      ],
     })
   );
 
   app.get(
     "/auth/google/callback",
     passport.authenticate("google", {
-      failureRedirect: "/error",
+      failureRedirect: "/auth/error",
     }),
     (req, res) => {
-      // res.redirect("/");
-      res.send(req.user);
+      res.send(genCallbackHTML(JSON.stringify(req.user)));
     }
   );
 
   app.get("/", (req, res, next) => {
     res.send("hello world!");
+  });
+
+  app.get("/auth/error", (req, res, next) => {
+    res.send(
+      genCallbackHTML(
+        JSON.stringify({ error: "Authentication error occurred" })
+      )
+    );
   });
 };
