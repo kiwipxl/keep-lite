@@ -1,12 +1,13 @@
 const { PG_UNDEFINED_TABLE } = require("@drdgvhbh/postgres-error-codes");
 const express = require("express");
-const { ApolloServer } = require("apollo-server-express");
+const { ApolloServer, AuthenticationError } = require("apollo-server-express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const { db, connect, createNewDatabase } = require("./db");
 const schema = require("./schema");
 const resolvers = require("./resolvers");
 const auth = require("./auth");
+const { createTestUser } = require("./user");
 
 const context = async ({ req }) => {
   const user = await auth.getUserFromReq(req);
@@ -50,4 +51,6 @@ app.listen({ port: 4000 }, async () => {
       throw err;
     }
   }
+
+  await createTestUser();
 });

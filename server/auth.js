@@ -2,13 +2,12 @@ const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
 const credentials = require("./google-credentials.json");
 const { createUser, getUser } = require("./user");
+const session = require("./auth_session");
 
 module.exports = {
   use,
   getUserFromReq,
 };
-
-const userAccessTokens = {};
 
 passport.use(
   new GoogleStrategy(
@@ -34,13 +33,13 @@ passport.use(
       // If token already exists for this particular user, delete it.
       // This is to prevent stale tokens being kept around when a new
       // access token is generated.
-      Object.keys(userAccessTokens).forEach((token) => {
-        if (userAccessTokens[token] === user.id) {
-          delete userAccessTokens[token];
+      Object.keys(session).forEach((token) => {
+        if (session[token] === user.id) {
+          delete session[token];
         }
       });
 
-      userAccessTokens[accessToken] = user.id;
+      session[accessToken] = user.id;
 
       done(null, user);
     }
@@ -77,15 +76,15 @@ async function getUserFromReq(req) {
   if (token && token.startsWith("Bearer ")) {
     token = token.substring(7);
 
-    if (token in userAccessTokens) {
-      return await getUser(userAccessTokens[token]);
+    if (token in session) {
+      return await getUser(session[token]);
     }
   }
 
   const authCookie = req.cookies.auth;
   if (authCookie) {
-    if (token in userAccessTokens) {
-      return await getUser(userAccessTokens[token]);
+    if (token in session) {
+      return await getUser(session[token]);
     }
   }
 

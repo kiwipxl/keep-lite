@@ -26,13 +26,14 @@ module.exports = {
   },
 
   Mutation: {
-    createLabel: async (_, { name }, { user }) => createLabel(user, name),
+    createLabel: async (_, { id, name }, { user }) =>
+      createLabel(user, id, name),
     renameLabel: async (_, { id, name }, { user }) =>
       renameLabel(user, id, name),
     deleteLabel: async (_, { id }, { user }) => deleteLabel(user, id),
 
-    createNote: async (_, { title, body }, { user }) =>
-      createNote(user, title, body),
+    createNote: async (_, { id, title, body }, { user }) =>
+      createNote(user, id, title, body),
     setNoteContent: async (_, { id, title, body }, { user }) =>
       setNoteContent(user, id, title, body),
     setNoteLabels: async (_, { id, labels }, { user }) => {

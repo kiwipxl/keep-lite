@@ -41,11 +41,11 @@ module.exports = gql`
   }
 
   type Mutation {
-    createLabel(name: String!): Label!
+    createLabel(id: ID, name: String!): Label!
     renameLabel(id: ID!, name: String!): Boolean
     deleteLabel(id: ID!): Boolean
 
-    createNote(title: String, body: String): Note!
+    createNote(id: ID, title: String, body: String): Note!
     setNoteContent(id: ID!, title: String, body: String): Note
     setNoteLabels(id: ID!, labels: [ID!]!): Note
     deleteNote(id: ID!): Boolean

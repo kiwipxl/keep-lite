@@ -1,5 +1,7 @@
 const { db } = require("./db");
 const { getNoteLabels } = require("./label");
+const { v4 } = require("uuid");
+const uuidv4 = v4;
 
 module.exports = {
   createNote,
@@ -9,12 +11,12 @@ module.exports = {
   getRecentNotes,
 };
 
-async function createNote(user, title, body) {
+async function createNote(user, id, title, body) {
   const query = {
     text: `
-      INSERT INTO note(user_id, title, body, created, edited)
-      VALUES($1, $2, $3, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP) RETURNING *`,
-    values: [user.id, title, body],
+      INSERT INTO note(user_id, id, title, body, created, edited)
+      VALUES($1, $2, $3, $4, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP) RETURNING *`,
+    values: [user.id, id || uuidv4(), title, body],
   };
 
   const res = await db.query(query);

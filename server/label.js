@@ -1,4 +1,6 @@
 const { db } = require("./db");
+const { v4 } = require("uuid");
+const uuidv4 = v4;
 
 module.exports = {
   addLabelToNote,
@@ -39,10 +41,10 @@ async function getNoteLabels(user, noteId) {
   return labels;
 }
 
-async function createLabel(user, name) {
+async function createLabel(user, id, name) {
   const query = {
-    text: "INSERT INTO label(user_id, name) VALUES($1, $2) RETURNING *",
-    values: [user.id, name],
+    text: "INSERT INTO label(user_id, id, name) VALUES($1, $2, $3) RETURNING *",
+    values: [user.id, id || uuidv4(), name],
   };
 
   const res = await db.query(query);
@@ -65,10 +67,10 @@ async function renameLabel(user, labelId, name) {
 
   const res = await db.query(query);
   if (res.rowCount === 0) {
-    return null;
+    return false;
   }
 
-  return res.rows[0];
+  return true;
 }
 
 async function deleteLabel(user, id) {

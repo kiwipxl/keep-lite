@@ -1,8 +1,12 @@
 const { db } = require("./db");
+const { createLabel } = require("./label");
+const { createNote } = require("./note");
+const session = require("./auth_session");
 
 module.exports = {
   createUser,
   getUser,
+  createTestUser,
 };
 
 async function createUser(id, authProvider, email, name) {
@@ -50,4 +54,26 @@ async function getUser(id) {
     name: user.name,
     created: user.created,
   };
+}
+
+async function createTestUser() {
+  const testUser = await createUser(
+    "TEST-USER",
+    "google",
+    "test@email.com",
+    "test name"
+  );
+
+  session["TEST-USER-TOKEN"] = testUser.id;
+
+  await createLabel({ id: testUser.id }, null, "Science");
+  await createLabel({ id: testUser.id }, null, "Psychology");
+
+  await createNote({ id: testUser.id }, null, "Test title", "test body");
+  await createNote(
+    { id: testUser.id },
+    null,
+    "Another note!",
+    "Isnt that grand."
+  );
 }

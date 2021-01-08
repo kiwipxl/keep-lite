@@ -52,7 +52,7 @@ async function createNewDatabase() {
       );
       
       CREATE TABLE label (
-        id serial, 
+        id VARCHAR(128) NOT NULL, 
         user_id VARCHAR(128) NOT NULL, 
         name VARCHAR(255) NOT NULL, 
       
@@ -67,7 +67,7 @@ async function createNewDatabase() {
       );
       
       CREATE TABLE note (
-        id serial, 
+        id VARCHAR(128) NOT NULL, 
         user_id VARCHAR(128) NOT NULL, 
         title VARCHAR(255), 
         body TEXT, 
@@ -87,8 +87,8 @@ async function createNewDatabase() {
       
       CREATE TABLE note_label (
         user_id VARCHAR(128) NOT NULL, 
-        note_id INT NOT NULL, 
-        label_id INT NOT NULL, 
+        note_id VARCHAR(128) NOT NULL, 
+        label_id VARCHAR(128) NOT NULL, 
       
         CONSTRAINT fk_note_id
           FOREIGN KEY(note_id, user_id)
