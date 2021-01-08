@@ -1,7 +1,7 @@
-const { db } = require("./db");
+const { db } = require("../db");
 const { createLabel } = require("./label");
 const { createNote } = require("./note");
-const session = require("./auth_session");
+const { addSession } = require("../auth/sessions");
 
 module.exports = {
   createUser,
@@ -64,7 +64,7 @@ async function createTestUser() {
     "test name"
   );
 
-  session["TEST-USER-TOKEN"] = testUser.id;
+  addSession(testUser.id, "TEST-USER-TOKEN");
 
   await createLabel({ id: testUser.id }, null, "Science");
   await createLabel({ id: testUser.id }, null, "Psychology");

@@ -4,7 +4,7 @@ const {
   deleteNote,
   getNote,
   getRecentNotes,
-} = require("./note");
+} = require("../data/note");
 const {
   createLabel,
   renameLabel,
@@ -12,7 +12,7 @@ const {
   getLabels,
   getNoteLabels,
   addLabelToNote,
-} = require("./label");
+} = require("../data/label");
 
 module.exports = {
   Query: {

@@ -15,6 +15,7 @@
     "apollo-server-express": "^2.19.1",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
+    "draft-js": "^0.11.7",
     "express": "^4.17.1",
     "jest": "^26.6.3",
     "passport": "^0.4.1",

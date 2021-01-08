@@ -1,7 +1,7 @@
-const { db } = require("./db");
-const { getNoteLabels } = require("./label");
 const { v4 } = require("uuid");
 const uuidv4 = v4;
+const { db } = require("../db");
+const { getNoteLabels } = require("./label");
 
 module.exports = {
   createNote,

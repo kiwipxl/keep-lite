@@ -1,6 +1,6 @@
-const { db } = require("./db");
 const { v4 } = require("uuid");
 const uuidv4 = v4;
+const { db } = require("../db");
 
 module.exports = {
   addLabelToNote,
