@@ -21,20 +21,20 @@ const note = (state = {}, action) => {
       };
 
     case ADD_NOTE_LABEL: {
-      if (state.labels.includes(action.payload.lid)) {
+      if (state.labels.includes(action.payload.labelId)) {
         return state;
       }
 
-      state.labels.push(action.payload.lid);
+      state.labels.push(action.payload.labelId);
       return state;
     }
 
     case REMOVE_NOTE_LABEL: {
-      if (!state.labels.includes(action.payload.lid)) {
+      if (!state.labels.includes(action.payload.labelId)) {
         return state;
       }
 
-      state.labels.splice(state.labels.indexOf(action.payload.lid), 1);
+      state.labels.splice(state.labels.indexOf(action.payload.labelId), 1);
       return state;
     }
 
@@ -44,13 +44,13 @@ const note = (state = {}, action) => {
 };
 
 export default (state = {}, action) => {
-  const nid = (action.payload && action.payload.id) || -1;
+  const id = (action.payload && action.payload.id) || -1;
 
   switch (action.type) {
     case ADD_NOTE:
       return {
         ...state,
-        [nid]: {
+        [id]: {
           title: action.payload.title,
           body: action.payload.body,
           labels: action.payload.labels,
@@ -63,8 +63,8 @@ export default (state = {}, action) => {
     case REMOVE_NOTE_LABEL:
       return {
         ...state,
-        [nid]: {
-          ...note(state[nid], action),
+        [id]: {
+          ...note(state[id], action),
         },
       };
 

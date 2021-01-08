@@ -1,6 +1,6 @@
 const { db } = require("../db");
 const { createLabel } = require("./label");
-const { createNote } = require("./note");
+const { createNote, convertTextToNoteBody } = require("./note");
 const { addSession } = require("../auth/sessions");
 
 module.exports = {
@@ -69,11 +69,16 @@ async function createTestUser() {
   await createLabel({ id: testUser.id }, null, "Science");
   await createLabel({ id: testUser.id }, null, "Psychology");
 
-  await createNote({ id: testUser.id }, null, "Test title", "test body");
+  await createNote(
+    { id: testUser.id },
+    null,
+    "Test title",
+    convertTextToNoteBody("test body")
+  );
   await createNote(
     { id: testUser.id },
     null,
     "Another note!",
-    "Isnt that grand."
+    convertTextToNoteBody("What, wow! Isnt that grand.")
   );
 }

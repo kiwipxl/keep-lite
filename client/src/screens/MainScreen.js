@@ -10,7 +10,7 @@ import Button from "../components/input/Button";
 import Input from "../components/input/Input";
 import MainSidebar from "../components/nav/MainSidebar";
 import { addNote } from "../redux/actions/notes";
-import { getNotes } from "../redux/sync";
+import { getNotes } from "../sync/queries";
 
 const MainScreen = ({ className }) => {
   const [sidebarOpen, setSidebarOpen] = React.useState(false);

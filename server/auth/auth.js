@@ -1,4 +1,3 @@
-const passport = require("passport");
 const { getSessionUser } = require("./sessions");
 const auth_google = require("./google");
 const { getUser } = require("../data/user");

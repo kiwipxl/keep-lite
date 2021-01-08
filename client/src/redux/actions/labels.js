@@ -4,25 +4,25 @@ export const CREATE_LABEL = "CREATE_LABEL";
 export const DELETE_LABEL = "DELETE_LABEL";
 export const RENAME_LABEL = "RENAME_LABEL";
 
-export const createLabel = (lid, name) => ({
+export const createLabel = (id, name) => ({
   type: CREATE_LABEL,
   payload: {
-    id: lid || uuidv4(),
+    id: id || uuidv4(),
     name: name,
   },
 });
 
-export const deleteLabel = (lid) => ({
+export const deleteLabel = (id) => ({
   type: DELETE_LABEL,
   payload: {
-    id: lid || uuidv4(),
+    id: id || uuidv4(),
   },
 });
 
-export const renameLabel = (lid, name) => ({
+export const renameLabel = (id, name) => ({
   type: RENAME_LABEL,
   payload: {
-    id: lid,
+    id: id,
     name: name,
   },
 });

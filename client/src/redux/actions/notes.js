@@ -7,45 +7,45 @@ export const SET_NOTE_BODY = "SET_NOTE_BODY";
 export const ADD_NOTE_LABEL = "ADD_NOTE_LABEL";
 export const REMOVE_NOTE_LABEL = "REMOVE_NOTE_LABEL";
 
-export const addNote = (sync, nid, title, body, labels) => ({
+export const addNote = (sync, id, title, body, labels) => ({
   type: ADD_NOTE,
   sync: sync,
   payload: {
-    id: nid || uuidv4(),
+    id: id || uuidv4(),
     title: title || ContentState.createFromText(""),
     body: body || ContentState.createFromText(""),
     labels: labels || [],
   },
 });
 
-export const setNoteTitle = (nid, title) => ({
+export const setNoteTitle = (id, title) => ({
   type: SET_NOTE_TITLE,
   payload: {
-    id: nid,
+    id: id,
     title: title,
   },
 });
 
-export const setNoteBody = (nid, body) => ({
+export const setNoteBody = (id, body) => ({
   type: SET_NOTE_BODY,
   payload: {
-    id: nid,
+    id: id,
     body: body,
   },
 });
 
-export const addNoteLabel = (nid, lid) => ({
+export const addNoteLabel = (noteId, labelId) => ({
   type: ADD_NOTE_LABEL,
   payload: {
-    id: nid,
-    lid: lid,
+    noteId: noteId,
+    labelId: labelId,
   },
 });
 
-export const removeNoteLabel = (nid, lid) => ({
+export const removeNoteLabel = (noteId, labelId) => ({
   type: REMOVE_NOTE_LABEL,
   payload: {
-    id: nid,
-    lid: lid,
+    noteId: noteId,
+    labelId: labelId,
   },
 });

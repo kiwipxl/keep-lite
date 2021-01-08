@@ -9,7 +9,13 @@ module.exports = {
   deleteNote,
   getNote,
   getRecentNotes,
+  convertTextToNoteBody,
 };
+
+function convertTextToNoteBody(text) {
+  // TODO:
+  return null;
+}
 
 async function createNote(user, id, title, body) {
   const query = {
@@ -24,7 +30,7 @@ async function createNote(user, id, title, body) {
     return null;
   }
 
-  return buildNote(user, res.rows[0]);
+  return await buildNote(user, res.rows[0]);
 }
 
 async function setNoteContent(user, noteId, title, body) {
@@ -42,7 +48,7 @@ async function setNoteContent(user, noteId, title, body) {
     return null;
   }
 
-  return buildNote(user, res.rows[0]);
+  return await buildNote(user, res.rows[0]);
 }
 
 async function deleteNote(user, id) {
@@ -66,7 +72,7 @@ async function getNote(user, id) {
     return null;
   }
 
-  return buildNote(user, res.rows[0]);
+  return await buildNote(user, res.rows[0]);
 }
 
 async function getRecentNotes(user, limit) {
@@ -80,7 +86,12 @@ async function getRecentNotes(user, limit) {
   return notes;
 }
 
-function buildNote(user, note) {
-  note.labels = getNoteLabels(user, note.id);
+// After fetching the note from the database, fetch additional data
+// so that note matches our graphQL schema.
+async function buildNote(user, dbNote) {
+  let note = dbNote;
+
+  note.labels = await getNoteLabels(user, note.id);
+
   return note;
 }
