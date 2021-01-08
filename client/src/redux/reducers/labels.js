@@ -1,19 +1,9 @@
 import { gql } from "@apollo/client";
 import { CREATE_LABEL, DELETE_LABEL, RENAME_LABEL } from "../actions/labels";
 import { AUTH_LOGIN } from "../actions/auth";
-import gqlClient from "../../gqlClient";
+import { sync } from "../sync";
 
 const initialState = {};
-
-function sync(mutation, variables) {
-  gqlClient
-    .mutate({
-      mutation: mutation,
-      variables: variables,
-    })
-    .then((res) => console.log(res))
-    .catch((err) => console.error(err));
-}
 
 export default (state = initialState, action) => {
   switch (action.type) {

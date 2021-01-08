@@ -23,6 +23,7 @@ module.exports = {
 
     getLabel: async (_, { id }, { user }) => getLabel(user, id),
     getNote: async (_, { id }, { user }) => getNote(user, id),
+    getNotes: async (_, { limit }, { user }) => getRecentNotes(user, limit),
   },
 
   Mutation: {

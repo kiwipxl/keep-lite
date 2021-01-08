@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { useQuery, gql } from "@apollo/client";
 import { MdAccountCircle, MdMenu } from "react-icons/md";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
@@ -11,6 +10,7 @@ import Button from "../components/input/Button";
 import Input from "../components/input/Input";
 import MainSidebar from "../components/nav/MainSidebar";
 import { addNote } from "../redux/actions/notes";
+import { getNotes } from "../redux/sync";
 
 const MainScreen = ({ className }) => {
   const [sidebarOpen, setSidebarOpen] = React.useState(false);
@@ -18,6 +18,10 @@ const MainScreen = ({ className }) => {
   const routerHistory = useHistory();
   const notes = useSelector((state) => state.notes);
   const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    getNotes(10);
+  }, []);
 
   function openSidebar() {
     setSidebarOpen(true);
@@ -28,7 +32,7 @@ const MainScreen = ({ className }) => {
   }
 
   function addEmptyNote() {
-    const note = dispatch(addNote()).payload;
+    const note = dispatch(addNote(true)).payload;
     routerHistory.push(`/note/${note.id}`);
   }
 

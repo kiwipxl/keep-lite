@@ -7,8 +7,9 @@ export const SET_NOTE_BODY = "SET_NOTE_BODY";
 export const ADD_NOTE_LABEL = "ADD_NOTE_LABEL";
 export const REMOVE_NOTE_LABEL = "REMOVE_NOTE_LABEL";
 
-export const addNote = (nid, title, body, labels) => ({
+export const addNote = (sync, nid, title, body, labels) => ({
   type: ADD_NOTE,
+  sync: sync,
   payload: {
     id: nid || uuidv4(),
     title: title || ContentState.createFromText(""),
