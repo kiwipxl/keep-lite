@@ -41,8 +41,10 @@ const AuthScreen = ({ className }) => {
   }
 
   function onMessage(ev) {
-    if (ev.data && ev.data.id) {
+    if (ev.data && ev.data.id && ev.data.authProvider) {
       const user = ev.data;
+
+      localStorage.setItem("authToken", user.accessToken);
 
       console.log(
         `authenticated successfully with provider '${user.authProvider}'`

@@ -3,6 +3,13 @@ const GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
 const credentials = require("./google-credentials.json");
 const { createUser, getUser } = require("./user");
 
+module.exports = {
+  use,
+  getUserFromReq,
+};
+
+const userAccessTokens = {};
+
 passport.use(
   new GoogleStrategy(
     {
@@ -22,25 +29,27 @@ passport.use(
         );
       }
 
+      user.accessToken = accessToken;
+
+      // If token already exists for this particular user, delete it.
+      // This is to prevent stale tokens being kept around when a new
+      // access token is generated.
+      Object.keys(userAccessTokens).forEach((token) => {
+        if (userAccessTokens[token] === user.id) {
+          delete userAccessTokens[token];
+        }
+      });
+
+      userAccessTokens[accessToken] = user.id;
+
       done(null, user);
     }
   )
 );
 
-// Passport stores user data in the browser's session so it can be retrieved
-// without re-authenticating.
-// We store the id for simplicity sake.
-// NOTE: These functions are required.
-passport.serializeUser((user, done) => {
-  done(null, user.id);
-});
-
-passport.deserializeUser(async (userId, done) => {
-  const user = await getUser(userId);
-  done(user ? null : `No user could be found with id ${userId}`, user);
-});
-
-const genCallbackHTML = (message) => {
+// On successful or failed authentication, we want to send our client to this
+// HTML page that posts them a message with data (user on success, error message otherwise).
+function genCallbackHTML(message) {
   return `
     <html>
     <head>
@@ -56,12 +65,47 @@ const genCallbackHTML = (message) => {
     </body>
     </html>
     `;
-};
+}
 
-module.exports.use = (app) => {
-  app.use(passport.initialize());
-  app.use(passport.session());
+async function getUserFromReq(req) {
+  // Two ways to verify:
+  // 1. OAuth2 authorisation header. Useful when using the server as an API.
+  // 2. Cookie. This is the standard way to login with our client app. When we authorise, the
+  // server sends us an 'auth' cookie that contains the token.
 
+  let token = req.headers.authorization;
+  if (token && token.startsWith("Bearer ")) {
+    token = token.substring(7);
+
+    if (token in userAccessTokens) {
+      return await getUser(userAccessTokens[token]);
+    }
+  }
+
+  const authCookie = req.cookies.auth;
+  if (authCookie) {
+    if (token in userAccessTokens) {
+      return await getUser(userAccessTokens[token]);
+    }
+  }
+
+  return null;
+}
+
+async function authenticateUser(req, res, next) {
+  try {
+    const user = await getUserFromReq(res);
+    if (user) {
+      next(null, user);
+    } else {
+      res.sendStatus(401);
+    }
+  } catch (err) {
+    next(err);
+  }
+}
+
+function use(app) {
   app.get(
     "/auth/google",
     passport.authenticate("google", {
@@ -76,8 +120,10 @@ module.exports.use = (app) => {
     "/auth/google/callback",
     passport.authenticate("google", {
       failureRedirect: "/auth/error",
+      session: false,
     }),
     (req, res) => {
+      res.cookie("auth", req.user.accessToken);
       res.send(genCallbackHTML(JSON.stringify(req.user)));
     }
   );
@@ -93,4 +139,8 @@ module.exports.use = (app) => {
       )
     );
   });
-};
+
+  app.get("/me", authenticateUser, (req, res, next) => {
+    res.send(req.user);
+  });
+}

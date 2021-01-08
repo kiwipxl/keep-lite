@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "set PGUSER=postgres&& set PGHOST=localhost&& set PGDATABASE=postgres&& set PGPORT=5432&& node index.js",
+    "start": "set PGUSER=postgres&& set PGHOST=localhost&& set PGDATABASE=postgres&& set PGPORT=5432&& nodemon index.js",
     "test": "set PGUSER=postgres&& set PGHOST=localhost&& set PGDATABASE=testing&& set PGPORT=5432&& jest --watch --runInBand"
   },
   "author": "",
@@ -13,6 +13,8 @@
     "@drdgvhbh/postgres-error-codes": "0.0.6",
     "apollo-server": "^2.19.1",
     "apollo-server-express": "^2.19.1",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "jest": "^26.6.3",
     "passport": "^0.4.1",

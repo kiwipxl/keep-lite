@@ -1,16 +1,24 @@
 const { PG_UNDEFINED_TABLE } = require("@drdgvhbh/postgres-error-codes");
 const express = require("express");
 const { ApolloServer } = require("apollo-server-express");
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
 const { db, connect, createNewDatabase } = require("./db");
 const schema = require("./schema");
 const resolvers = require("./resolvers");
 const auth = require("./auth");
 
 const context = async ({ req }) => {
+  console.log(req.header.authorization);
+
+  const user = await auth.getUserFromReq(req);
+
+  if (!user) {
+    throw new AuthenticationError("failed to authorise");
+  }
+
   return {
-    user: {
-      id: 1,
-    },
+    user,
   };
 };
 
@@ -23,8 +31,10 @@ const server = new ApolloServer({
 });
 
 const app = express();
-server.applyMiddleware({ app });
 
+app.use(cookieParser());
+app.use(cors());
+server.applyMiddleware({ app });
 auth.use(app);
 
 app.listen({ port: 4000 }, async () => {

@@ -9,6 +9,10 @@ module.exports = gql`
     ARCHIVED
   }
 
+  enum AuthProvider {
+    GOOGLE
+  }
+
   type Note {
     id: ID!
     title: String
@@ -26,6 +30,10 @@ module.exports = gql`
 
   type User {
     id: ID!
+    authProvider: AuthProvider
+    email: String
+    name: String
+    created: Date
   }
 
   type Query {
