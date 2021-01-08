@@ -9,8 +9,6 @@ const resolvers = require("./resolvers");
 const auth = require("./auth");
 
 const context = async ({ req }) => {
-  console.log(req.header.authorization);
-
   const user = await auth.getUserFromReq(req);
 
   if (!user) {
