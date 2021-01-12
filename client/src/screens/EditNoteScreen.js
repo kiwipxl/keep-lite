@@ -11,15 +11,15 @@ import NoteEditor from "../components/note/editor/NoteEditor";
 
 const EditNoteScreen = ({ className }) => {
   const routerHistory = useHistory();
-  const { nid } = useParams();
-  const note = useSelector((state) => state.notes[nid]);
+  const { noteId } = useParams();
+  const note = useSelector((state) => state.notes[noteId]);
 
   React.useEffect(() => {
     if (!note) {
-      console.error(`note ${nid} not found`);
+      console.error(`note ${noteId} not found`);
       routerHistory.replace("/404");
     }
-  });
+  }, []);
 
   if (!note) {
     return <div></div>;
@@ -34,11 +34,11 @@ const EditNoteScreen = ({ className }) => {
           Component={GoPencil}
           variant="button"
           size={28}
-          onClick={() => routerHistory.push(`/note/${nid}/labels`)}
+          onClick={() => routerHistory.push(`/note/${noteId}/labels`)}
         ></AddLabelsIcon>
       </Header>
 
-      <StyledNoteEditor nid={nid}></StyledNoteEditor>
+      <StyledNoteEditor id={noteId}></StyledNoteEditor>
 
       <Footer>
         <AddContentIcon

@@ -8,10 +8,14 @@ import React from "react";
 // By preventing mouseDown events, this keeps focus on the Input.
 export const usePreventMouseDown = (ref, defaultEnabled) => {
   React.useEffect(() => {
-    ref.current.addEventListener("mousedown", (e) => {
-      if (defaultEnabled) {
-        e.preventDefault();
-      }
-    });
+    ref.current.addEventListener(
+      "mousedown",
+      (e) => {
+        if (defaultEnabled) {
+          e.preventDefault();
+        }
+      },
+      []
+    );
   });
 };

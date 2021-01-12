@@ -24,13 +24,41 @@ export default async (action) => {
         `,
         variables: {
           id: action.payload.id,
-          title: action.payload.title,
+          title: action.payload.title.getPlainText(),
           body: JSON.stringify(convertToRaw(action.payload.body)),
         },
       });
 
     case SET_NOTE_TITLE:
+      return await gqlClient.mutate({
+        mutation: gql`
+          mutation SetNoteTitle($id: ID!, $title: String) {
+            setNoteTitle(id: $id, title: $title) {
+              id
+            }
+          }
+        `,
+        variables: {
+          id: action.payload.id,
+          title: action.payload.title.getPlainText(),
+        },
+      });
+
     case SET_NOTE_BODY:
+      return await gqlClient.mutate({
+        mutation: gql`
+          mutation SetNoteBody($id: ID!, $body: String) {
+            setNoteBody(id: $id, body: $body) {
+              id
+            }
+          }
+        `,
+        variables: {
+          id: action.payload.id,
+          body: JSON.stringify(convertToRaw(action.payload.body)),
+        },
+      });
+
     case ADD_NOTE_LABEL:
     case REMOVE_NOTE_LABEL:
       break;

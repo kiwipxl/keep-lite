@@ -28,15 +28,25 @@ export async function getNotes() {
       },
     });
 
+    const storedNotes = store.getState().notes;
+
     for (const note of res.data.notes) {
+      if (storedNotes[note.id]) {
+        continue;
+      }
+
       try {
+        const contentStateTitle = note.title
+          ? ContentState.createFromText(note.title)
+          : null;
+
         const contentStateBody = note.body
           ? convertFromRaw(JSON.parse(note.body))
           : null;
 
         const action = createNote(
           note.id,
-          note.title,
+          contentStateTitle,
           contentStateBody,
           note.labels
         );
@@ -44,13 +54,10 @@ export async function getNotes() {
         store.dispatch(action);
       } catch (err) {
         console.error("error parsing server note data:", err);
+        return;
       }
     }
-
-    return res.data.notes;
   } catch (err) {
     onGqlError(err);
   }
-
-  return [];
 }

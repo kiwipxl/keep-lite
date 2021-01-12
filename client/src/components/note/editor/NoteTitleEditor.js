@@ -6,13 +6,19 @@ import Editor from "@draft-js-plugins/editor";
 import { setNoteTitle } from "../../../redux/actions/notes";
 
 const NoteTitleEditor = (props) => {
-  const { className, nid, forwardedRef } = props;
+  const { className, id, forwardedRef } = props;
   const dispatch = useDispatch();
 
   function onChange(editorState) {
     props.onChange(editorState);
 
-    dispatch(setNoteTitle(nid, editorState.getCurrentContent().getPlainText()));
+    const lastChangeType = editorState.getLastChangeType();
+    if (!lastChangeType) {
+      return;
+    }
+    console.log("title", lastChangeType);
+
+    dispatch(setNoteTitle(id, editorState.getCurrentContent()));
   }
 
   return (
@@ -20,6 +26,7 @@ const NoteTitleEditor = (props) => {
       <Editor
         ref={forwardedRef}
         placeholder="Title"
+        plugins={[]}
         {...props}
         onChange={onChange}
       ></Editor>

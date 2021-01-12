@@ -18,11 +18,11 @@ const AppRouter = () => {
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path="/note/:nid/labels">
+        <Route exact path="/note/:noteId/labels">
           <AddLabelsScreen></AddLabelsScreen>
         </Route>
 
-        <Route exact path="/note/:nid">
+        <Route exact path="/note/:noteId">
           <EditNoteScreen></EditNoteScreen>
         </Route>
 

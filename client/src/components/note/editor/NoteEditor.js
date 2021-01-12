@@ -6,12 +6,12 @@ import NoteTitleEditor from "./NoteTitleEditor";
 import NoteBodyEditor from "./NoteBodyEditor";
 import NoteLabels from "../../label/NoteLabels";
 
-const NoteEditor = ({ className, nid, children }) => {
-  const note = useSelector((state) => state.notes[nid]);
+const NoteEditor = ({ className, id, children }) => {
+  const note = useSelector((state) => state.notes[id]);
 
   const titleRef = React.createRef();
   const [titleEditorState, setTitleEditorState] = React.useState(() =>
-    EditorState.createWithContent(ContentState.createFromText(note.title || ""))
+    EditorState.createWithContent(note.title)
   );
 
   const bodyRef = React.createRef();
@@ -23,7 +23,7 @@ const NoteEditor = ({ className, nid, children }) => {
     if (bodyRef.current) {
       bodyRef.current.focus();
     }
-  });
+  }, []);
 
   return (
     <div className={className}>
@@ -41,14 +41,14 @@ const NoteEditor = ({ className, nid, children }) => {
           )}
 
         <StyledTitleEditor
-          nid={nid}
+          id={id}
           editorState={titleEditorState}
           onChange={setTitleEditorState}
           forwardedRef={titleRef}
         ></StyledTitleEditor>
 
         <StyledBodyEditor
-          nid={nid}
+          id={id}
           editorState={bodyEditorState}
           onChange={setBodyEditorState}
           forwardedRef={bodyRef}

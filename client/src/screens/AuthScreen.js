@@ -36,7 +36,7 @@ const AuthScreen = ({ className }) => {
         fetchLoginData(res.data.me);
       })
       .catch((err) => {});
-  });
+  }, []);
 
   async function fetchLoginData(user) {
     try {

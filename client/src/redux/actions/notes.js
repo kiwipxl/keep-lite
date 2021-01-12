@@ -11,7 +11,7 @@ export const createNote = (id, title, body, labels) => ({
   type: CREATE_NOTE,
   payload: {
     id: id || uuidv4(),
-    title: title,
+    title: title || ContentState.createFromText(""),
     body: body || ContentState.createFromText(""),
     labels: labels || [],
   },
@@ -21,7 +21,7 @@ export const setNoteTitle = (id, title) => ({
   type: SET_NOTE_TITLE,
   payload: {
     id: id,
-    title: title,
+    title: title || ContentState.createFromText(""),
   },
 });
 
@@ -29,7 +29,7 @@ export const setNoteBody = (id, body) => ({
   type: SET_NOTE_BODY,
   payload: {
     id: id,
-    body: body,
+    body: body || ContentState.createFromText(""),
   },
 });
 

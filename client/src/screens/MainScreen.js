@@ -67,9 +67,9 @@ const MainScreen = ({ className }) => {
 
       <StyledNoteCardGrid
         width={380}
-        notes={Object.keys(notes).map((nid) => ({
-          id: nid,
-          ...notes[nid],
+        notes={Object.keys(notes).map((noteId) => ({
+          id: noteId,
+          ...notes[noteId],
         }))}
       ></StyledNoteCardGrid>
 

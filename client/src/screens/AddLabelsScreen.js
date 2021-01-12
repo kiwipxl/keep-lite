@@ -15,36 +15,36 @@ import { addNoteLabel, removeNoteLabel } from "../redux/actions/notes";
 const AddLabelsScreen = ({ className }) => {
   const [searchText, setSearchText] = React.useState("");
   const dispatch = useDispatch();
-  const { nid } = useParams();
-  const note = useSelector((state) => state.notes[nid]);
+  const { noteId } = useParams();
+  const note = useSelector((state) => state.notes[noteId]);
   const labels = useSelector((state) => state.labels);
   // Array of label ids. If label is is in array, then it is 'checked'.
   const [checkedLabels, setCheckedLabels] = React.useState(
     useSelector((state) =>
-      Object.keys(state.labels).filter((lid) => note.labels.includes(lid))
+      Object.keys(state.labels).filter((labelId) => note.labels.includes(labelId))
     )
   );
 
-  function toggleCheckedLabel(lid) {
-    const checked = !checkedLabels.includes(lid);
+  function toggleCheckedLabel(labelId) {
+    const checked = !checkedLabels.includes(labelId);
 
     if (checked) {
       // Label is now checked
-      setCheckedLabels([lid].concat(checkedLabels));
+      setCheckedLabels([labelId].concat(checkedLabels));
 
-      dispatch(addNoteLabel(nid, lid));
+      dispatch(addNoteLabel(noteId, labelId));
     } else {
       // Label is now un-checked
-      checkedLabels.splice(checkedLabels.indexOf(lid), 1);
+      checkedLabels.splice(checkedLabels.indexOf(labelId), 1);
       setCheckedLabels(checkedLabels);
 
-      dispatch(removeNoteLabel(nid, lid));
+      dispatch(removeNoteLabel(noteId, labelId));
     }
   }
 
   // Select labels based on search results
-  const filteredLabels = Object.keys(labels).filter((lid) => {
-    const label = labels[lid];
+  const filteredLabels = Object.keys(labels).filter((labelId) => {
+    const label = labels[labelId];
 
     if (searchText.length > 0) {
       // Nothing complicated, just a simple check to see if text exists in the name
@@ -69,14 +69,14 @@ const AddLabelsScreen = ({ className }) => {
       <CreateLabelListRow></CreateLabelListRow>
 
       <List>
-        {filteredLabels.map((lid) => {
-          const label = labels[lid];
+        {filteredLabels.map((labelId) => {
+          const label = labels[labelId];
 
           return (
             <ListRow
-              key={lid}
+              key={labelId}
               clickable
-              onClick={() => toggleCheckedLabel(lid)}
+              onClick={() => toggleCheckedLabel(labelId)}
             >
               <LabelRowContent>
                 <LabelIcon Component={MdLabelOutline} size={22}></LabelIcon>
@@ -84,8 +84,8 @@ const AddLabelsScreen = ({ className }) => {
                 <Label>{label.name}</Label>
 
                 <StyledCheckbox
-                  checked={checkedLabels.includes(lid)}
-                  onClick={() => toggleCheckedLabel(lid)}
+                  checked={checkedLabels.includes(labelId)}
+                  onClick={() => toggleCheckedLabel(labelId)}
                 ></StyledCheckbox>
               </LabelRowContent>
             </ListRow>

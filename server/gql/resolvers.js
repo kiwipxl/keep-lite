@@ -1,6 +1,7 @@
 const {
   createNote,
-  setNoteContent,
+  setNoteTitle,
+  setNoteBody,
   deleteNote,
   getNote,
   getRecentNotes,
@@ -35,8 +36,10 @@ module.exports = {
 
     createNote: async (_, { id, title, body }, { user }) =>
       createNote(user, id, title, body),
-    setNoteContent: async (_, { id, title, body }, { user }) =>
-      setNoteContent(user, id, title, body),
+    setNoteTitle: async (_, { id, title }, { user }) =>
+      setNoteTitle(user, id, title),
+    setNoteBody: async (_, { id, body }, { user }) =>
+      setNoteBody(user, id, body),
     setNoteLabels: async (_, { id, labels }, { user }) => {
       for (const labelId of labels) {
         addLabelToNote(user, id, labelId);

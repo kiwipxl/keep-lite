@@ -5,7 +5,8 @@ const { getNoteLabels } = require("./label");
 
 module.exports = {
   createNote,
-  setNoteContent,
+  setNoteTitle,
+  setNoteBody,
   deleteNote,
   getNote,
   getRecentNotes,
@@ -33,14 +34,32 @@ async function createNote(user, id, title, body) {
   return await buildNote(user, res.rows[0]);
 }
 
-async function setNoteContent(user, noteId, title, body) {
+async function setNoteTitle(user, noteId, title) {
   const query = {
     text: `
-      UPDATE note SET edited = CURRENT_TIMESTAMP, title = $3, body = $4
+      UPDATE note SET edited = CURRENT_TIMESTAMP, title = $3
       WHERE user_id = $1 AND id = $2
       RETURNING *
     `,
-    values: [user.id, noteId, title, body],
+    values: [user.id, noteId, title],
+  };
+
+  const res = await db.query(query);
+  if (res.rowCount === 0) {
+    return null;
+  }
+
+  return await buildNote(user, res.rows[0]);
+}
+
+async function setNoteBody(user, noteId, body) {
+  const query = {
+    text: `
+      UPDATE note SET edited = CURRENT_TIMESTAMP, body = $3
+      WHERE user_id = $1 AND id = $2
+      RETURNING *
+    `,
+    values: [user.id, noteId, body],
   };
 
   const res = await db.query(query);
