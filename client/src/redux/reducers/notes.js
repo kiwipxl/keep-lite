@@ -25,9 +25,12 @@ const note = (state = {}, action) => {
         return state;
       }
 
+      const labels = [].concat(state.labels);
+      labels.push(action.payload.labelId);
+
       return {
         ...state,
-        labels: state.labels.concat(action.payload.labelId),
+        labels: labels,
       };
     }
 
@@ -36,10 +39,12 @@ const note = (state = {}, action) => {
         return state;
       }
 
-      state.labels.splice(state.labels.indexOf(action.payload.labelId), 1);
+      const labels = [].concat(state.labels);
+      labels.splice(labels.indexOf(action.payload.labelId), 1);
+
       return {
         ...state,
-        labels: state.labels,
+        labels: labels,
       };
     }
 

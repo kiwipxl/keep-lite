@@ -28,20 +28,27 @@ export default (state = initialState, action) => {
       }
       return state;
 
-    case SYNC_PUSH:
+    case SYNC_PUSH: {
+      const queue = [].concat(state.queue);
+      queue.push(action.action);
+
       return {
         ...state,
-        queue: state.queue.concat(action.action),
+        queue: queue,
       };
+    }
 
-    case SYNC_POP:
+    case SYNC_POP: {
       console.log("sync", action.action.type);
 
-      state.queue.splice(0, 1);
+      const queue = [].concat(state.queue);
+      queue.splice(0, 1);
 
       return {
         ...state,
+        queue: queue,
       };
+    }
 
     default:
       return state;
