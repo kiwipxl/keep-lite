@@ -39,6 +39,8 @@ module.exports = gql`
     getLabel(id: ID!): Label
     getNote(id: ID!): Note
     getNotes(limit: Int): [Note!]!
+    getNotesByLabel(labelId: ID!, limit: Int): [Note!]!
+    getNotesBySearchQuery(query: String!, limit: Int): [Note!]!
   }
 
   type Mutation {

@@ -5,11 +5,45 @@ import gqlClient from "../gqlClient";
 import { createNote } from "../redux/actions/notes";
 import { onGqlError } from "./util";
 
-export async function getNotes() {
+async function addNotesToStore(notes) {
+  const storedNotes = store.getState().notes;
+
+  for (const note of notes) {
+    if (storedNotes[note.id]) {
+      continue;
+    }
+
+    try {
+      const contentStateTitle = note.title
+        ? ContentState.createFromText(note.title)
+        : null;
+
+      const contentStateBody = note.body
+        ? convertFromRaw(JSON.parse(note.body))
+        : null;
+
+      const labels = note.labels.map((label) => label.id);
+
+      const action = createNote(
+        note.id,
+        contentStateTitle,
+        contentStateBody,
+        labels
+      );
+      action.sync = false;
+      store.dispatch(action);
+    } catch (err) {
+      console.error("error parsing server note data:", err);
+      return;
+    }
+  }
+}
+
+export async function getNotes(limit) {
   try {
     const res = await gqlClient.query({
       query: gql`
-        query GetNotes($limit: Int) {
+        query($limit: Int) {
           notes: getNotes(limit: $limit) {
             id
             title
@@ -23,41 +57,40 @@ export async function getNotes() {
         }
       `,
       variables: {
-        limit: 10,
+        limit: limit,
       },
     });
 
-    const storedNotes = store.getState().notes;
+    addNotesToStore(res.data.notes);
+  } catch (err) {
+    onGqlError(err);
+  }
+}
 
-    for (const note of res.data.notes) {
-      if (storedNotes[note.id]) {
-        continue;
-      }
+export async function getNotesByLabel(labelId, limit) {
+  try {
+    const res = await gqlClient.query({
+      query: gql`
+        query($labelId: ID!, $limit: Int) {
+          notes: getNotesByLabel(labelId: $labelId, limit: $limit) {
+            id
+            title
+            body
+            labels {
+              id
+            }
+            created
+            edited
+          }
+        }
+      `,
+      variables: {
+        labelId: labelId,
+        limit: limit,
+      },
+    });
 
-      try {
-        const contentStateTitle = note.title
-          ? ContentState.createFromText(note.title)
-          : null;
-
-        const contentStateBody = note.body
-          ? convertFromRaw(JSON.parse(note.body))
-          : null;
-
-        const labels = note.labels.map((label) => label.id);
-
-        const action = createNote(
-          note.id,
-          contentStateTitle,
-          contentStateBody,
-          labels
-        );
-        action.sync = false;
-        store.dispatch(action);
-      } catch (err) {
-        console.error("error parsing server note data:", err);
-        return;
-      }
-    }
+    addNotesToStore(res.data.notes);
   } catch (err) {
     onGqlError(err);
   }

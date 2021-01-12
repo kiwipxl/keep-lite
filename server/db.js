@@ -89,6 +89,11 @@ async function createNewDatabase() {
         user_id VARCHAR(128) NOT NULL, 
         note_id VARCHAR(128) NOT NULL, 
         label_id VARCHAR(128) NOT NULL, 
+
+        CONSTRAINT fk_user_id
+          FOREIGN KEY(user_id)
+            REFERENCES app_user(id)
+              ON DELETE CASCADE, 
       
         CONSTRAINT fk_note_id
           FOREIGN KEY(note_id, user_id)

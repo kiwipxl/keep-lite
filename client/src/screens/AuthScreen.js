@@ -42,7 +42,7 @@ const AuthScreen = ({ className }) => {
     try {
       const res = await gqlClient.query({
         query: gql`
-          query FetchInitialData {
+          query {
             labels {
               id
               name

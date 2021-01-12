@@ -11,7 +11,7 @@ import Icon from "../Icon";
 
 const MainSidebar = ({ className, hidden, onOpen, onClose }) => {
   const labels = useSelector((state) => state.labels);
-  const routerHistory = useHistory();
+  const router = useHistory();
 
   return (
     <Sidebar
@@ -27,19 +27,20 @@ const MainSidebar = ({ className, hidden, onOpen, onClose }) => {
 
         <LabelHeaderRow>
           <Header>Labels</Header>
-          <Button
-            variant="outline"
-            onClick={() => routerHistory.push("/labels/edit")}
-          >
+          <Button variant="outline" onClick={() => router.push("/labels/edit")}>
             Edit
           </Button>
         </LabelHeaderRow>
 
-        {Object.keys(labels).map((lid) => (
-          <ListRow key={lid} clickable>
+        {Object.keys(labels).map((labelId) => (
+          <ListRow
+            key={labelId}
+            clickable
+            onClick={() => router.push(`/labels/${labelId}`)}
+          >
             <LabelRowContent>
               <Icon Component={MdLabelOutline} size={30}></Icon>
-              <Label>{labels[lid].name}</Label>
+              <Label>{labels[labelId].name}</Label>
             </LabelRowContent>
           </ListRow>
         ))}

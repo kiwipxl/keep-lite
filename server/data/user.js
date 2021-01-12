@@ -1,7 +1,8 @@
 const { db } = require("../db");
-const { createLabel } = require("./label");
+const { createLabel, addNoteLabel } = require("./label");
 const { createNote, convertTextToNoteBody } = require("./note");
 const { addSession } = require("../auth/sessions");
+const { getNotesByLabel } = require("./note_queries");
 
 module.exports = {
   createUser,
@@ -66,19 +67,24 @@ async function createTestUser() {
 
   addSession(testUser.id, "TEST-USER-TOKEN");
 
-  await createLabel({ id: testUser.id }, null, "Science");
-  await createLabel({ id: testUser.id }, null, "Psychology");
+  const label1 = await createLabel({ id: testUser.id }, null, "Science");
+  const label2 = await createLabel({ id: testUser.id }, null, "Psychology");
 
-  await createNote(
+  const note1 = await createNote(
     { id: testUser.id },
     null,
     "Test title",
     convertTextToNoteBody("test body")
   );
-  await createNote(
+  const note2 = await createNote(
     { id: testUser.id },
     null,
     "Another note!",
     convertTextToNoteBody("What, wow! Isnt that grand.")
   );
+
+  await addNoteLabel(testUser, note1.id, label1.id);
+  console.log(await getNotesByLabel(testUser, label1.id, 10));
+
+  return testUser;
 }

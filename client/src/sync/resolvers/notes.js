@@ -14,7 +14,7 @@ export default async (action) => {
     case CREATE_NOTE: {
       const res = await gqlClient.mutate({
         mutation: gql`
-          mutation CreateNote($id: ID!, $title: String, $body: String) {
+          mutation($id: ID!, $title: String, $body: String) {
             note: createNote(id: $id, title: $title, body: $body) {
               id
               title
@@ -34,7 +34,7 @@ export default async (action) => {
     case SET_NOTE_TITLE: {
       const res = await gqlClient.mutate({
         mutation: gql`
-          mutation SetNoteTitle($id: ID!, $title: String) {
+          mutation($id: ID!, $title: String) {
             note: setNoteTitle(id: $id, title: $title) {
               id
             }
@@ -55,7 +55,7 @@ export default async (action) => {
     case SET_NOTE_BODY: {
       const res = await gqlClient.mutate({
         mutation: gql`
-          mutation SetNoteBody($id: ID!, $body: String) {
+          mutation($id: ID!, $body: String) {
             note: setNoteBody(id: $id, body: $body) {
               id
             }
@@ -76,7 +76,7 @@ export default async (action) => {
     case ADD_NOTE_LABEL: {
       const res = await gqlClient.mutate({
         mutation: gql`
-          mutation AddNoteLabel($id: ID!, $labelId: ID!) {
+          mutation($id: ID!, $labelId: ID!) {
             success: addNoteLabel(id: $id, labelId: $labelId)
           }
         `,
@@ -95,7 +95,7 @@ export default async (action) => {
     case REMOVE_NOTE_LABEL: {
       const res = await gqlClient.mutate({
         mutation: gql`
-          mutation RemoveNoteLabel($id: ID!, $labelId: ID!) {
+          mutation($id: ID!, $labelId: ID!) {
             success: removeNoteLabel(id: $id, labelId: $labelId)
           }
         `,

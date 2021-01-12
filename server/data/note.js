@@ -9,8 +9,8 @@ module.exports = {
   setNoteBody,
   deleteNote,
   getNote,
-  getRecentNotes,
   convertTextToNoteBody,
+  buildNote,
 };
 
 function convertTextToNoteBody(text) {
@@ -92,17 +92,6 @@ async function getNote(user, id) {
   }
 
   return await buildNote(user, res.rows[0]);
-}
-
-async function getRecentNotes(user, limit) {
-  const query = {
-    text: "SELECT * from note WHERE user_id = $1 ORDER BY created ASC LIMIT $2",
-    values: [user.id, limit],
-  };
-
-  const res = await db.query(query);
-  let notes = res.rows.map((dbNote) => buildNote(user, dbNote));
-  return notes;
 }
 
 // After fetching the note from the database, fetch additional data

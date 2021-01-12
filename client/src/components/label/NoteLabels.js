@@ -1,14 +1,20 @@
 import React from "react";
 import styled from "styled-components";
+import { useSelector } from "react-redux";
 import NoteLabel from "./NoteLabel";
 
 const NoteLabels = ({ className, labels }) => {
+  const allLabels = useSelector((state) => state.labels);
+
+  const renderedLabels = labels
+    ? labels.filter((labelId) => labelId in allLabels)
+    : [];
+
   return (
     <div className={className}>
-      {labels &&
-        labels.map((labelId) => (
-          <StyledLabel key={labelId} id={labelId}></StyledLabel>
-        ))}
+      {renderedLabels.map((labelId) => (
+        <StyledLabel key={labelId} id={labelId}></StyledLabel>
+      ))}
     </div>
   );
 };

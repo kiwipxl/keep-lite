@@ -4,8 +4,12 @@ const {
   setNoteBody,
   deleteNote,
   getNote,
-  getRecentNotes,
 } = require("../data/note");
+const {
+  getNotes,
+  getNotesByLabel,
+  getNotesBySearchQuery,
+} = require("../data/note_queries");
 const {
   createLabel,
   renameLabel,
@@ -25,7 +29,11 @@ module.exports = {
 
     getLabel: async (_, { id }, { user }) => getLabel(user, id),
     getNote: async (_, { id }, { user }) => getNote(user, id),
-    getNotes: async (_, { limit }, { user }) => getRecentNotes(user, limit),
+    getNotes: async (_, { limit }, { user }) => getNotes(user, limit),
+    getNotesByLabel: async (_, { labelId, limit }, { user }) =>
+      getNotesByLabel(user, labelId, limit),
+    getNotesBySearchQuery: async (_, { query, limit }, { user }) =>
+      getNotesBySearchQuery(user, query, limit),
   },
 
   Mutation: {

@@ -11,7 +11,7 @@ export default async (action) => {
     case CREATE_LABEL: {
       const res = await gqlClient.mutate({
         mutation: gql`
-          mutation CreateLabel($id: ID!, $name: String!) {
+          mutation($id: ID!, $name: String!) {
             label: createLabel(id: $id, name: $name) {
               id
             }
@@ -25,7 +25,7 @@ export default async (action) => {
     case DELETE_LABEL: {
       const res = await gqlClient.mutate({
         mutation: gql`
-          mutation DeleteLabel($id: ID!) {
+          mutation($id: ID!) {
             success: deleteLabel(id: $id)
           }
         `,
@@ -41,8 +41,8 @@ export default async (action) => {
     case RENAME_LABEL: {
       const res = await gqlClient.mutate({
         mutation: gql`
-          mutation RenameLabel($id: ID!, $name: String!) {
-            renameLabel(id: $id, name: $name)
+          mutation($id: ID!, $name: String!) {
+            success: renameLabel(id: $id, name: $name)
           }
         `,
         variables: { id: action.payload.id, name: action.payload.name },

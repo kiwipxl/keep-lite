@@ -7,6 +7,7 @@ import NotFoundScreen from "./screens/NotFoundScreen";
 import AddLabelsScreen from "./screens/AddLabelsScreen";
 import ManageLabelsScreen from "./screens/ManageLabelsScreen";
 import AuthScreen from "./screens/AuthScreen";
+import LabelNotesScreen from "./screens/LabelNotesScreen";
 
 const AppRouter = () => {
   const signedInUser = useSelector((state) => state.auth.user);
@@ -28,6 +29,10 @@ const AppRouter = () => {
 
         <Route exact path="/labels/edit">
           <ManageLabelsScreen></ManageLabelsScreen>
+        </Route>
+
+        <Route exact path="/labels/:labelId">
+          <LabelNotesScreen></LabelNotesScreen>
         </Route>
 
         <Route exact path="/">
