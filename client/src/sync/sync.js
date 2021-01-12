@@ -1,4 +1,4 @@
-import { onGqlError } from "./util";
+import { getGqlErrors } from "./util";
 import label_resolvers from "./resolvers/labels";
 import note_resolvers from "./resolvers/notes";
 import { syncPush, syncPop } from "../redux/actions/sync";
@@ -26,10 +26,10 @@ async function pollQueue() {
           console.error("fatal sync error for action", action.type);
 
           if (err.graphQLErrors || err.networkError) {
-            onGqlError(err);
+            console.error("graphql errors", getGqlErrors(err));
           }
 
-          throw new Error();
+          throw err;
         }
 
         store.dispatch(syncPop(action));

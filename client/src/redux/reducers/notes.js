@@ -25,8 +25,10 @@ const note = (state = {}, action) => {
         return state;
       }
 
-      state.labels.push(action.payload.labelId);
-      return state;
+      return {
+        ...state,
+        labels: state.labels.concat(action.payload.labelId),
+      };
     }
 
     case REMOVE_NOTE_LABEL: {
@@ -35,7 +37,10 @@ const note = (state = {}, action) => {
       }
 
       state.labels.splice(state.labels.indexOf(action.payload.labelId), 1);
-      return state;
+      return {
+        ...state,
+        labels: state.labels,
+      };
     }
 
     default:

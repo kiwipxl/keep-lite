@@ -16,7 +16,6 @@ const NoteTitleEditor = (props) => {
     if (!lastChangeType) {
       return;
     }
-    console.log("title", lastChangeType);
 
     dispatch(setNoteTitle(id, editorState.getCurrentContent()));
   }

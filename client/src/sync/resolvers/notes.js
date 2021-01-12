@@ -11,11 +11,11 @@ import { convertToRaw } from "draft-js";
 
 export default async (action) => {
   switch (action.type) {
-    case CREATE_NOTE:
-      return await gqlClient.mutate({
+    case CREATE_NOTE: {
+      const res = await gqlClient.mutate({
         mutation: gql`
           mutation CreateNote($id: ID!, $title: String, $body: String) {
-            createNote(id: $id, title: $title, body: $body) {
+            note: createNote(id: $id, title: $title, body: $body) {
               id
               title
               body
@@ -28,12 +28,14 @@ export default async (action) => {
           body: JSON.stringify(convertToRaw(action.payload.body)),
         },
       });
+      return res;
+    }
 
-    case SET_NOTE_TITLE:
-      return await gqlClient.mutate({
+    case SET_NOTE_TITLE: {
+      const res = await gqlClient.mutate({
         mutation: gql`
           mutation SetNoteTitle($id: ID!, $title: String) {
-            setNoteTitle(id: $id, title: $title) {
+            note: setNoteTitle(id: $id, title: $title) {
               id
             }
           }
@@ -44,11 +46,17 @@ export default async (action) => {
         },
       });
 
-    case SET_NOTE_BODY:
-      return await gqlClient.mutate({
+      if (!res.data.note) {
+        throw new Error("server rejected action");
+      }
+      return res;
+    }
+
+    case SET_NOTE_BODY: {
+      const res = await gqlClient.mutate({
         mutation: gql`
           mutation SetNoteBody($id: ID!, $body: String) {
-            setNoteBody(id: $id, body: $body) {
+            note: setNoteBody(id: $id, body: $body) {
               id
             }
           }
@@ -59,8 +67,48 @@ export default async (action) => {
         },
       });
 
-    case ADD_NOTE_LABEL:
-    case REMOVE_NOTE_LABEL:
-      break;
+      if (!res.data.note) {
+        throw new Error("server rejected action");
+      }
+      return res;
+    }
+
+    case ADD_NOTE_LABEL: {
+      const res = await gqlClient.mutate({
+        mutation: gql`
+          mutation AddNoteLabel($id: ID!, $labelId: ID!) {
+            success: addNoteLabel(id: $id, labelId: $labelId)
+          }
+        `,
+        variables: {
+          id: action.payload.id,
+          labelId: action.payload.labelId,
+        },
+      });
+
+      if (!res.data.success) {
+        throw new Error("server rejected action");
+      }
+      return res;
+    }
+
+    case REMOVE_NOTE_LABEL: {
+      const res = await gqlClient.mutate({
+        mutation: gql`
+          mutation RemoveNoteLabel($id: ID!, $labelId: ID!) {
+            success: removeNoteLabel(id: $id, labelId: $labelId)
+          }
+        `,
+        variables: {
+          id: action.payload.id,
+          labelId: action.payload.labelId,
+        },
+      });
+
+      if (!res.data.success) {
+        throw new Error("server rejected action");
+      }
+      return res;
+    }
   }
 };

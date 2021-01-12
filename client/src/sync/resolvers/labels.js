@@ -8,30 +8,38 @@ import {
 
 export default async (action) => {
   switch (action.type) {
-    case CREATE_LABEL:
-      return await gqlClient.mutate({
+    case CREATE_LABEL: {
+      const res = await gqlClient.mutate({
         mutation: gql`
           mutation CreateLabel($id: ID!, $name: String!) {
-            createLabel(id: $id, name: $name) {
+            label: createLabel(id: $id, name: $name) {
               id
             }
           }
         `,
         variables: { id: action.payload.id, name: action.payload.name },
       });
+      return res;
+    }
 
-    case DELETE_LABEL:
-      return await gqlClient.mutate({
+    case DELETE_LABEL: {
+      const res = await gqlClient.mutate({
         mutation: gql`
           mutation DeleteLabel($id: ID!) {
-            deleteLabel(id: $id)
+            success: deleteLabel(id: $id)
           }
         `,
         variables: { id: action.payload.id },
       });
 
-    case RENAME_LABEL:
-      return await gqlClient.mutate({
+      if (!res.data.success) {
+        throw new Error("server rejected action");
+      }
+      return res;
+    }
+
+    case RENAME_LABEL: {
+      const res = await gqlClient.mutate({
         mutation: gql`
           mutation RenameLabel($id: ID!, $name: String!) {
             renameLabel(id: $id, name: $name)
@@ -39,5 +47,11 @@ export default async (action) => {
         `,
         variables: { id: action.payload.id, name: action.payload.name },
       });
+
+      if (!res.data.success) {
+        throw new Error("server rejected action");
+      }
+      return res;
+    }
   }
 };

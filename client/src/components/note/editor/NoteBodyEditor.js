@@ -29,7 +29,6 @@ const NoteBodyEditor = (props) => {
     if (!lastChangeType) {
       return;
     }
-    console.log("body", lastChangeType);
 
     dispatch(setNoteBody(id, editorState.getCurrentContent()));
   }

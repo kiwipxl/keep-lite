@@ -36,7 +36,7 @@ export const setNoteBody = (id, body) => ({
 export const addNoteLabel = (noteId, labelId) => ({
   type: ADD_NOTE_LABEL,
   payload: {
-    noteId: noteId,
+    id: noteId,
     labelId: labelId,
   },
 });
@@ -44,7 +44,7 @@ export const addNoteLabel = (noteId, labelId) => ({
 export const removeNoteLabel = (noteId, labelId) => ({
   type: REMOVE_NOTE_LABEL,
   payload: {
-    noteId: noteId,
+    id: noteId,
     labelId: labelId,
   },
 });

@@ -16,7 +16,6 @@ export async function getNotes() {
             body
             labels {
               id
-              name
             }
             created
             edited
@@ -44,11 +43,13 @@ export async function getNotes() {
           ? convertFromRaw(JSON.parse(note.body))
           : null;
 
+        const labels = note.labels.map((label) => label.id);
+
         const action = createNote(
           note.id,
           contentStateTitle,
           contentStateBody,
-          note.labels
+          labels
         );
         action.sync = false;
         store.dispatch(action);

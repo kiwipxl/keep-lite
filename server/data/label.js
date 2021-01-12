@@ -3,7 +3,8 @@ const uuidv4 = v4;
 const { db } = require("../db");
 
 module.exports = {
-  addLabelToNote,
+  addNoteLabel,
+  removeNoteLabel,
   getNoteLabels,
   createLabel,
   renameLabel,
@@ -12,7 +13,7 @@ module.exports = {
   getLabels,
 };
 
-async function addLabelToNote(user, noteId, labelId) {
+async function addNoteLabel(user, noteId, labelId) {
   const query = {
     text: `
       INSERT INTO note_label(user_id, note_id, label_id)
@@ -22,6 +23,30 @@ async function addLabelToNote(user, noteId, labelId) {
 
   const res = await db.query(query);
   return res.rowCount > 0;
+}
+
+async function removeNoteLabel(user, noteId, labelId) {
+  const query = {
+    text: `
+      DELETE FROM note_label
+      WHERE user_id = $1 AND note_id = $2 AND label_id = $3`,
+    values: [user.id, noteId, labelId],
+  };
+
+  const res = await db.query(query);
+  return res.rowCount > 0;
+}
+
+async function clearNoteLabels(user, noteId) {
+  const query = {
+    text: `
+      DELETE FROM note_label
+      WHERE user_id = $1, note_id = $2`,
+    values: [user.id, noteId],
+  };
+
+  await db.query(query);
+  return true;
 }
 
 async function getNoteLabels(user, noteId) {

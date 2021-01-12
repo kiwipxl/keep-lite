@@ -45,11 +45,13 @@ module.exports = gql`
     createLabel(id: ID, name: String!): Label!
     renameLabel(id: ID!, name: String!): Boolean
     deleteLabel(id: ID!): Boolean
+    setNoteLabels(id: ID!, labels: [ID!]!): Note
+    addNoteLabel(id: ID!, labelId: ID!): Boolean
+    removeNoteLabel(id: ID!, labelId: ID!): Boolean
 
     createNote(id: ID, title: String, body: String): Note!
     setNoteTitle(id: ID!, title: String): Note
     setNoteBody(id: ID!, body: String): Note
-    setNoteLabels(id: ID!, labels: [ID!]!): Note
     deleteNote(id: ID!): Boolean
   }
 `;
