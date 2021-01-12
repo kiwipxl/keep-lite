@@ -2,7 +2,7 @@ import { gql } from "@apollo/client";
 import { ContentState, convertFromRaw } from "draft-js";
 import store from "../redux/store";
 import gqlClient from "../gqlClient";
-import { addNote } from "../redux/actions/notes";
+import { createNote } from "../redux/actions/notes";
 import { onGqlError } from "./util";
 
 export async function getNotes() {
@@ -29,23 +29,22 @@ export async function getNotes() {
     });
 
     for (const note of res.data.notes) {
-      const contentStateTitle = note.title
-        ? ContentState.createFromText(note.title)
-        : null;
+      try {
+        const contentStateBody = note.body
+          ? convertFromRaw(JSON.parse(note.body))
+          : null;
 
-      const contentStateBody = note.body
-        ? convertFromRaw(JSON.parse(note.body))
-        : null;
-
-      store.dispatch(
-        addNote(
-          false,
+        const action = createNote(
           note.id,
-          contentStateTitle,
+          note.title,
           contentStateBody,
           note.labels
-        )
-      );
+        );
+        action.sync = false;
+        store.dispatch(action);
+      } catch (err) {
+        console.error("error parsing server note data:", err);
+      }
     }
 
     return res.data.notes;

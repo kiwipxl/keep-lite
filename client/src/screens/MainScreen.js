@@ -9,7 +9,7 @@ import Icon from "../components/Icon";
 import Button from "../components/input/Button";
 import Input from "../components/input/Input";
 import MainSidebar from "../components/nav/MainSidebar";
-import { addNote } from "../redux/actions/notes";
+import { createNote } from "../redux/actions/notes";
 import { getNotes } from "../sync/queries";
 
 const MainScreen = ({ className }) => {
@@ -32,7 +32,7 @@ const MainScreen = ({ className }) => {
   }
 
   function addEmptyNote() {
-    const note = dispatch(addNote(true)).payload;
+    const note = dispatch(createNote()).payload;
     routerHistory.push(`/note/${note.id}`);
   }
 

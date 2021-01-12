@@ -1,4 +1,4 @@
-function onGqlError(err) {
+export function onGqlError(err) {
   let errors = [];
 
   if (err.graphQLErrors && err.graphQLErrors.length > 0) {

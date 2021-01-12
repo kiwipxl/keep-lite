@@ -1,23 +1,12 @@
 import { gql } from "@apollo/client";
-import sync from "./sync";
-import gqlClient from "../gqlClient";
+import gqlClient from "../../gqlClient";
 import {
   CREATE_LABEL,
   DELETE_LABEL,
   RENAME_LABEL,
-} from "../redux/actions/labels";
+} from "../../redux/actions/labels";
 
-export const onReduxAction = (action) => {
-  switch (action.type) {
-    case CREATE_LABEL:
-    case DELETE_LABEL:
-    case RENAME_LABEL:
-      sync.push(action);
-      break;
-  }
-};
-
-export const onSyncAction = async (action) => {
+export default async (action) => {
   switch (action.type) {
     case CREATE_LABEL:
       return await gqlClient.mutate({

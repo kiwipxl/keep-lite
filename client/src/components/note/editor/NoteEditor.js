@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
-import { EditorState } from "draft-js";
+import { EditorState, ContentState } from "draft-js";
 import NoteTitleEditor from "./NoteTitleEditor";
 import NoteBodyEditor from "./NoteBodyEditor";
 import NoteLabels from "../../label/NoteLabels";
@@ -11,7 +11,7 @@ const NoteEditor = ({ className, nid, children }) => {
 
   const titleRef = React.createRef();
   const [titleEditorState, setTitleEditorState] = React.useState(() =>
-    EditorState.createWithContent(note.title)
+    EditorState.createWithContent(ContentState.createFromText(note.title || ""))
   );
 
   const bodyRef = React.createRef();

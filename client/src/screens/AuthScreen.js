@@ -52,6 +52,8 @@ const AuthScreen = ({ className }) => {
       });
 
       dispatch(authStore.login(user, res.data.labels));
+
+      console.log("logged in with user id", user.id);
     } catch (err) {
       console.error(err);
       // TODO: show error

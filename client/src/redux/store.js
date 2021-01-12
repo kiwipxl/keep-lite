@@ -2,7 +2,7 @@ import { createStore, combineReducers } from "redux";
 import notes from "./reducers/notes";
 import labels from "./reducers/labels";
 import auth from "./reducers/auth";
-import { onReduxAction } from "../sync/sync_resolvers";
+import sync from "../sync/sync";
 
 export default createStore(
   combineReducers({
@@ -10,7 +10,7 @@ export default createStore(
     labels,
     auth,
     sync: (state = {}, action) => {
-      onReduxAction(action);
+      sync.push(action);
       return state;
     },
   }),

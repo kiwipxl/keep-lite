@@ -1,18 +1,17 @@
 import { v4 as uuidv4 } from "uuid";
 import { ContentState } from "draft-js";
 
-export const ADD_NOTE = "ADD_NOTE";
+export const CREATE_NOTE = "CREATE_NOTE";
 export const SET_NOTE_TITLE = "SET_NOTE_TITLE";
 export const SET_NOTE_BODY = "SET_NOTE_BODY";
 export const ADD_NOTE_LABEL = "ADD_NOTE_LABEL";
 export const REMOVE_NOTE_LABEL = "REMOVE_NOTE_LABEL";
 
-export const addNote = (sync, id, title, body, labels) => ({
-  type: ADD_NOTE,
-  sync: sync,
+export const createNote = (id, title, body, labels) => ({
+  type: CREATE_NOTE,
   payload: {
     id: id || uuidv4(),
-    title: title || ContentState.createFromText(""),
+    title: title,
     body: body || ContentState.createFromText(""),
     labels: labels || [],
   },

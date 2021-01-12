@@ -36,8 +36,9 @@ const Note = ({ className, id, title, body, labels, onClick }) => {
   const bodyRef = React.useRef(null);
   const routerHistory = useHistory();
   const [clampedContent, setClampedContent] = React.useState(false);
-  const [titleHTML] = React.useState(draftToHTML(title));
   const [bodyHTML] = React.useState(draftToHTML(body));
+
+  const hasTitle = title && title.length > 0;
 
   let onClickOverride = onClick;
   if (!onClick) {
@@ -64,17 +65,16 @@ const Note = ({ className, id, title, body, labels, onClick }) => {
       hidden={!clampedContent}
     >
       <Content>
-        {!isContentEmpty(title) && (
-          <Title
-            ref={titleRef}
-            dangerouslySetInnerHTML={{ __html: titleHTML }}
-          ></Title>
+        {hasTitle && <Title ref={titleRef}>{title}</Title>}
+
+        {!isContentEmpty(body) && (
+          <Body
+            ref={bodyRef}
+            dangerouslySetInnerHTML={{ __html: bodyHTML }}
+          ></Body>
         )}
 
-        <Body
-          ref={bodyRef}
-          dangerouslySetInnerHTML={{ __html: bodyHTML }}
-        ></Body>
+        {hasTitle && isContentEmpty(body) && <div></div>}
 
         <StyledNoteLabels labels={labels}></StyledNoteLabels>
       </Content>

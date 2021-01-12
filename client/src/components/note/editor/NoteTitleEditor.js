@@ -12,7 +12,7 @@ const NoteTitleEditor = (props) => {
   function onChange(editorState) {
     props.onChange(editorState);
 
-    dispatch(setNoteTitle(nid, editorState.getCurrentContent()));
+    dispatch(setNoteTitle(nid, editorState.getCurrentContent().getPlainText()));
   }
 
   return (

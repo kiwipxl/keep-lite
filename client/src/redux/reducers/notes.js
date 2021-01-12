@@ -1,5 +1,5 @@
 import {
-  ADD_NOTE,
+  CREATE_NOTE,
   SET_NOTE_TITLE,
   SET_NOTE_BODY,
   ADD_NOTE_LABEL,
@@ -47,7 +47,7 @@ export default (state = {}, action) => {
   const id = (action.payload && action.payload.id) || -1;
 
   switch (action.type) {
-    case ADD_NOTE:
+    case CREATE_NOTE:
       return {
         ...state,
         [id]: {
