@@ -15,7 +15,7 @@ const LabelNotesScreen = ({ className }) => {
     for (const noteId of Object.keys(state.notes)) {
       const note = state.notes[noteId];
       if (note.labels.includes(labelId)) {
-        res.push(note);
+        res.push({ ...note, id: noteId });
       }
     }
     return res;
@@ -39,7 +39,7 @@ const LabelNotesScreen = ({ className }) => {
     <div className={className}>
       <Header backButton title={label.name}></Header>
 
-      <StyledNoteCardGrid width={380} notes={notesList}></StyledNoteCardGrid>
+      <StyledNoteCardGrid notes={notesList}></StyledNoteCardGrid>
     </div>
   );
 };

@@ -1,11 +1,17 @@
 import styled from "styled-components";
 import NoteCard from "./NoteCard";
+import App from "../../App";
 
 const NoteCardGrid = ({ className, width, notes }) => {
-  const numColumns = 2;
+  if (!width) {
+    // NOTE: Subtract padding (10px is the most common padding applied).
+    width = App.width - 20;
+  }
+
+  const numColumns = Math.min(Math.max(Math.round(width / 300), 2), 4);
   const spacingX = 5;
   const spacingY = 10;
-  const cardWidth = width / numColumns - spacingX / (numColumns - 1);
+  const cardWidth = width / numColumns - spacingX;
 
   let columns = [];
 
