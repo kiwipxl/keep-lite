@@ -92,4 +92,8 @@ const DismissButton = styled(Button)`
   width: 60px;
 `;
 
+Toast.InfoVariant = InfoVariant;
+Toast.WarningVariant = WarningVariant;
+Toast.ErrorVariant = ErrorVariant;
+
 export default styled(Toast)``;

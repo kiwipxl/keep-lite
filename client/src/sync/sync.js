@@ -4,7 +4,7 @@ import note_resolvers from "./resolvers/notes";
 import { syncPush, syncPop } from "../redux/actions/sync";
 import store from "../redux/store";
 import { addGlobalToast, addGlobalToastCustom } from "../redux/actions/misc";
-import Toast from "../components/Toast";
+import ViewDetailsToast from "../components/ViewDetailsToast";
 
 const resolvers = [label_resolvers, note_resolvers];
 
@@ -16,9 +16,6 @@ export default {
 
 async function pollQueue() {
   try {
-    const r = 0;
-    r.test = 1;
-
     const queue = store.getState().sync.queue;
 
     if (queue.length > 0) {
@@ -45,15 +42,21 @@ async function pollQueue() {
   } catch (err) {
     console.error("fatal sync error", err);
 
-    store.dispatch(addGlobalToast("info", "test message!"));
-
     store.dispatch(
       addGlobalToastCustom(({ onDismissed }) => (
-        <Toast
+        <ViewDetailsToast
           message="Fatal sync error"
-          dismissable
           onDismissed={onDismissed}
-        ></Toast>
+          renderDetails={() => {
+            return (
+              <div>
+                <p>{err.message}</p>
+                {(err.graphQLErrors || err.networkError) &&
+                  getGqlErrors(err).map((err) => <p>{err.message}</p>)}
+              </div>
+            );
+          }}
+        ></ViewDetailsToast>
       ))
     );
   }
