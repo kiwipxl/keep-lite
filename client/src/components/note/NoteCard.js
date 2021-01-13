@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import { convertToHTML } from "draft-convert";
 import { useHistory } from "react-router-dom";
-import clampjs from "clamp-js";
 import NoteLabels from "../label/NoteLabels";
 
 function draftToHTML(contentState) {
@@ -35,7 +34,6 @@ const Note = ({ className, id, title, body, labels, onClick }) => {
   const titleRef = React.useRef(null);
   const bodyRef = React.useRef(null);
   const routerHistory = useHistory();
-  const [clampedContent, setClampedContent] = React.useState(false);
   const [bodyHTML] = React.useState(draftToHTML(body));
 
   const titleText = title ? title.getPlainText() : "";
@@ -49,23 +47,8 @@ const Note = ({ className, id, title, body, labels, onClick }) => {
     };
   }
 
-  React.useEffect(() => {
-    if (titleRef.current) {
-      clampjs(titleRef.current, { clamp: 2 });
-    }
-    if (bodyRef.current) {
-      clampjs(bodyRef.current, { clamp: 5 });
-    }
-
-    setClampedContent(true);
-  }, []);
-
   return (
-    <div
-      className={className}
-      onClick={onClickOverride}
-      hidden={!clampedContent}
-    >
+    <div className={className} onClick={onClickOverride}>
       <Content>
         {hasTitle && <Title ref={titleRef}>{titleText}</Title>}
 
@@ -94,12 +77,15 @@ const Title = styled.div`
   margin-bottom: 5px;
   font-size: 15px;
   opacity: ${(props) => props.theme.highEmphasisOpacity};
+  max-height: 40px;
+  overflow: hidden;
 `;
 
 const Body = styled.div`
   margin: 0px;
   font-size: 12px;
   opacity: ${(props) => props.theme.highEmphasisOpacity};
+  max-height: 48px;
   overflow: hidden;
 `;
 
@@ -110,7 +96,6 @@ const StyledNoteLabels = styled(NoteLabels)`
 
 export default styled(Note)`
   width: 100%;
-  max-height: 200px;
   overflow: hidden;
   color: ${(props) => props.theme.onSurfaceColor};
   background-color: ${(props) => props.theme.surfaceColor};

@@ -19,11 +19,11 @@ const NoteEditor = ({ className, id, children }) => {
     EditorState.createWithContent(note.body)
   );
 
-  React.useEffect(() => {
-    if (bodyRef.current) {
-      bodyRef.current.focus();
-    }
-  }, []);
+  // React.useEffect(() => {
+  //   if (bodyRef.current) {
+  //     bodyRef.current.focus();
+  //   }
+  // }, []);
 
   return (
     <div className={className}>
