@@ -1,10 +1,11 @@
 import { ApolloClient, InMemoryCache, createHttpLink } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
+import config from "./config";
 
 // This is required for apollo-client to send cookies to the server.
 // Cookies store our authentication token (login information).
 const httpLink = createHttpLink({
-  uri: "http://localhost:4000/graphql",
+  uri: `${config.serverUrl}/graphql`,
 });
 
 const authLink = setContext((_, { headers }) => {

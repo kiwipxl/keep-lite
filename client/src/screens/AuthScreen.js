@@ -6,6 +6,7 @@ import { useHistory } from "react-router-dom";
 import * as authStore from "../redux/actions/auth";
 import gqlClient from "../gqlClient";
 import Button from "../components/input/Button";
+import config from "../config";
 
 const AuthScreen = ({ className }) => {
   const [loggingIn, setLoggingIn] = React.useState(false);
@@ -64,7 +65,7 @@ const AuthScreen = ({ className }) => {
 
   function authenticate(authProvider) {
     // TODO: replace localhost url
-    window.open(`http://localhost:4000/auth/${authProvider}`);
+    window.open(`${config.serverUrl}/auth/${authProvider}`);
 
     setLoggingIn(true);
   }

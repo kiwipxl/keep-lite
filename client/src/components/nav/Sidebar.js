@@ -1,11 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 import Backdrop from "../Backdrop";
+import config from "../../config";
 
 const Sidebar = ({ className, children, hidden, onOpen, onClose }) => {
   return (
     <div>
-      <Backdrop zIndex={10} hidden={hidden} onClick={onClose}></Backdrop>
+      <Backdrop hidden={hidden} onClick={onClose}></Backdrop>
       <div className={className}>{children}</div>
     </div>
   );
@@ -20,5 +21,5 @@ export default styled(Sidebar)`
   background-color: ${(props) =>
     props.theme.elevate01dp(props.theme.surfaceColor)};
   transition: left 0.3s;
-  z-index: 20;
+  z-index: ${config.sortingOrder.sidebar};
 `;

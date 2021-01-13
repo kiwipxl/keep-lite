@@ -2,6 +2,7 @@ import { BiArrowBack } from "react-icons/bi";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import Icon from "./Icon";
+import config from "../config";
 
 const Header = ({ className, children, variant, backButton, title }) => {
   const routerHistory = useHistory();
@@ -63,5 +64,5 @@ export default styled(Header)`
   height: 60px;
   position: relative;
   background-color: ${(props) => props.theme.surfaceColor};
-  z-index: 5;
+  z-index: ${config.sortingOrder.header};
 `;

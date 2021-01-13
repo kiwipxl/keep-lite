@@ -73,7 +73,6 @@ const StyledNoteEditor = styled(NoteEditor)`
 
 const Footer = styled.div`
   height: 55px;
-  z-index: 1;
   background-color: ${(props) => props.theme.surfaceColor};
   display: flex;
   align-items: center;
