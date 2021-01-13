@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
-import { EditorState, ContentState } from "draft-js";
+import { EditorState } from "draft-js";
 import NoteTitleEditor from "./NoteTitleEditor";
 import NoteBodyEditor from "./NoteBodyEditor";
 import NoteLabels from "../../label/NoteLabels";
@@ -27,7 +27,7 @@ const NoteEditor = ({ className, id, children }) => {
         bodyRef.current.focus();
       }
     }
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className={className}>

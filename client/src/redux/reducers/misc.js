@@ -8,7 +8,7 @@ const initialState = {
   toasts: [],
 };
 
-export default (state = initialState, action) => {
+const reducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_GLOBAL_TOAST: {
       return {
@@ -45,3 +45,5 @@ export default (state = initialState, action) => {
       return state;
   }
 };
+
+export default reducer;

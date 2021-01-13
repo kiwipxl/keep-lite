@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import Toast from "./Toast";
 import { removeOldestGlobalToast } from "../redux/actions/misc";
 
-const GlobalToast = ({}) => {
+const GlobalToast = () => {
   const dispatch = useDispatch();
   const toast = useSelector((state) => {
     if (state.misc.toasts.length > 0) {

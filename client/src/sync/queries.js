@@ -95,3 +95,48 @@ export async function getNotesByLabel(labelId, limit) {
     onGqlError(err);
   }
 }
+
+export async function getAuthorisedUser() {
+  try {
+    const res = await gqlClient.query({
+      query: gql`
+        query {
+          me {
+            id
+            authProvider
+            email
+            name
+            created
+          }
+        }
+      `,
+    });
+
+    return res.data.me;
+  } catch (err) {
+    onGqlError(err);
+  }
+
+  return null;
+}
+
+export async function getLoginData() {
+  try {
+    const res = await gqlClient.query({
+      query: gql`
+        query {
+          labels {
+            id
+            name
+          }
+        }
+      `,
+    });
+
+    return res.data;
+  } catch (err) {
+    onGqlError(err);
+  }
+
+  return null;
+}

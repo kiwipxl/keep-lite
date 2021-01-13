@@ -19,7 +19,7 @@ const EditNoteScreen = ({ className }) => {
       console.error(`note ${noteId} not found`);
       routerHistory.replace("/404");
     }
-  }, []);
+  }, [note, noteId, routerHistory]);
 
   if (!note) {
     return <div></div>;

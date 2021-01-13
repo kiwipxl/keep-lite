@@ -7,9 +7,10 @@ const elements = {};
 
 const pollInterval = 50;
 
-export default {
+const exports = {
   push,
 };
+export default exports;
 
 function poll() {
   try {

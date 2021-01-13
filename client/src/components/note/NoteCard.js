@@ -7,14 +7,7 @@ import NoteLabels from "../label/NoteLabels";
 function draftToHTML(contentState) {
   return convertToHTML({
     blockToHTML: (block) => {
-      return (
-        <span
-          style={{
-            display: "block",
-            height: "calc(1em + 5px)",
-          }}
-        />
-      );
+      return <div></div>;
     },
     entityToHTML: (entity, originalText) => {
       // TODO: add LINK support (need to add linkify plugin)

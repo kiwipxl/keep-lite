@@ -9,7 +9,7 @@ import {
 } from "../../redux/actions/notes";
 import { convertToRaw } from "draft-js";
 
-export default async (action) => {
+const resolver = async (action) => {
   switch (action.type) {
     case CREATE_NOTE: {
       const res = await gqlClient.mutate({
@@ -110,5 +110,10 @@ export default async (action) => {
       }
       return res;
     }
+
+    default:
+      break;
   }
 };
+
+export default resolver;

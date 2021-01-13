@@ -1,10 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import NoteCardGrid from "../components/note/NoteCardGrid";
 import Header from "../components/Header";
-import Icon from "../components/Icon";
 import { getNotesByLabel } from "../sync/queries";
 
 const LabelNotesScreen = ({ className }) => {
@@ -21,13 +20,12 @@ const LabelNotesScreen = ({ className }) => {
     return res;
   });
   const label = useSelector((state) => state.labels[labelId]);
-  const dispatch = useDispatch();
 
   React.useEffect(() => {
     if (label) {
       getNotesByLabel(label.id, 10);
     }
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!label) {
     console.error(`label id ${labelId} does not exist`);

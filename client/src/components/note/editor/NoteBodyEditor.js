@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import "draft-js/dist/Draft.css";
 import Editor from "@draft-js-plugins/editor";
 import createLinkifyPlugin from "@draft-js-plugins/linkify";
-// import createInlineToolbarPlugin from "@draft-js-plugins/inline-toolbar";
+import createInlineToolbarPlugin from "@draft-js-plugins/inline-toolbar";
 import {
   ItalicButton,
   BoldButton,
@@ -14,9 +14,9 @@ import "@draft-js-plugins/linkify/lib/plugin.css";
 import "@draft-js-plugins/inline-toolbar/lib/plugin.css";
 import { setNoteBody } from "../../../redux/actions/notes";
 
-// const inlineToolbarPlugin = createInlineToolbarPlugin();
-// const { InlineToolbar } = inlineToolbarPlugin;
-const plugins = [createLinkifyPlugin()]; //, inlineToolbarPlugin];
+const inlineToolbarPlugin = createInlineToolbarPlugin();
+const { InlineToolbar } = inlineToolbarPlugin;
+const plugins = [createLinkifyPlugin(), inlineToolbarPlugin];
 
 const NoteBodyEditor = (props) => {
   const { className, id, forwardedRef } = props;
@@ -43,7 +43,7 @@ const NoteBodyEditor = (props) => {
         onChange={onChange}
       ></Editor>
 
-      {/* <InlineToolbar>
+      <InlineToolbar>
         {
           // may be use React.Fragment instead of div to improve perfomance after React 16
           (externalProps) => (
@@ -54,7 +54,7 @@ const NoteBodyEditor = (props) => {
             </div>
           )
         }
-      </InlineToolbar> */}
+      </InlineToolbar>
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import React from "react";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import config from "../config";
 import Button from "./input/Button";
 import Toast from "./Toast";

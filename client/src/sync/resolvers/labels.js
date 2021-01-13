@@ -6,7 +6,7 @@ import {
   RENAME_LABEL,
 } from "../../redux/actions/labels";
 
-export default async (action) => {
+const resolver = async (action) => {
   switch (action.type) {
     case CREATE_LABEL: {
       const res = await gqlClient.mutate({
@@ -53,5 +53,10 @@ export default async (action) => {
       }
       return res;
     }
+
+    default:
+      break;
   }
 };
+
+export default resolver;

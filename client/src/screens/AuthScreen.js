@@ -1,10 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import { gql, useQuery } from "@apollo/client";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
 import * as authStore from "../redux/actions/auth";
-import gqlClient from "../gqlClient";
+import { getAuthorisedUser, getLoginData } from "../sync/queries";
 import Button from "../components/input/Button";
 import config from "../config";
 
@@ -12,65 +10,34 @@ const AuthScreen = ({ className }) => {
   const [loggingIn, setLoggingIn] = React.useState(false);
   const dispatch = useDispatch();
 
-  React.useEffect(() => {
-    // Try to login automatically.
-    // If a graphQL query works, it means we're already authenticated.
-    // We call this a 'persistent logon'.
-    gqlClient
-      .query({
-        query: gql`
-          query GetMe {
-            me {
-              id
-              authProvider
-              email
-              name
-              created
-            }
-          }
-        `,
-      })
-      .then((res) => {
-        console.log(
-          `found persistent logon (${res.data.me.id}). fetching login data...`
-        );
-        fetchLoginData(res.data.me);
-      })
-      .catch((err) => {});
-  }, []);
-
-  async function fetchLoginData(user) {
-    try {
-      const res = await gqlClient.query({
-        query: gql`
-          query {
-            labels {
-              id
-              name
-            }
-          }
-        `,
-      });
-
-      dispatch(authStore.login(user, res.data.labels));
-
-      console.log("logged in with user id", user.id);
-    } catch (err) {
-      console.error(err);
-      // TODO: show error
-    }
+  const login = async (user) => {
+    const loginData = await getLoginData();
+    dispatch(authStore.login(user, loginData.labels));
 
     setLoggingIn(false);
-  }
+  };
 
-  function authenticate(authProvider) {
-    // TODO: replace localhost url
+  const authenticate = (authProvider) => {
     window.open(`${config.serverUrl}/auth/${authProvider}`);
 
     setLoggingIn(true);
-  }
+  };
 
-  function onMessage(ev) {
+  const tryPersistentLogin = async () => {
+    // Try to login automatically.
+    // If a graphQL query works, it means we're already authenticated.
+    // We call this a 'persistent logon'.
+
+    const user = await getAuthorisedUser();
+    if (user) {
+      console.log(`found persistent logon (${user.id}). logging in...`);
+      await login(user);
+    }
+  };
+
+  React.useEffect(() => tryPersistentLogin(), []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const onMessage = (ev) => {
     if (ev.data && ev.data.id && ev.data.authProvider) {
       const user = ev.data;
 
@@ -81,15 +48,15 @@ const AuthScreen = ({ className }) => {
       );
       window.onmessage = null;
 
-      fetchLoginData(user);
+      login(user);
     }
-  }
+  };
 
   React.useEffect(() => {
     window.addEventListener("message", onMessage);
 
     return () => window.removeEventListener("message", onMessage);
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className={className}>

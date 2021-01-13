@@ -53,7 +53,7 @@ const note = (state = {}, action) => {
   }
 };
 
-export default (state = {}, action) => {
+const reducer = (state = {}, action) => {
   const id = (action.payload && action.payload.id) || -1;
 
   switch (action.type) {
@@ -82,3 +82,5 @@ export default (state = {}, action) => {
       return state;
   }
 };
+
+export default reducer;

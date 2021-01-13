@@ -1,4 +1,4 @@
-export default {
+const exports = {
   // This app is designed for mobile phone screens. That is, width that is shorter
   // than height.
   // So for laptops/monitors which have larger width, we squish it's aspect ratio down to
@@ -12,3 +12,4 @@ export default {
     toast: 40,
   },
 };
+export default exports;

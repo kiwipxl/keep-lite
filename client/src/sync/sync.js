@@ -10,9 +10,10 @@ const resolvers = [label_resolvers, note_resolvers];
 
 const pollFrequency = 200;
 
-export default {
+const exports = {
   push,
 };
+export default exports;
 
 async function pollQueue() {
   try {
