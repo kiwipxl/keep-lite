@@ -8,6 +8,7 @@ import {
 } from "../actions/notes";
 import { SYNC_PUSH, SYNC_POP } from "../actions/sync";
 import sync from "../../sync/sync";
+import sync_throttler from "../../sync/sync_throttler";
 
 const initialState = {
   queue: [],
@@ -16,8 +17,6 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case CREATE_NOTE:
-    case SET_NOTE_TITLE:
-    case SET_NOTE_BODY:
     case ADD_NOTE_LABEL:
     case REMOVE_NOTE_LABEL:
     case CREATE_LABEL:
@@ -25,6 +24,13 @@ export default (state = initialState, action) => {
     case DELETE_LABEL:
       if (action.sync === true || action.sync === undefined) {
         setTimeout(() => sync.push(action), 0);
+      }
+      return state;
+
+    case SET_NOTE_TITLE:
+    case SET_NOTE_BODY:
+      if (action.sync === true || action.sync === undefined) {
+        setTimeout(() => sync_throttler.push(action.id, action, 1000), 0);
       }
       return state;
 

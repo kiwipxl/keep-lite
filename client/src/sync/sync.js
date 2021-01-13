@@ -3,8 +3,8 @@ import label_resolvers from "./resolvers/labels";
 import note_resolvers from "./resolvers/notes";
 import { syncPush, syncPop } from "../redux/actions/sync";
 import store from "../redux/store";
-import { addGlobalToast, addGlobalToastCustom } from "../redux/actions/misc";
-import ViewDetailsToast from "../components/ViewDetailsToast";
+import { addGlobalToastCustom } from "../redux/actions/misc";
+import ErrorDetailsToast from "../components/ErrorDetailsToast";
 
 const resolvers = [label_resolvers, note_resolvers];
 
@@ -44,19 +44,11 @@ async function pollQueue() {
 
     store.dispatch(
       addGlobalToastCustom(({ onDismissed }) => (
-        <ViewDetailsToast
+        <ErrorDetailsToast
           message="Fatal sync error"
+          error={err}
           onDismissed={onDismissed}
-          renderDetails={() => {
-            return (
-              <div>
-                <p>{err.message}</p>
-                {(err.graphQLErrors || err.networkError) &&
-                  getGqlErrors(err).map((err) => <p>{err.message}</p>)}
-              </div>
-            );
-          }}
-        ></ViewDetailsToast>
+        ></ErrorDetailsToast>
       ))
     );
   }

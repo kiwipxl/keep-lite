@@ -19,11 +19,15 @@ const NoteEditor = ({ className, id, children }) => {
     EditorState.createWithContent(note.body)
   );
 
-  // React.useEffect(() => {
-  //   if (bodyRef.current) {
-  //     bodyRef.current.focus();
-  //   }
-  // }, []);
+  React.useEffect(() => {
+    if (bodyRef.current) {
+      // If our note hasn't been edited yet, let's focus on it.
+      // This is useful when creating a new note and immediately focusing automatically.
+      if (bodyEditorState.getCurrentContent().getPlainText().length === 0) {
+        bodyRef.current.focus();
+      }
+    }
+  }, []);
 
   return (
     <div className={className}>
