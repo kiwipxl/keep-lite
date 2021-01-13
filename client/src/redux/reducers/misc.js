@@ -1,52 +1,43 @@
-import { CREATE_LABEL, DELETE_LABEL, RENAME_LABEL } from "../actions/labels";
 import {
-  CREATE_NOTE,
-  SET_NOTE_TITLE,
-  SET_NOTE_BODY,
-  ADD_NOTE_LABEL,
-  REMOVE_NOTE_LABEL,
-} from "../actions/notes";
-import { SYNC_PUSH, SYNC_POP } from "../actions/sync";
-import sync from "../../sync/sync";
+  ADD_GLOBAL_TOAST,
+  ADD_GLOBAL_TOAST_CUSTOM,
+  REMOVE_OLDEST_GLOBAL_TOAST,
+} from "../actions/misc";
 
 const initialState = {
-  queue: [],
+  toasts: [],
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case CREATE_NOTE:
-    case SET_NOTE_TITLE:
-    case SET_NOTE_BODY:
-    case ADD_NOTE_LABEL:
-    case REMOVE_NOTE_LABEL:
-    case CREATE_LABEL:
-    case RENAME_LABEL:
-    case DELETE_LABEL:
-      if (action.sync === true || action.sync === undefined) {
-        setTimeout(() => sync.push(action), 0);
-      }
-      return state;
-
-    case SYNC_PUSH: {
-      const queue = [].concat(state.queue);
-      queue.push(action.action);
-
+    case ADD_GLOBAL_TOAST: {
       return {
         ...state,
-        queue: queue,
+        toasts: [].concat(state.toasts).concat({
+          variant: action.variant,
+          message: action.message,
+          custom: false,
+        }),
       };
     }
 
-    case SYNC_POP: {
-      console.log("sync", action.action.type);
+    case ADD_GLOBAL_TOAST_CUSTOM: {
+      return {
+        ...state,
+        toasts: [].concat(state.toasts).concat({
+          render: action.render,
+          custom: true,
+        }),
+      };
+    }
 
-      const queue = [].concat(state.queue);
-      queue.splice(0, 1);
+    case REMOVE_OLDEST_GLOBAL_TOAST: {
+      const toasts = [].concat(state.toasts);
+      toasts.splice(0, 1);
 
       return {
         ...state,
-        queue: queue,
+        toasts,
       };
     }
 

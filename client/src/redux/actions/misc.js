@@ -1,12 +1,18 @@
-export const SYNC_PUSH = "SYNC_PUSH";
-export const SYNC_POP = "SYNC_POP";
+export const ADD_GLOBAL_TOAST = "ADD_GLOBAL_TOAST";
+export const ADD_GLOBAL_TOAST_CUSTOM = "ADD_GLOBAL_TOAST_CUSTOM";
+export const REMOVE_OLDEST_GLOBAL_TOAST = "REMOVE_OLDEST_GLOBAL_TOAST";
 
-export const syncPush = (action) => ({
-  type: SYNC_PUSH,
-  action: action,
+export const addGlobalToast = (variant, message) => ({
+  type: ADD_GLOBAL_TOAST,
+  variant: variant,
+  message: message,
 });
 
-export const syncPop = (action) => ({
-  type: SYNC_POP,
-  action: action,
+export const addGlobalToastCustom = (render) => ({
+  type: ADD_GLOBAL_TOAST_CUSTOM,
+  render: render,
+});
+
+export const removeOldestGlobalToast = () => ({
+  type: REMOVE_OLDEST_GLOBAL_TOAST,
 });

@@ -8,8 +8,7 @@ import theme from "./theme";
 import AppRouter from "./AppRouter";
 import gqlClient from "./gqlClient";
 import config from "./config";
-import Toast from "./components/Toast";
-import sync from "./sync/sync";
+import GlobalToast from "./components/GlobalToast";
 
 function getDimensions() {
   let left = 0;
@@ -43,9 +42,8 @@ function App() {
             height={dimensions.height}
           >
             <GlobalStyle></GlobalStyle>
+            <GlobalToast></GlobalToast>
             <AppRouter></AppRouter>
-
-            <Toast message="This is a message" cancellable></Toast>
           </AppContent>
         </ApolloProvider>
       </ThemeProvider>
