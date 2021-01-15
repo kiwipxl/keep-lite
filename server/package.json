@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "set PGUSER=postgres&& set PGHOST=localhost&& set PGDATABASE=postgres&& set PGPORT=5432&& nodemon index.js",
-    "test": "set PGUSER=postgres&& set PGHOST=localhost&& set PGDATABASE=testing&& set PGPORT=5432&& jest --watch --runInBand"
+    "test": "set PGUSER=postgres&& set PGHOST=localhost&& set PGDATABASE=testing&& set PGPORT=5432&& jest --watch --runInBand", 
+    "dev": "nodemon index.js"
   },
   "author": "",
   "license": "ISC",
@@ -23,7 +24,8 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "prettier": "2.2.1"
+    "prettier": "2.2.1", 
+    "nodemon": "^1.19.2"
   },
   "jest": {
     "modulePathIgnorePatterns": [
