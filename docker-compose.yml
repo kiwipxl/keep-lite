@@ -1,18 +1,15 @@
 version: "3.7"
 
 services:
-  server_dev:
-    image: node:12-alpine
-    command: sh -c "yarn run dev"
+  server:
+    build: ./server
     ports:
       - 4000:4000
-    working_dir: /server
-    volumes:
-      - ./:/server
+
+  client:
+    build: ./client
     environment:
-      PGUSER: postgres
-      PGHOST: database
-      PGPASSWORD: postgres
+      SERVER_HOST: localhost
 
   database:
     image: postgres

@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "set PGUSER=postgres&& set PGHOST=localhost&& set PGDATABASE=postgres&& set PGPORT=5432&& nodemon index.js",
+    "start": "node src/index.js",
     "test": "set PGUSER=postgres&& set PGHOST=localhost&& set PGDATABASE=testing&& set PGPORT=5432&& jest --watch --runInBand", 
-    "dev": "nodemon index.js"
+    "dev": "set PGUSER=postgres&& set PGHOST=localhost&& set PGDATABASE=postgres&& set PGPORT=5432&& nodemon src/index.js"
   },
   "author": "",
   "license": "ISC",
@@ -29,8 +29,7 @@
   },
   "jest": {
     "modulePathIgnorePatterns": [
-      "src",
-      "__tests__/src"
+      "src/__tests__/src"
     ]
   }
 }

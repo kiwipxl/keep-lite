@@ -1,4 +1,3 @@
-const { PG_UNDEFINED_TABLE } = require("@drdgvhbh/postgres-error-codes");
 const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
@@ -6,6 +5,7 @@ const { db, connect, createNewDatabase } = require("./db");
 const auth = require("./auth/auth");
 const { createTestUser } = require("./data/user");
 const gql_server = require("./gql/server");
+const { PG_UNDEFINED_TABLE } = require("@drdgvhbh/postgres-error-codes");
 
 const app = express();
 
