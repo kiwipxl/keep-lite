@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node src/index.js",
+    "start": "nodemon src/index.js",
     "test": "set PGUSER=postgres&& set PGHOST=localhost&& set PGDATABASE=testing&& set PGPORT=5432&& jest --watch --runInBand", 
     "dev": "set PGUSER=postgres&& set PGHOST=localhost&& set PGDATABASE=postgres&& set PGPORT=5432&& nodemon src/index.js"
   },
@@ -21,11 +21,11 @@
     "passport": "^0.4.1",
     "passport-google-oauth": "^2.0.0",
     "pg": "^8.5.1",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2", 
+    "nodemon": "^1.19.2"
   },
   "devDependencies": {
-    "prettier": "2.2.1", 
-    "nodemon": "^1.19.2"
+    "prettier": "2.2.1"
   },
   "jest": {
     "modulePathIgnorePatterns": [

@@ -5,11 +5,17 @@ services:
     build: ./server
     ports:
       - 4000:4000
+    environment:
+      PGUSER: postgres
+      PGHOST: database
+      PGPASSWORD: postgres
 
   client:
     build: ./client
+    ports:
+      - 80:80
     environment:
-      SERVER_HOST: localhost
+      SERVER_HOST: keep-lite_default
 
   database:
     image: postgres

@@ -1,8 +1,14 @@
-# Container for a nginx server to host our build/index.html
-# Make sure we run `npm install && npm run build` before hand!
+# STEP 1 - build react
+FROM node:12-alpine AS react_build
+WORKDIR /client
+COPY . /client
+RUN ls
+RUN npm install
+RUN npm run-script build
 
+# STEP 2 - Container for a nginx server to host our build/index.html
 FROM nginx
-COPY /build /usr/share/nginx/html
+COPY --from=react_build /client/build /usr/share/nginx/html
 RUN rm /etc/nginx/conf.d/default.conf
 COPY nginx.conf /etc/nginx/conf.d
 EXPOSE 80
