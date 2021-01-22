@@ -142,5 +142,11 @@ function combine(srcBackup, dstBackup) {
     }
   }
 
+  for (const dstItem of Object.values(snidDstItems)) {
+    if (dstItem.content_type !== "Tag") {
+      delete snidDstItems[dstItem.snid];
+    }
+  }
+
   return { items: Object.values(snidDstItems) };
 }
