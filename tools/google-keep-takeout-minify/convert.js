@@ -33,6 +33,13 @@ function convert(dataDir) {
 
       const keepNote = JSON.parse(fs.readFileSync(filePath));
 
+      // Don't convert note that has no labels.
+      // This is an optimisation as my personal notes had many uninteresting
+      // notes without any labels.
+      if (!keepNote.labels) {
+        return;
+      }
+
       const noteId = uuidv4();
       const editedDate = moment
         .utc(keepNote.userEditedTimestampUsec / 1000)

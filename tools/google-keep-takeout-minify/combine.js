@@ -1,5 +1,6 @@
 const crypto = require("crypto");
 const moment = require("moment");
+const { updateClientTimestamp } = require("./tools");
 
 module.exports = combine;
 
@@ -102,17 +103,7 @@ function combine(srcBackup, dstBackup) {
 
   // Post operations on final items
   for (const dstItem of Object.values(snidDstItems)) {
-    if (dstItem.content.appData) {
-      dstItem.content.appData[
-        "org.standardnotes.sn"
-      ].client_updated_at = moment().toDate();
-    } else {
-      dstItem.content.appData = {
-        "org.standardnotes.sn": {
-          client_updated_at: moment().toDate(),
-        },
-      };
-    }
+    updateClientTimestamp(dstItem);
 
     switch (dstItem.content_type) {
       case "Note":

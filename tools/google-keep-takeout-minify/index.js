@@ -15,6 +15,8 @@ if (process.argv.length !== 5) {
   throw new Error(`expected 3 arguments, got ${process.argv.length - 2}`);
 }
 
+console.log(require("moment")().toDate());
+
 const snBackupPath = path.resolve(__dirname, process.argv[2]);
 const takeoutDir = path.resolve(__dirname, process.argv[3]);
 const outPath = path.resolve(__dirname, process.argv[4]);
