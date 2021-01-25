@@ -80,6 +80,7 @@ function combine(srcBackup, dstBackup) {
         case "Note":
           dstItem.created_at = srcItem.created_at;
           dstItem.updated_at = srcItem.updated_at;
+          dstItem.archived = srcItem.archived;
           break;
 
         case "Tag":

@@ -5,15 +5,15 @@ const moment = require("moment");
 
 module.exports = convert;
 
-function convert(dataDir) {
+function convert(takeoutDir) {
   let fileTypeStats = {};
   let notes = {};
   let tags = {};
   let tagNameToTagId = {};
 
-  const files = fs.readdirSync(dataDir);
+  const files = fs.readdirSync(takeoutDir);
   files.forEach((name) => {
-    const filePath = path.join(dataDir, name);
+    const filePath = path.join(takeoutDir, name);
     const fileSize = fs.statSync(filePath).size;
     const fileExtension = name.substring(name.lastIndexOf(".") + 1);
 
@@ -27,10 +27,6 @@ function convert(dataDir) {
     stats.numItems += 1;
 
     if (fileExtension == "json") {
-      if (stats.numItems > 50) {
-        // return;
-      }
-
       const keepNote = JSON.parse(fs.readFileSync(filePath));
 
       // Don't convert note that has no labels.
@@ -38,6 +34,10 @@ function convert(dataDir) {
       // notes without any labels.
       if (!keepNote.labels) {
         return;
+      }
+
+      if (keepNote.archived) {
+        console.log("found archived");
       }
 
       const noteId = uuidv4();
@@ -54,6 +54,7 @@ function convert(dataDir) {
           title: keepNote.title,
           text: keepNote.textContent,
         },
+        archived: keepNote.archived,
       };
 
       for (const label of keepNote.labels || []) {

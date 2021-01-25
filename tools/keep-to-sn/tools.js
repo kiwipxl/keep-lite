@@ -2,7 +2,7 @@ const moment = require("moment");
 
 module.exports = {
   updateClientTimestamp,
-  deleteAllWithoutTags,
+  filterNotes,
 };
 
 function updateClientTimestamp(item) {
@@ -19,7 +19,7 @@ function updateClientTimestamp(item) {
   }
 }
 
-function deleteAllWithoutTags(backup) {
+function filterNotes(items, callback) {
   let notes = {};
   let tags = {};
   let newItems = [];
@@ -33,18 +33,11 @@ function deleteAllWithoutTags(backup) {
   }
 
   for (const note of Object.values(notes)) {
-    const hasTag = Object.values(tags).find((tag) =>
-      tag.content.references.find((ref) => ref.uuid === note.uuid)
-    );
-
-    if (!hasTag) {
+    if (callback(note, notes, tags)) {
       updateClientTimestamp(note);
-      note.deleted = true;
       newItems.push(note);
     }
   }
-
-  console.log(`found ${newItems.length} notes without tags`);
 
   return { items: newItems };
 }
