@@ -8,7 +8,10 @@ const NoteCardGrid = ({ className, width, notes }) => {
     width = App.width - 20;
   }
 
-  const numColumns = Math.min(Math.max(Math.round(width / 300), 2), 4);
+  let numColumns = Math.min(Math.max(Math.round(width / 300), 2), 4);
+  // Make sure we don't have more columns than notes, otherwise it will look oddly spaced out
+  numColumns = Math.min(numColumns, notes.length);
+
   const spacingX = 5;
   const spacingY = 10;
   const cardWidth = width / numColumns - spacingX;

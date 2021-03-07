@@ -23,7 +23,7 @@ module.exports = {
 
 async function connect() {
   console.log(
-    `connecting to database '${process.env.PGDATABASE}' at ${process.env.PGHOST}:${process.env.PGPORT}`
+    `connecting to database '${process.env.PGDATABASE}' at ${process.env.PGHOST}:${process.env.PGPORT} with user '${process.env.PGUSER}'`
   );
   return await client.connect();
 }

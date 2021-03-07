@@ -1,13 +1,15 @@
-# keep-lite
-A lite version of Google Keep built in React/node.
+## keep-lite
+A simple notetaking app built using React/node/SQL/redux/graphQL tech stack. Design is inspired by Google Keep.
 
-## Local Development
-# Client
+![App screenshot](screenshot.png?raw=true)
+
+# Development
+## Client
 Run `npm install` && `npm run dev`.
 
 Client will be hosted at localhost:3000.
 
-# Server
+## Server
 1. Download and install postgresql. Setup a local database and set the following environment variables:
 
 PGUSER: your_username
@@ -19,5 +21,5 @@ PGPORT: your_port
 
 Server will be hosted at localhost:4000.
 
-## Building
+# Building
 To build production Docker containers, run `docker-compose up` in the root folder.

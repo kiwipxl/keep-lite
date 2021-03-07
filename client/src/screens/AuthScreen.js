@@ -60,11 +60,9 @@ const AuthScreen = ({ className }) => {
 
   return (
     <div className={className}>
-      {!loggingIn && (
-        <Button onClick={() => authenticate("google")}>
-          Sign in with Google
-        </Button>
-      )}
+      <Button onClick={() => authenticate("google")}>
+        Sign in with Google
+      </Button>
     </div>
   );
 };
