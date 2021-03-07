@@ -1,21 +1,23 @@
 # keep-lite
-Development is still early days - check back later!
+A lite version of Google Keep built in React/node.
 
-## TODO
-- Replace rich text editor with https://github.com/jpuri/react-draft-wysiwyg
-- Max char and newline limitations on title editor
+## Local Development
+# Client
+Run `npm install` && `npm run dev`.
 
-## Development
-Follow these instructions to setup your local development environment:
+Client will be hosted at localhost:3000.
 
-## Client
-Run `npm install && npm run dev`.
+# Server
+1. Download and install postgresql. Setup a local database and set the following environment variables:
 
-## Server
-* Download and install postgresql. Create a database with the following properties:
-User: postgres
-Host: database
-Password: postgres
-Port: 5432
+PGUSER: your_username
+PGHOST: your_host
+PGPASSWORD: your_password
+PGPORT: your_port
 
-* Run `npm install && npm run dev`
+2. Run `npm install` && `npm run dev`
+
+Server will be hosted at localhost:4000.
+
+## Building
+To build production Docker containers, run `docker-compose up` in the root folder.

@@ -8,8 +8,8 @@ const { genResponseHTML } = require("./util");
 passport.use(
   new GoogleStrategy(
     {
-      clientID: credentials.clientID,
-      clientSecret: credentials.clientSecret,
+      clientID: credentials.client_id,
+      clientSecret: credentials.client_secret,
       callbackURL: "http://localhost:4000/auth/google/callback",
     },
     async (accessToken, refreshToken, profile, done) => {
